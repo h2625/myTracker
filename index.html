@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Tracker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --g: #22c55e; --g-bg: #dcfce7; --g-dk: #15803d;
+    --y: #eab308; --y-bg: #fef9c3; --y-dk: #a16207;
+    --r: #ef4444; --r-bg: #fee2e2; --r-dk: #b91c1c;
+    --bg: #f9f9f7;
+    --card: #ffffff;
+    --border: rgba(0,0,0,0.1);
+    --border-md: rgba(0,0,0,0.18);
+    --text: #1a1a18;
+    --muted: #6b6b67;
+    --surface: #f1f0eb;
+    --info-bg: #e6f1fb;
+    --info-text: #185fa5;
+    --warn-bg: #faeeda;
+    --warn-text: #854f0b;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Fraunces', serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a18;
+      --card: #242422;
+      --border: rgba(255,255,255,0.1);
+      --border-md: rgba(255,255,255,0.2);
+      --text: #f0efe8;
+      --muted: #8a8a84;
+      --surface: #2a2a28;
+      --g-bg: #14532d; --g-dk: #86efac;
+      --y-bg: #422006; --y-dk: #fde68a;
+      --r-bg: #450a0a; --r-dk: #fca5a5;
+      --info-bg: #042c53; --info-text: #85b7eb;
+      --warn-bg: #412402; --warn-text: #fac775;
+    }
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  #app {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 2rem 0 1.25rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  .header-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+  }
+
+  .header-date { font-size: 12px; color: var(--muted); }
+
+  .nav-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 1.25rem;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: 3px;
+  }
+
+  .tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 7px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+  }
+
+  .tab-btn.active {
+    background: var(--card);
+    color: var(--text);
+    border: 0.5px solid var(--border);
+  }
+
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+  }
+
+  .score-ring {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+
+  .score-ring.green { background: var(--g-bg); color: var(--g-dk); }
+  .score-ring.yellow { background: var(--y-bg); color: var(--y-dk); }
+  .score-ring.red { background: var(--r-bg); color: var(--r-dk); }
+  .score-ring.none { background: var(--surface); color: var(--muted); }
+
+  .score-info { flex: 1; min-width: 0; }
+  .score-label { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+  .score-status { font-size: 13px; font-weight: 500; }
+
+  .streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--g-bg);
+    color: var(--g-dk);
+    white-space: nowrap;
+  }
+
+  .streak-badge .streak-num { font-weight: 500; font-size: 14px; }
+
+  .override-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .override-label { font-size: 11px; color: var(--muted); }
+  .override-btns { display: flex; gap: 4px; }
+
+  .dot-btn {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .dot-btn.g-btn { background: var(--g-bg); border-color: var(--g); }
+  .dot-btn.y-btn { background: var(--y-bg); border-color: var(--y); }
+  .dot-btn.r-btn { background: var(--r-bg); border-color: var(--r); }
+  .dot-btn.none-btn { background: var(--surface); border-color: var(--border-md); }
+  .dot-btn.active-dot::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+  }
+  .dot-btn.g-btn.active-dot::after { background: var(--g); }
+  .dot-btn.y-btn.active-dot::after { background: var(--y); }
+  .dot-btn.r-btn.active-dot::after { background: var(--r); }
+  .dot-btn.none-btn.active-dot::after { background: var(--muted); }
+  .dot-btn:hover { transform: scale(1.15); }
+
+  .auto-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: var(--info-bg);
+    color: var(--info-text);
+    margin-left: 4px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .add-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .add-btn:hover { background: var(--surface); }
+
+  .activity-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .activity-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s;
+  }
+
+  .activity-row:hover { border-color: var(--border-md); }
+  .activity-row.has-green { border-left: 3px solid var(--g); }
+  .activity-row.has-yellow { border-left: 3px solid var(--y); }
+  .activity-row.has-red { border-left: 3px solid var(--r); }
+
+  .act-name { flex: 1; font-size: 13px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .weight-badge {
+    font-size: 10px;
+    color: var(--muted);
+    padding: 2px 6px;
+    background: var(--surface);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .rating-btns { display: flex; gap: 3px; }
+
+  .rate-btn {
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    border: 1.5px solid transparent;
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .rate-btn.g { background: var(--g-bg); color: var(--g-dk); }
+  .rate-btn.y { background: var(--y-bg); color: var(--y-dk); }
+  .rate-btn.r { background: var(--r-bg); color: var(--r-dk); }
+  .rate-btn.g.sel { border-color: var(--g); box-shadow: 0 0 0 2px var(--g-bg); }
+  .rate-btn.y.sel { border-color: var(--y); box-shadow: 0 0 0 2px var(--y-bg); }
+  .rate-btn.r.sel { border-color: var(--r); box-shadow: 0 0 0 2px var(--r-bg); }
+  .rate-btn:hover { transform: scale(1.08); }
+
+  .act-actions { display: flex; gap: 3px; }
+
+  .icon-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); padding: 5px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .icon-btn:hover { color: var(--text); background: var(--surface); }
+  .icon-btn.danger:hover { color: var(--r-dk); background: var(--r-bg); }
+
+  .add-form {
+    display: none;
+    padding: 14px;
+    background: var(--card);
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    gap: 10px;
+    margin-top: 6px;
+    flex-direction: column;
+  }
+
+  .add-form.open { display: flex; }
+
+  .form-row { display: flex; gap: 8px; align-items: center; }
+  .form-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+  input[type="text"], input[type="number"] {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 7px 10px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input[type="text"]:focus, input[type="number"]:focus {
+    border-color: var(--border-md);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+  }
+
+  input[type="text"] { width: 100%; }
+  input[type="number"] { width: 80px; }
+
+  .form-actions { display: flex; gap: 6px; justify-content: flex-end; }
+
+  .btn-primary {
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 7px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.8; }
+
+  .btn-cancel {
+    background: none;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 7px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-cancel:hover { color: var(--text); border-color: var(--border-md); }
+
+  .edit-inline {
+    display: none;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    margin-top: 4px;
+  }
+
+  .edit-inline.open { display: flex; }
+  .edit-inline input[type="text"] { flex: 1; }
+  .edit-inline input[type="number"] { width: 70px; }
+
+  .cal-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .cal-period {
+    flex: 1;
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .nav-btn {
+    background: none;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    width: 32px; height: 32px;
+    cursor: pointer;
+    color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover { background: var(--surface); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 2px;
+  }
+
+  .stat-val.green { color: var(--g-dk); }
+  .stat-val.yellow { color: var(--y-dk); }
+
+  .stat-lbl { font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
+
+  .day-header-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .day-header {
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    padding-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+
+  .day-cell {
+    aspect-ratio: 1;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 0.5px solid var(--border);
+    background: var(--surface);
+    gap: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .day-cell .day-num { font-size: 12px; position: relative; z-index: 1; }
+  .day-cell .day-pct { font-size: 9px; color: var(--muted); position: relative; z-index: 1; }
+
+  .day-cell.green { background: var(--g-bg); border-color: transparent; color: var(--g-dk); }
+  .day-cell.green .day-pct { color: var(--g-dk); opacity: 0.7; }
+  .day-cell.yellow { background: var(--y-bg); border-color: transparent; color: var(--y-dk); }
+  .day-cell.yellow .day-pct { color: var(--y-dk); opacity: 0.7; }
+  .day-cell.red { background: var(--r-bg); border-color: transparent; color: var(--r-dk); }
+  .day-cell.red .day-pct { color: var(--r-dk); opacity: 0.7; }
+  .day-cell.today { outline: 2px solid var(--text); outline-offset: 1px; }
+  .day-cell:hover { transform: scale(1.04); }
+
+  .streak-bar {
+    position: absolute;
+    top: 0; left: -4px; right: -4px; bottom: 0;
+    background: rgba(34,197,94,0.14);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .month-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--surface);
+    color: var(--muted);
+  }
+
+  .month-cell.green { background: var(--g-bg); color: var(--g-dk); }
+  .month-cell.yellow { background: var(--y-bg); color: var(--y-dk); }
+  .month-cell.red { background: var(--r-bg); color: var(--r-dk); }
+  .month-cell.today { outline: 2px solid var(--text); outline-offset: 1px; }
+  .month-cell.empty { opacity: 0; pointer-events: none; }
+  .month-cell:not(.empty):hover { transform: scale(1.08); }
+
+  .year-months {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .year-cell {
+    aspect-ratio: 1;
+    border-radius: 2px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+
+  .year-cell.green { background: var(--g); opacity: 0.75; }
+  .year-cell.yellow { background: var(--y); opacity: 0.75; }
+  .year-cell.red { background: var(--r); opacity: 0.55; }
+  .year-cell:hover { opacity: 1 !important; transform: scale(1.4); }
+
+  .legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 0.75rem;
+    font-size: 10px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .empty-state {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--muted);
+    font-size: 13px;
+    border: 0.5px dashed var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--text);
+    color: var(--bg);
+    padding: 9px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: var(--mono);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 480px) {
+    .rate-btn { width: 26px; height: 26px; font-size: 10px; }
+    .act-name { font-size: 12px; }
+    .score-ring { width: 48px; height: 48px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="header-title">Daily Tracker</div>
+    <div class="header-date" id="header-date"></div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('today')">Today</button>
+    <button class="tab-btn" onclick="switchView('week')">Week</button>
+    <button class="tab-btn" onclick="switchView('month')">Month</button>
+    <button class="tab-btn" onclick="switchView('year')">Year</button>
+  </div>
+
+  <!-- TODAY -->
+  <div id="view-today" class="view active">
+    <div class="score-bar">
+      <div class="score-ring none" id="score-ring">—</div>
+      <div class="score-info">
+        <div class="score-label">Overall score <span class="auto-badge" id="auto-badge">auto</span></div>
+        <div class="score-status" id="score-status">Rate your activities below</div>
+        <div class="override-row">
+          <span class="override-label">Override:</span>
+          <div class="override-btns">
+            <button class="dot-btn g-btn" title="Force Green" onclick="setOverride('green')"></button>
+            <button class="dot-btn y-btn" title="Force Yellow" onclick="setOverride('yellow')"></button>
+            <button class="dot-btn r-btn" title="Force Red" onclick="setOverride('red')"></button>
+            <button class="dot-btn none-btn" title="Clear override" onclick="setOverride(null)"></button>
+          </div>
+        </div>
+      </div>
+      <div class="streak-badge" id="streak-badge">
+        <i class="ti ti-flame"></i>
+        <span class="streak-num" id="streak-num">0</span>
+        <span>streak</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-title">Activities</span>
+      <button class="add-btn" onclick="toggleAddForm()">
+        <i class="ti ti-plus"></i> add activity
+      </button>
+    </div>
+
+    <div class="add-form" id="add-form">
+      <div class="form-row">
+        <input type="text" id="new-act-name" placeholder="Activity name…" maxlength="50" />
+      </div>
+      <div class="form-row">
+        <span class="form-label">Weight:</span>
+        <input type="number" id="new-act-weight" value="1" min="0.1" max="10" step="0.1" />
+        <span class="form-label" style="font-size:10px;">(importance multiplier)</span>
+      </div>
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="toggleAddForm()">cancel</button>
+        <button class="btn-primary" onclick="addActivity()">add</button>
+      </div>
+    </div>
+
+    <div class="activity-list" id="activity-list"></div>
+  </div>
+
+  <!-- WEEK -->
+  <div id="view-week" class="view">
+    <div class="cal-nav">
+      <button class="nav-btn" onclick="navWeek(-1)"><i class="ti ti-chevron-left"></i></button>
+      <div class="cal-period" id="week-period"></div>
+      <button class="nav-btn" onclick="navWeek(1)"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="stats-row" id="week-stats"></div>
+    <div class="day-header-row">
+      <div class="day-header">Sun</div><div class="day-header">Mon</div><div class="day-header">Tue</div>
+      <div class="day-header">Wed</div><div class="day-header">Thu</div><div class="day-header">Fri</div><div class="day-header">Sat</div>
+    </div>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--g)"></div> Green ≥80%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--y)"></div> Yellow 60–79%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--r)"></div> Red &lt;60%</div>
+    </div>
+  </div>
+
+  <!-- MONTH -->
+  <div id="view-month" class="view">
+    <div class="cal-nav">
+      <button class="nav-btn" onclick="navMonth(-1)"><i class="ti ti-chevron-left"></i></button>
+      <div class="cal-period" id="month-period"></div>
+      <button class="nav-btn" onclick="navMonth(1)"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="stats-row" id="month-stats"></div>
+    <div class="day-header-row">
+      <div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div>
+      <div class="day-header">We</div><div class="day-header">Th</div><div class="day-header">Fr</div><div class="day-header">Sa</div>
+    </div>
+    <div class="month-grid" id="month-grid"></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--g)"></div> Green</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--y)"></div> Yellow</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--r)"></div> Red</div>
+    </div>
+  </div>
+
+  <!-- YEAR -->
+  <div id="view-year" class="view">
+    <div class="cal-nav">
+      <button class="nav-btn" onclick="navYear(-1)"><i class="ti ti-chevron-left"></i></button>
+      <div class="cal-period" id="year-period"></div>
+      <button class="nav-btn" onclick="navYear(1)"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="stats-row" id="year-stats"></div>
+    <div class="year-months" id="year-months"></div>
+    <div class="year-grid" id="year-grid"></div>
+    <div class="legend" style="margin-top:0.5rem;">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--g)"></div> Green</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--y)"></div> Yellow</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--r)"></div> Red</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--surface);border:0.5px solid var(--border);"></div> No data</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TODAY = new Date();
+TODAY.setHours(0,0,0,0);
+
+function dateKey(d) {
+  const dt = d instanceof Date ? d : new Date(d);
+  return dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0');
+}
+
+function todayKey() { return dateKey(TODAY); }
+
+const STORAGE_KEY = 'dpt_v2';
+
+let state = loadState();
+
+function loadState() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return getDefaultState();
+}
+
+function getDefaultState() {
+  return {
+    days: {},
+    defaultActivities: [
+      { id: uid(), name: 'Deep work', weight: 2 },
+      { id: uid(), name: 'Exercise', weight: 1.5 },
+      { id: uid(), name: 'Healthy eating', weight: 1 },
+      { id: uid(), name: 'Sleep quality', weight: 1.5 },
+      { id: uid(), name: 'No distractions', weight: 1 }
+    ]
+  };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function uid() { return Math.random().toString(36).slice(2,9); }
+
+function getDay(key) {
+  if (!state.days[key]) {
+    const yesterday = new Date(key);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yKey = dateKey(yesterday);
+    const prev = state.days[yKey];
+    const baseActivities = prev
+      ? prev.activities.map(a => ({ ...a, id: uid(), rating: null }))
+      : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
+    state.days[key] = { activities: baseActivities, override: null };
+  }
+  return state.days[key];
+}
+
+function calcScore(day) {
+  const rated = day.activities.filter(a => a.rating !== null);
+  if (!rated.length) return null;
+  const total = rated.reduce((s,a) => s + a.weight * ratingVal(a.rating), 0);
+  const wsum = rated.reduce((s,a) => s + a.weight, 0);
+  return Math.round(total / wsum);
+}
+
+function ratingVal(r) {
+  if (r === 'green') return 90;
+  if (r === 'yellow') return 70;
+  if (r === 'red') return 40;
+  return 0;
+}
+
+function scoreClass(pct) {
+  if (pct === null) return 'none';
+  if (pct >= 80) return 'green';
+  if (pct >= 60) return 'yellow';
+  return 'red';
+}
+
+function calcStreak() {
+  let streak = 0;
+  const d = new Date(TODAY);
+  while (true) {
+    const k = dateKey(d);
+    const day = state.days[k];
+    const pct = day ? (day.override ? ratingVal(day.override) : calcScore(day)) : null;
+    if (pct !== null && pct >= 80) { streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+let currentWeekOffset = 0;
+let currentMonthOffset = 0;
+let currentYearOffset = 0;
+let editingId = null;
+
+function renderToday() {
+  const key = todayKey();
+  const day = getDay(key);
+
+  const pct = day.override ? ratingVal(day.override) : calcScore(day);
+  const cls = scoreClass(pct);
+  const ring = document.getElementById('score-ring');
+  ring.textContent = pct !== null ? pct + '%' : '—';
+  ring.className = 'score-ring ' + cls;
+
+  const badge = document.getElementById('auto-badge');
+  badge.textContent = day.override ? 'override' : 'auto';
+  badge.style.background = day.override ? 'var(--warn-bg)' : '';
+  badge.style.color = day.override ? 'var(--warn-text)' : '';
+
+  const status = document.getElementById('score-status');
+  if (pct === null) status.textContent = 'Rate your activities below';
+  else if (cls === 'green') status.textContent = 'Green day — great work!';
+  else if (cls === 'yellow') status.textContent = 'Yellow day — room to grow';
+  else status.textContent = 'Red day — keep pushing';
+
+  document.querySelectorAll('.dot-btn').forEach(b => b.classList.remove('active-dot'));
+  if (day.override) {
+    const map = { green: 'g-btn', yellow: 'y-btn', red: 'r-btn' };
+    document.querySelector('.dot-btn.' + map[day.override])?.classList.add('active-dot');
+  }
+
+  const streak = calcStreak();
+  document.getElementById('streak-num').textContent = streak;
+  document.getElementById('streak-badge').style.display = streak > 0 ? 'flex' : 'none';
+
+  document.getElementById('header-date').textContent = TODAY.toLocaleDateString('en-US', {
+    weekday:'short', month:'short', day:'numeric', year:'numeric'
+  });
+
+  renderActivities(day);
+}
+
+function renderActivities(day) {
+  const list = document.getElementById('activity-list');
+  if (!day.activities.length) {
+    list.innerHTML = '<div class="empty-state">No activities yet — add one above</div>';
+    return;
+  }
+  list.innerHTML = day.activities.map(a => `
+    <div class="activity-row ${a.rating ? 'has-'+a.rating : ''}" id="act-${a.id}">
+      <div class="act-name">${escHtml(a.name)}</div>
+      <div class="weight-badge">×${a.weight}</div>
+      <div class="rating-btns">
+        <button class="rate-btn g ${a.rating==='green'?'sel':''}" onclick="rateActivity('${a.id}','green')" title="Green">G</button>
+        <button class="rate-btn y ${a.rating==='yellow'?'sel':''}" onclick="rateActivity('${a.id}','yellow')" title="Yellow">Y</button>
+        <button class="rate-btn r ${a.rating==='red'?'sel':''}" onclick="rateActivity('${a.id}','red')" title="Red">R</button>
+      </div>
+      <div class="act-actions">
+        <button class="icon-btn" onclick="startEdit('${a.id}')" title="Edit"><i class="ti ti-pencil" style="font-size:15px"></i></button>
+        <button class="icon-btn danger" onclick="removeActivity('${a.id}')" title="Remove"><i class="ti ti-trash" style="font-size:15px"></i></button>
+      </div>
+    </div>
+    <div class="edit-inline ${editingId===a.id?'open':''}" id="edit-${a.id}">
+      <input type="text" id="edit-name-${a.id}" value="${escHtml(a.name)}" maxlength="50" onkeydown="if(event.key==='Enter') saveEdit('${a.id}')" />
+      <span style="font-size:11px;color:var(--muted);">×</span>
+      <input type="number" id="edit-weight-${a.id}" value="${a.weight}" min="0.1" max="10" step="0.1" style="width:70px;" />
+      <button class="btn-primary" style="padding:5px 12px;font-size:11px;" onclick="saveEdit('${a.id}')">save</button>
+      <button class="btn-cancel" style="padding:5px 12px;font-size:11px;" onclick="cancelEdit()">✕</button>
+    </div>
+  `).join('');
+
+  if (editingId) {
+    document.getElementById('edit-name-' + editingId)?.focus();
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function rateActivity(id, rating) {
+  const day = getDay(todayKey());
+  const act = day.activities.find(a => a.id === id);
+  if (!act) return;
+  act.rating = act.rating === rating ? null : rating;
+  saveState();
+  renderToday();
+}
+
+function removeActivity(id) {
+  const day = getDay(todayKey());
+  day.activities = day.activities.filter(a => a.id !== id);
+  saveState();
+  renderToday();
+}
+
+function setOverride(val) {
+  const day = getDay(todayKey());
+  day.override = val;
+  saveState();
+  renderToday();
+}
+
+function toggleAddForm() {
+  const f = document.getElementById('add-form');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) document.getElementById('new-act-name').focus();
+}
+
+function addActivity() {
+  const name = document.getElementById('new-act-name').value.trim();
+  if (!name) { showToast('Enter an activity name'); return; }
+  const weight = parseFloat(document.getElementById('new-act-weight').value) || 1;
+  const day = getDay(todayKey());
+  day.activities.push({ id: uid(), name, weight, rating: null });
+  document.getElementById('new-act-name').value = '';
+  document.getElementById('new-act-weight').value = '1';
+  document.getElementById('add-form').classList.remove('open');
+  saveState();
+  renderToday();
+}
+
+function startEdit(id) {
+  editingId = id;
+  renderActivities(getDay(todayKey()));
+}
+
+function saveEdit(id) {
+  const name = document.getElementById('edit-name-'+id)?.value.trim();
+  const weight = parseFloat(document.getElementById('edit-weight-'+id)?.value) || 1;
+  if (!name) return;
+  const day = getDay(todayKey());
+  const act = day.activities.find(a => a.id === id);
+  if (act) { act.name = name; act.weight = weight; }
+  editingId = null;
+  saveState();
+  renderToday();
+}
+
+function cancelEdit() {
+  editingId = null;
+  renderActivities(getDay(todayKey()));
+}
+
+function getDayPct(key) {
+  const day = state.days[key];
+  if (!day) return null;
+  if (day.override) return ratingVal(day.override);
+  return calcScore(day);
+}
+
+function renderWeek() {
+  const base = new Date(TODAY);
+  base.setDate(base.getDate() - base.getDay() + (currentWeekOffset * 7));
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(base); d.setDate(base.getDate() + i); days.push(d);
+  }
+
+  const fmt = d => d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+  document.getElementById('week-period').textContent = fmt(days[0]) + ' – ' + fmt(days[6]) + ', ' + days[0].getFullYear();
+
+  let greens=0, yellows=0, bestStreak=0, curStreak=0;
+  const inStreak = days.map(d => {
+    const pct = getDayPct(dateKey(d));
+    if (pct !== null && pct >= 80) { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; return true; }
+    else { if(pct !== null && pct >= 60) yellows++; curStreak=0; return false; }
+  });
+
+  document.getElementById('week-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-val green">${greens}</div><div class="stat-lbl">Green days</div></div>
+    <div class="stat-card"><div class="stat-val yellow">${yellows}</div><div class="stat-lbl">Yellow days</div></div>
+    <div class="stat-card"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
+  `;
+
+  let html = '';
+  days.forEach((d, i) => {
+    const key = dateKey(d);
+    const pct = getDayPct(key);
+    const cls = scoreClass(pct);
+    const isToday = key === todayKey();
+    const inSt = inStreak[i];
+    const prevSt = i > 0 && inStreak[i-1];
+    const nextSt = i < 6 && inStreak[i+1];
+    html += `<div class="day-cell ${cls} ${isToday?'today':''}" onclick="goToDay('${key}')">
+      ${inSt && (prevSt || nextSt) ? '<div class="streak-bar"></div>' : ''}
+      <div class="day-num">${d.getDate()}</div>
+      ${pct !== null ? `<div class="day-pct">${pct}%</div>` : ''}
+    </div>`;
+  });
+  document.getElementById('week-grid').innerHTML = html;
+}
+
+function renderMonth() {
+  const d = new Date(TODAY.getFullYear(), TODAY.getMonth() + currentMonthOffset, 1);
+  document.getElementById('month-period').textContent = d.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+
+  const daysInMonth = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+  const startDay = d.getDay();
+
+  let greens=0, yellows=0, bestStreak=0, curStreak=0;
+  for (let day=1; day<=daysInMonth; day++) {
+    const pct = getDayPct(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
+    if (pct !== null && pct >= 80) { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; }
+    else if (pct !== null && pct >= 60) { yellows++; curStreak=0; }
+    else curStreak=0;
+  }
+
+  document.getElementById('month-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-val green">${greens}</div><div class="stat-lbl">Green days</div></div>
+    <div class="stat-card"><div class="stat-val yellow">${yellows}</div><div class="stat-lbl">Yellow days</div></div>
+    <div class="stat-card"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
+  `;
+
+  let html = '';
+  for (let i=0; i<startDay; i++) html += `<div class="month-cell empty"></div>`;
+  for (let day=1; day<=daysInMonth; day++) {
+    const k = dateKey(new Date(d.getFullYear(), d.getMonth(), day));
+    const pct = getDayPct(k);
+    const cls = scoreClass(pct);
+    const isToday = k === todayKey();
+    html += `<div class="month-cell ${cls} ${isToday?'today':''}" title="${d.toLocaleDateString('en-US',{month:'short'})} ${day}${pct!==null?' — '+pct+'%':''}">${day}</div>`;
+  }
+  document.getElementById('month-grid').innerHTML = html;
+}
+
+function renderYear() {
+  const year = TODAY.getFullYear() + currentYearOffset;
+  document.getElementById('year-period').textContent = String(year);
+
+  const start = new Date(year, 0, 1);
+  const startDow = start.getDay();
+  const weeks = Math.ceil((startDow + 366) / 7);
+
+  let greens=0, yellows=0, bestStreak=0, curStreak=0;
+  let html = '';
+
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('year-months').innerHTML = months.map((m,i) => {
+    const first = new Date(year, i, 1);
+    const dayOfYear = Math.floor((first - start) / 86400000);
+    const col = Math.floor((dayOfYear + startDow) / 7);
+    const pct = Math.round((col / (weeks-1)) * 100);
+    return `<span style="position:absolute;left:${pct}%;transform:translateX(-50%)">${m}</span>`;
+  }).join('');
+  document.getElementById('year-months').style.position = 'relative';
+  document.getElementById('year-months').style.height = '16px';
+
+  for (let w=0; w<weeks; w++) {
+    for (let dow=0; dow<7; dow++) {
+      const dayIndex = w*7 + dow - startDow;
+      const d = new Date(year, 0, 1 + dayIndex);
+      if (dayIndex < 0 || d.getFullYear() !== year) { html += `<div class="year-cell" style="opacity:0;pointer-events:none"></div>`; continue; }
+      const k = dateKey(d);
+      const pct = getDayPct(k);
+      const cls = scoreClass(pct);
+      if (cls === 'green') { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; }
+      else if (cls === 'yellow') { yellows++; curStreak=0; }
+      else if (cls === 'red') { curStreak=0; }
+      html += `<div class="year-cell ${cls==='none'?'':cls}" title="${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}${pct!==null?' — '+pct+'%':''}"></div>`;
+    }
+  }
+
+  document.getElementById('year-grid').innerHTML = html;
+  document.getElementById('year-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-val green">${greens}</div><div class="stat-lbl">Green days</div></div>
+    <div class="stat-card"><div class="stat-val yellow">${yellows}</div><div class="stat-lbl">Yellow days</div></div>
+    <div class="stat-card"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
+  `;
+}
+
+function navWeek(d) { currentWeekOffset += d; renderWeek(); }
+function navMonth(d) { currentMonthOffset += d; renderMonth(); }
+function navYear(d) { currentYearOffset += d; renderYear(); }
+
+function goToDay(key) {
+  if (key === todayKey()) switchView('today');
+  else showToast(key);
+}
+
+function switchView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.tab-btn')[['today','week','month','year'].indexOf(v)].classList.add('active');
+  if (v === 'week') renderWeek();
+  if (v === 'month') renderMonth();
+  if (v === 'year') renderYear();
+}
+
+document.getElementById('new-act-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addActivity();
+});
+
+renderToday();
+</script>
+</body>
+</html>
