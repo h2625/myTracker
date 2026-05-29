@@ -115,6 +115,7 @@
   .view { display: none; }
   .view.active { display: block; }
 
+  /* ── Score bar ── */
   .score-bar {
     display: flex;
     align-items: center;
@@ -148,39 +149,48 @@
   .score-label { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
   .score-status { font-size: 13px; font-weight: 500; }
 
-  .streak-badge {
-    display: flex;
+  /* Override — now a subtle inline link below status */
+  .override-trigger {
+    display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    padding: 5px 10px;
-    border-radius: 20px;
-    background: var(--g-bg);
-    color: var(--g-dk);
-    white-space: nowrap;
+    gap: 4px;
+    margin-top: 5px;
+    font-size: 10px;
+    color: var(--muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--mono);
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
   }
+  .override-trigger:hover { color: var(--text); background: var(--surface); }
+  .override-trigger.has-override { color: var(--warn-text); background: var(--warn-bg); }
 
-  .streak-badge .streak-num { font-weight: 500; font-size: 14px; }
-
-  .override-row {
-    display: flex;
+  .override-panel {
+    display: none;
     align-items: center;
     gap: 6px;
-    margin-top: 8px;
+    margin-top: 6px;
+    padding: 6px 8px;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border);
   }
-
-  .override-label { font-size: 11px; color: var(--muted); }
+  .override-panel.open { display: flex; }
+  .override-panel-label { font-size: 10px; color: var(--muted); white-space: nowrap; }
   .override-btns { display: flex; gap: 4px; }
 
   .dot-btn {
-    width: 22px; height: 22px;
+    width: 20px; height: 20px;
     border-radius: 50%;
     border: 1.5px solid transparent;
     cursor: pointer;
     transition: all 0.15s;
     position: relative;
   }
-
   .dot-btn.g-btn { background: var(--g-bg); border-color: var(--g); }
   .dot-btn.y-btn { background: var(--y-bg); border-color: var(--y); }
   .dot-btn.r-btn { background: var(--r-bg); border-color: var(--r); }
@@ -197,15 +207,76 @@
   .dot-btn.none-btn.active-dot::after { background: var(--muted); }
   .dot-btn:hover { transform: scale(1.15); }
 
-  .auto-badge {
+  .streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--g-bg);
+    color: var(--g-dk);
+    white-space: nowrap;
+  }
+  .streak-badge .streak-num { font-weight: 500; font-size: 14px; }
+
+  /* ── Day navigation in Today tab ── */
+  .day-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .day-nav-btn {
+    background: none;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    width: 30px; height: 30px;
+    cursor: pointer;
+    color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .day-nav-btn:hover { background: var(--surface); }
+  .day-nav-label {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    font-family: var(--serif);
+    font-weight: 300;
+  }
+  .day-nav-today-btn {
     font-size: 10px;
-    padding: 2px 7px;
+    padding: 3px 8px;
     border-radius: 10px;
+    border: 0.5px solid var(--border);
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .day-nav-today-btn:hover { background: var(--surface); color: var(--text); }
+  .day-nav-today-btn.hidden { visibility: hidden; }
+
+  /* future day banner */
+  .future-banner {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
     background: var(--info-bg);
     color: var(--info-text);
-    margin-left: 4px;
+    border-radius: var(--radius-md);
+    font-size: 11px;
+    margin-bottom: 0.75rem;
   }
+  .future-banner.show { display: flex; }
 
+  /* ── Section header ── */
   .section-header {
     display: flex;
     align-items: center;
@@ -234,7 +305,6 @@
     cursor: pointer;
     transition: all 0.15s;
   }
-
   .add-btn:hover { background: var(--surface); }
 
   .activity-list { display: flex; flex-direction: column; gap: 6px; }
@@ -249,7 +319,6 @@
     border-radius: var(--radius-md);
     transition: border-color 0.2s;
   }
-
   .activity-row:hover { border-color: var(--border-md); }
   .activity-row.has-green { border-left: 3px solid var(--g); }
   .activity-row.has-yellow { border-left: 3px solid var(--y); }
@@ -266,8 +335,8 @@
     white-space: nowrap;
   }
 
+  /* GYR rating buttons */
   .rating-btns { display: flex; gap: 3px; }
-
   .rate-btn {
     width: 30px; height: 30px;
     border-radius: 7px;
@@ -279,7 +348,6 @@
     transition: all 0.15s;
     display: flex; align-items: center; justify-content: center;
   }
-
   .rate-btn.g { background: var(--g-bg); color: var(--g-dk); }
   .rate-btn.y { background: var(--y-bg); color: var(--y-dk); }
   .rate-btn.r { background: var(--r-bg); color: var(--r-dk); }
@@ -288,18 +356,28 @@
   .rate-btn.r.sel { border-color: var(--r); box-shadow: 0 0 0 2px var(--r-bg); }
   .rate-btn:hover { transform: scale(1.08); }
 
-  .act-actions { display: flex; gap: 3px; }
+  /* Edit/delete actions — visually separated from GYR */
+  .act-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 2px;
+    flex-shrink: 0;
+  }
 
+  .act-actions { display: flex; gap: 2px; }
   .icon-btn {
     background: none; border: none; cursor: pointer;
     color: var(--muted); padding: 5px; border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
+    opacity: 0.5;
   }
-
+  .activity-row:hover .icon-btn { opacity: 1; }
   .icon-btn:hover { color: var(--text); background: var(--surface); }
   .icon-btn.danger:hover { color: var(--r-dk); background: var(--r-bg); }
 
+  /* Add form */
   .add-form {
     display: none;
     padding: 14px;
@@ -310,7 +388,6 @@
     margin-top: 6px;
     flex-direction: column;
   }
-
   .add-form.open { display: flex; }
 
   .form-row { display: flex; gap: 8px; align-items: center; }
@@ -327,12 +404,10 @@
     outline: none;
     transition: border-color 0.15s;
   }
-
   input[type="text"]:focus, input[type="number"]:focus {
     border-color: var(--border-md);
     box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
   }
-
   input[type="text"] { width: 100%; }
   input[type="number"] { width: 80px; }
 
@@ -349,7 +424,6 @@
     cursor: pointer;
     transition: opacity 0.15s;
   }
-
   .btn-primary:hover { opacity: 0.8; }
 
   .btn-cancel {
@@ -363,7 +437,6 @@
     cursor: pointer;
     transition: all 0.15s;
   }
-
   .btn-cancel:hover { color: var(--text); border-color: var(--border-md); }
 
   .edit-inline {
@@ -375,18 +448,17 @@
     border-radius: var(--radius-md);
     margin-top: 4px;
   }
-
   .edit-inline.open { display: flex; }
   .edit-inline input[type="text"] { flex: 1; }
   .edit-inline input[type="number"] { width: 70px; }
 
+  /* ── Calendar nav (week/month/year) ── */
   .cal-nav {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 1rem;
   }
-
   .cal-period {
     flex: 1;
     text-align: center;
@@ -394,7 +466,6 @@
     font-size: 18px;
     font-weight: 300;
   }
-
   .nav-btn {
     background: none;
     border: 0.5px solid var(--border);
@@ -406,42 +477,56 @@
     font-size: 16px;
     transition: all 0.15s;
   }
-
   .nav-btn:hover { background: var(--surface); }
 
+  /* ── Stats row ── */
   .stats-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin-bottom: 1rem;
   }
-
   .stat-card {
     background: var(--surface);
     border-radius: var(--radius-md);
     padding: 0.75rem 1rem;
     text-align: center;
   }
-
   .stat-val {
     font-family: var(--serif);
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 300;
     margin-bottom: 2px;
   }
-
   .stat-val.green { color: var(--g-dk); }
   .stat-val.yellow { color: var(--y-dk); }
-
+  .stat-val.red { color: var(--r-dk); }
   .stat-lbl { font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
 
+  /* ── Pct bar for week/month/year stats ── */
+  .pct-bar-wrap {
+    margin-top: 4px;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .pct-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .pct-bar-fill.green { background: var(--g); }
+  .pct-bar-fill.yellow { background: var(--y); }
+  .pct-bar-fill.red { background: var(--r); }
+
+  /* ── Week/Month grids ── */
   .day-header-row {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 6px;
     margin-bottom: 4px;
   }
-
   .day-header {
     text-align: center;
     font-size: 10px;
@@ -472,10 +557,8 @@
     position: relative;
     overflow: hidden;
   }
-
   .day-cell .day-num { font-size: 12px; position: relative; z-index: 1; }
   .day-cell .day-pct { font-size: 9px; color: var(--muted); position: relative; z-index: 1; }
-
   .day-cell.green { background: var(--g-bg); border-color: transparent; color: var(--g-dk); }
   .day-cell.green .day-pct { color: var(--g-dk); opacity: 0.7; }
   .day-cell.yellow { background: var(--y-bg); border-color: transparent; color: var(--y-dk); }
@@ -498,7 +581,6 @@
     grid-template-columns: repeat(7, 1fr);
     gap: 4px;
   }
-
   .month-cell {
     aspect-ratio: 1;
     border-radius: 6px;
@@ -511,7 +593,6 @@
     background: var(--surface);
     color: var(--muted);
   }
-
   .month-cell.green { background: var(--g-bg); color: var(--g-dk); }
   .month-cell.yellow { background: var(--y-bg); color: var(--y-dk); }
   .month-cell.red { background: var(--r-bg); color: var(--r-dk); }
@@ -519,6 +600,7 @@
   .month-cell.empty { opacity: 0; pointer-events: none; }
   .month-cell:not(.empty):hover { transform: scale(1.08); }
 
+  /* ── Year grid ── */
   .year-months {
     display: flex;
     justify-content: space-between;
@@ -527,14 +609,12 @@
     color: var(--muted);
     letter-spacing: 0.04em;
   }
-
   .year-grid {
     display: grid;
     grid-template-columns: repeat(53, 1fr);
     gap: 2px;
     overflow: hidden;
   }
-
   .year-cell {
     aspect-ratio: 1;
     border-radius: 2px;
@@ -542,12 +622,12 @@
     cursor: pointer;
     transition: all 0.1s;
   }
-
   .year-cell.green { background: var(--g); opacity: 0.75; }
   .year-cell.yellow { background: var(--y); opacity: 0.75; }
   .year-cell.red { background: var(--r); opacity: 0.55; }
   .year-cell:hover { opacity: 1 !important; transform: scale(1.4); }
 
+  /* ── Legend ── */
   .legend {
     display: flex;
     gap: 14px;
@@ -556,7 +636,6 @@
     color: var(--muted);
     flex-wrap: wrap;
   }
-
   .legend-item { display: flex; align-items: center; gap: 5px; }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
@@ -586,8 +665,20 @@
     z-index: 999;
     white-space: nowrap;
   }
-
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .reset-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 4px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    opacity: 0.5;
+  }
+  .reset-btn:hover { opacity: 1; color: var(--text); background: var(--surface); }
 
   @media (max-width: 480px) {
     .rate-btn { width: 26px; height: 26px; font-size: 10px; }
@@ -600,7 +691,24 @@
 <div id="app">
   <div class="header">
     <div class="header-title">Daily Tracker</div>
-    <div class="header-date" id="header-date"></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="header-date" id="header-date"></div>
+      <button class="reset-btn" onclick="confirmReset()" title="Settings / Reset data">
+        <i class="ti ti-settings" style="font-size:13px"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Reset confirm dialog -->
+  <div id="reset-dialog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:var(--card);border:0.5px solid var(--border-md);border-radius:var(--radius-lg);padding:1.5rem;max-width:320px;width:90%;font-family:var(--mono);">
+      <div style="font-family:var(--serif);font-size:18px;font-weight:300;margin-bottom:0.5rem;">Reset all data?</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">This will clear all tracked days and activities, and reset weights to x1. This cannot be undone.</div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn-cancel" onclick="closeReset()">cancel</button>
+        <button class="btn-primary" style="background:var(--r-dk);" onclick="doReset()">reset everything</button>
+      </div>
+    </div>
   </div>
 
   <div class="nav-tabs">
@@ -612,13 +720,34 @@
 
   <!-- TODAY -->
   <div id="view-today" class="view active">
+
+    <!-- Day navigation -->
+    <div class="day-nav">
+      <button class="day-nav-btn" onclick="navDay(-1)" title="Previous day"><i class="ti ti-chevron-left"></i></button>
+      <div class="day-nav-label" id="day-nav-label"></div>
+      <button class="day-nav-btn" onclick="navDay(1)" title="Next day"><i class="ti ti-chevron-right"></i></button>
+      <button class="day-nav-today-btn hidden" id="go-today-btn" onclick="goToToday()">jump to today</button>
+    </div>
+
+    <!-- Future day note -->
+    <div class="future-banner" id="future-banner">
+      <i class="ti ti-calendar-plus" style="font-size:14px;flex-shrink:0"></i>
+      <span>Planned day — activities here will carry forward unless changed</span>
+    </div>
+
+    <!-- Score bar -->
     <div class="score-bar">
       <div class="score-ring none" id="score-ring">—</div>
       <div class="score-info">
-        <div class="score-label">Overall score <span class="auto-badge" id="auto-badge">auto</span></div>
+        <div class="score-label" id="score-label">Overall score</div>
         <div class="score-status" id="score-status">Rate your activities below</div>
-        <div class="override-row">
-          <span class="override-label">Override:</span>
+        <!-- Override: subtle button, expands inline panel -->
+        <button class="override-trigger" id="override-trigger" onclick="toggleOverridePanel()">
+          <i class="ti ti-adjustments-horizontal" style="font-size:10px"></i>
+          <span id="override-trigger-text">override</span>
+        </button>
+        <div class="override-panel" id="override-panel">
+          <span class="override-panel-label">Force:</span>
           <div class="override-btns">
             <button class="dot-btn g-btn" title="Force Green" onclick="setOverride('green')"></button>
             <button class="dot-btn y-btn" title="Force Yellow" onclick="setOverride('yellow')"></button>
@@ -731,14 +860,22 @@ function dateKey(d) {
 
 function todayKey() { return dateKey(TODAY); }
 
-const STORAGE_KEY = 'dpt_v2';
+const STORAGE_KEY = 'dpt_v3';
 
 let state = loadState();
 
 function loadState() {
   try {
-    const s = localStorage.getItem(STORAGE_KEY);
-    if (s) return JSON.parse(s);
+    // Try v3 first
+    const s3 = localStorage.getItem(STORAGE_KEY);
+    if (s3) return JSON.parse(s3);
+    // Migrate from v2
+    const s2 = localStorage.getItem('dpt_v2');
+    if (s2) {
+      const old = JSON.parse(s2);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(old));
+      return old;
+    }
   } catch(e) {}
   return getDefaultState();
 }
@@ -747,10 +884,10 @@ function getDefaultState() {
   return {
     days: {},
     defaultActivities: [
-      { id: uid(), name: 'Deep work', weight: 2 },
-      { id: uid(), name: 'Exercise', weight: 1.5 },
+      { id: uid(), name: 'Deep work', weight: 1 },
+      { id: uid(), name: 'Exercise', weight: 1 },
       { id: uid(), name: 'Healthy eating', weight: 1 },
-      { id: uid(), name: 'Sleep quality', weight: 1.5 },
+      { id: uid(), name: 'Sleep quality', weight: 1 },
       { id: uid(), name: 'No distractions', weight: 1 }
     ]
   };
@@ -762,14 +899,55 @@ function saveState() {
 
 function uid() { return Math.random().toString(36).slice(2,9); }
 
+// ── Day offset for Today tab navigation ──
+let currentDayOffset = 0;
+
+function viewedKey() {
+  const d = new Date(TODAY);
+  d.setDate(d.getDate() + currentDayOffset);
+  return dateKey(d);
+}
+
+function viewedDate() {
+  const d = new Date(TODAY);
+  d.setDate(d.getDate() + currentDayOffset);
+  return d;
+}
+
+// getDay: for past/today, create from closest prior day or defaults.
+// For future days, ALWAYS mirror today's activities unless user has explicitly edited that day.
+// A day is "user-edited" if its `userEdited` flag is true (set when user adds/removes/edits activities).
 function getDay(key) {
+  const isFutureKey = key > todayKey();
+
+  if (isFutureKey) {
+    // If the day exists and was explicitly edited by the user, return it as-is
+    if (state.days[key] && state.days[key].userEdited) {
+      return state.days[key];
+    }
+    // Otherwise always regenerate from today's activities (fresh mirror of today)
+    const todayDay = state.days[todayKey()];
+    const baseActivities = todayDay
+      ? todayDay.activities.map(a => ({ ...a, id: uid(), rating: null }))
+      : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
+    // Preserve override if previously set, but regenerate activities
+    const existingOverride = state.days[key] ? state.days[key].override : null;
+    state.days[key] = { activities: baseActivities, override: existingOverride, userEdited: false };
+    return state.days[key];
+  }
+
+  // Past / today: create from closest prior day or defaults if not yet stored
   if (!state.days[key]) {
-    const yesterday = new Date(key);
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yKey = dateKey(yesterday);
-    const prev = state.days[yKey];
-    const baseActivities = prev
-      ? prev.activities.map(a => ({ ...a, id: uid(), rating: null }))
+    const target = new Date(key);
+    let basePrev = null;
+    for (let i = 1; i <= 365; i++) {
+      const pd = new Date(target);
+      pd.setDate(pd.getDate() - i);
+      const pk = dateKey(pd);
+      if (state.days[pk]) { basePrev = state.days[pk]; break; }
+    }
+    const baseActivities = basePrev
+      ? basePrev.activities.map(a => ({ ...a, id: uid(), rating: null }))
       : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
     state.days[key] = { activities: baseActivities, override: null };
   }
@@ -818,47 +996,119 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
+let editingId = null;
+
+function confirmReset() {
+  document.getElementById('reset-dialog').style.display = 'flex';
+}
+function closeReset() {
+  document.getElementById('reset-dialog').style.display = 'none';
+}
+function doReset() {
+  localStorage.removeItem('dpt_v3');
+  localStorage.removeItem('dpt_v2');
+  state = getDefaultState();
+  currentDayOffset = 0;
+  editingId = null;
+  closeReset();
+  renderToday();
+  showToast('Data reset — fresh start!');
+}
 let currentWeekOffset = 0;
 let currentMonthOffset = 0;
 let currentYearOffset = 0;
-let editingId = null;
+
+// ── Today tab ──
+
+function navDay(delta) {
+  currentDayOffset += delta;
+  editingId = null;
+  renderToday();
+}
+
+function goToToday() {
+  currentDayOffset = 0;
+  editingId = null;
+  renderToday();
+}
 
 function renderToday() {
-  const key = todayKey();
+  const key = viewedKey();
   const day = getDay(key);
+  const vDate = viewedDate();
+  const isToday = currentDayOffset === 0;
+  const isFuture = currentDayOffset > 0;
 
+  // Day nav label
+  const navLabel = document.getElementById('day-nav-label');
+  if (isToday) {
+    navLabel.textContent = 'Today — ' + TODAY.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  } else if (currentDayOffset === -1) {
+    navLabel.textContent = 'Yesterday — ' + vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  } else if (currentDayOffset === 1) {
+    navLabel.textContent = 'Tomorrow — ' + vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  } else {
+    navLabel.textContent = vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+  }
+
+  // Show/hide jump to today
+  const goBtn = document.getElementById('go-today-btn');
+  if (isToday) goBtn.classList.add('hidden');
+  else goBtn.classList.remove('hidden');
+
+  // Future banner
+  document.getElementById('future-banner').classList.toggle('show', isFuture);
+
+  // Score
   const pct = day.override ? ratingVal(day.override) : calcScore(day);
   const cls = scoreClass(pct);
   const ring = document.getElementById('score-ring');
   ring.textContent = pct !== null ? pct + '%' : '—';
   ring.className = 'score-ring ' + cls;
 
-  const badge = document.getElementById('auto-badge');
-  badge.textContent = day.override ? 'override' : 'auto';
-  badge.style.background = day.override ? 'var(--warn-bg)' : '';
-  badge.style.color = day.override ? 'var(--warn-text)' : '';
+  const scoreLabel = document.getElementById('score-label');
+  scoreLabel.textContent = isToday ? 'Overall score' : (isFuture ? 'Planned score' : 'Day score');
 
   const status = document.getElementById('score-status');
-  if (pct === null) status.textContent = 'Rate your activities below';
+  if (pct === null) status.textContent = isFuture ? 'Plan your activities below' : 'Rate your activities below';
   else if (cls === 'green') status.textContent = 'Green day — great work!';
   else if (cls === 'yellow') status.textContent = 'Yellow day — room to grow';
   else status.textContent = 'Red day — keep pushing';
 
+  // Override trigger
+  const trigger = document.getElementById('override-trigger');
+  const triggerText = document.getElementById('override-trigger-text');
+  if (day.override) {
+    trigger.classList.add('has-override');
+    triggerText.textContent = 'override: ' + day.override;
+  } else {
+    trigger.classList.remove('has-override');
+    triggerText.textContent = 'override';
+  }
+
+  // Override dot buttons
   document.querySelectorAll('.dot-btn').forEach(b => b.classList.remove('active-dot'));
   if (day.override) {
     const map = { green: 'g-btn', yellow: 'y-btn', red: 'r-btn' };
     document.querySelector('.dot-btn.' + map[day.override])?.classList.add('active-dot');
   }
 
+  // Streak (only meaningful for today)
   const streak = calcStreak();
   document.getElementById('streak-num').textContent = streak;
-  document.getElementById('streak-badge').style.display = streak > 0 ? 'flex' : 'none';
+  document.getElementById('streak-badge').style.display = (streak > 0 && isToday) ? 'flex' : 'none';
 
   document.getElementById('header-date').textContent = TODAY.toLocaleDateString('en-US', {
     weekday:'short', month:'short', day:'numeric', year:'numeric'
   });
 
   renderActivities(day);
+}
+
+let overridePanelOpen = false;
+function toggleOverridePanel() {
+  overridePanelOpen = !overridePanelOpen;
+  document.getElementById('override-panel').classList.toggle('open', overridePanelOpen);
 }
 
 function renderActivities(day) {
@@ -876,6 +1126,7 @@ function renderActivities(day) {
         <button class="rate-btn y ${a.rating==='yellow'?'sel':''}" onclick="rateActivity('${a.id}','yellow')" title="Yellow">Y</button>
         <button class="rate-btn r ${a.rating==='red'?'sel':''}" onclick="rateActivity('${a.id}','red')" title="Red">R</button>
       </div>
+      <div class="act-divider"></div>
       <div class="act-actions">
         <button class="icon-btn" onclick="startEdit('${a.id}')" title="Edit"><i class="ti ti-pencil" style="font-size:15px"></i></button>
         <button class="icon-btn danger" onclick="removeActivity('${a.id}')" title="Remove"><i class="ti ti-trash" style="font-size:15px"></i></button>
@@ -900,7 +1151,7 @@ function escHtml(s) {
 }
 
 function rateActivity(id, rating) {
-  const day = getDay(todayKey());
+  const day = getDay(viewedKey());
   const act = day.activities.find(a => a.id === id);
   if (!act) return;
   act.rating = act.rating === rating ? null : rating;
@@ -908,16 +1159,25 @@ function rateActivity(id, rating) {
   renderToday();
 }
 
+function markUserEdited(key) {
+  // Mark a future day as explicitly edited so it won't be overwritten by today's template
+  if (key > todayKey() && state.days[key]) state.days[key].userEdited = true;
+}
+
 function removeActivity(id) {
-  const day = getDay(todayKey());
+  const key = viewedKey();
+  const day = getDay(key);
   day.activities = day.activities.filter(a => a.id !== id);
+  markUserEdited(key);
   saveState();
   renderToday();
 }
 
 function setOverride(val) {
-  const day = getDay(todayKey());
+  const key = viewedKey();
+  const day = getDay(key);
   day.override = val;
+  // Don't mark userEdited for override — it's a score override, not an activity list change
   saveState();
   renderToday();
 }
@@ -932,8 +1192,10 @@ function addActivity() {
   const name = document.getElementById('new-act-name').value.trim();
   if (!name) { showToast('Enter an activity name'); return; }
   const weight = parseFloat(document.getElementById('new-act-weight').value) || 1;
-  const day = getDay(todayKey());
+  const key = viewedKey();
+  const day = getDay(key);
   day.activities.push({ id: uid(), name, weight, rating: null });
+  markUserEdited(key);
   document.getElementById('new-act-name').value = '';
   document.getElementById('new-act-weight').value = '1';
   document.getElementById('add-form').classList.remove('open');
@@ -943,25 +1205,47 @@ function addActivity() {
 
 function startEdit(id) {
   editingId = id;
-  renderActivities(getDay(todayKey()));
+  renderActivities(getDay(viewedKey()));
 }
 
 function saveEdit(id) {
   const name = document.getElementById('edit-name-'+id)?.value.trim();
   const weight = parseFloat(document.getElementById('edit-weight-'+id)?.value) || 1;
   if (!name) return;
-  const day = getDay(todayKey());
+  const key = viewedKey();
+  const day = getDay(key);
   const act = day.activities.find(a => a.id === id);
-  if (act) { act.name = name; act.weight = weight; }
+  if (act) {
+    const oldName = act.name;
+    act.name = name;
+    act.weight = weight;
+    // Propagate to user-edited future days that have a matching activity name
+    propagateEdit(key, oldName, name, weight);
+  }
+  markUserEdited(key);
   editingId = null;
   saveState();
   renderToday();
 }
 
+// Propagate name/weight changes to explicitly-edited future days.
+// Non-edited future days will automatically mirror today via getDay(), so no need to touch them.
+function propagateEdit(fromKey, oldName, newName, newWeight) {
+  Object.keys(state.days).forEach(k => {
+    if (k <= fromKey) return;
+    if (!state.days[k].userEdited) return; // only propagate to days user has customised
+    state.days[k].activities.forEach(a => {
+      if (a.name === oldName) { a.name = newName; a.weight = newWeight; }
+    });
+  });
+}
+
 function cancelEdit() {
   editingId = null;
-  renderActivities(getDay(todayKey()));
+  renderActivities(getDay(viewedKey()));
 }
+
+// ── Period stats helpers ──
 
 function getDayPct(key) {
   const day = state.days[key];
@@ -969,6 +1253,51 @@ function getDayPct(key) {
   if (day.override) return ratingVal(day.override);
   return calcScore(day);
 }
+
+function buildPeriodStats(keys) {
+  let greens = 0, yellows = 0, reds = 0, total = 0;
+  let bestStreak = 0, curStreak = 0;
+  keys.forEach(k => {
+    const pct = getDayPct(k);
+    if (pct !== null) {
+      total++;
+      if (pct >= 80) { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; }
+      else if (pct >= 60) { yellows++; curStreak = 0; }
+      else { reds++; curStreak = 0; }
+    } else { curStreak = 0; }
+  });
+  return { greens, yellows, reds, total, bestStreak };
+}
+
+function pctLabel(count, total) {
+  if (total === 0) return '—';
+  return Math.round(count / total * 100) + '%';
+}
+
+function renderStatCards(containerId, stats) {
+  const { greens, yellows, reds, total, bestStreak } = stats;
+  const gPct = total ? Math.round(greens/total*100) : 0;
+  const yPct = total ? Math.round(yellows/total*100) : 0;
+  const rPct = total ? Math.round(reds/total*100) : 0;
+  document.getElementById(containerId).innerHTML = `
+    <div class="stat-card">
+      <div class="stat-val green">${pctLabel(greens, total)}</div>
+      <div class="stat-lbl">Green days</div>
+      <div class="pct-bar-wrap"><div class="pct-bar-fill green" style="width:${gPct}%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val yellow">${pctLabel(yellows, total)}</div>
+      <div class="stat-lbl">Yellow days</div>
+      <div class="pct-bar-wrap"><div class="pct-bar-fill yellow" style="width:${yPct}%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">${bestStreak}</div>
+      <div class="stat-lbl">Best streak</div>
+    </div>
+  `;
+}
+
+// ── Week ──
 
 function renderWeek() {
   const base = new Date(TODAY);
@@ -981,18 +1310,14 @@ function renderWeek() {
   const fmt = d => d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
   document.getElementById('week-period').textContent = fmt(days[0]) + ' – ' + fmt(days[6]) + ', ' + days[0].getFullYear();
 
-  let greens=0, yellows=0, bestStreak=0, curStreak=0;
+  const keys = days.map(d => dateKey(d));
+  const stats = buildPeriodStats(keys);
+  renderStatCards('week-stats', stats);
+
   const inStreak = days.map(d => {
     const pct = getDayPct(dateKey(d));
-    if (pct !== null && pct >= 80) { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; return true; }
-    else { if(pct !== null && pct >= 60) yellows++; curStreak=0; return false; }
+    return pct !== null && pct >= 80;
   });
-
-  document.getElementById('week-stats').innerHTML = `
-    <div class="stat-card"><div class="stat-val green">${greens}</div><div class="stat-lbl">Green days</div></div>
-    <div class="stat-card"><div class="stat-val yellow">${yellows}</div><div class="stat-lbl">Yellow days</div></div>
-    <div class="stat-card"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
-  `;
 
   let html = '';
   days.forEach((d, i) => {
@@ -1012,6 +1337,8 @@ function renderWeek() {
   document.getElementById('week-grid').innerHTML = html;
 }
 
+// ── Month ──
+
 function renderMonth() {
   const d = new Date(TODAY.getFullYear(), TODAY.getMonth() + currentMonthOffset, 1);
   document.getElementById('month-period').textContent = d.toLocaleDateString('en-US', { month:'long', year:'numeric' });
@@ -1019,19 +1346,11 @@ function renderMonth() {
   const daysInMonth = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
   const startDay = d.getDay();
 
-  let greens=0, yellows=0, bestStreak=0, curStreak=0;
+  const keys = [];
   for (let day=1; day<=daysInMonth; day++) {
-    const pct = getDayPct(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
-    if (pct !== null && pct >= 80) { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; }
-    else if (pct !== null && pct >= 60) { yellows++; curStreak=0; }
-    else curStreak=0;
+    keys.push(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
   }
-
-  document.getElementById('month-stats').innerHTML = `
-    <div class="stat-card"><div class="stat-val green">${greens}</div><div class="stat-lbl">Green days</div></div>
-    <div class="stat-card"><div class="stat-val yellow">${yellows}</div><div class="stat-lbl">Yellow days</div></div>
-    <div class="stat-card"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
-  `;
+  renderStatCards('month-stats', buildPeriodStats(keys));
 
   let html = '';
   for (let i=0; i<startDay; i++) html += `<div class="month-cell empty"></div>`;
@@ -1040,10 +1359,12 @@ function renderMonth() {
     const pct = getDayPct(k);
     const cls = scoreClass(pct);
     const isToday = k === todayKey();
-    html += `<div class="month-cell ${cls} ${isToday?'today':''}" title="${d.toLocaleDateString('en-US',{month:'short'})} ${day}${pct!==null?' — '+pct+'%':''}">${day}</div>`;
+    html += `<div class="month-cell ${cls} ${isToday?'today':''}" title="${d.toLocaleDateString('en-US',{month:'short'})} ${day}${pct!==null?' — '+pct+'%':''}" onclick="goToDay('${k}')">${day}</div>`;
   }
   document.getElementById('month-grid').innerHTML = html;
 }
+
+// ── Year ──
 
 function renderYear() {
   const year = TODAY.getFullYear() + currentYearOffset;
@@ -1053,8 +1374,12 @@ function renderYear() {
   const startDow = start.getDay();
   const weeks = Math.ceil((startDow + 366) / 7);
 
-  let greens=0, yellows=0, bestStreak=0, curStreak=0;
-  let html = '';
+  const keys = [];
+  for (let m=0; m<12; m++) {
+    const dim = new Date(year, m+1, 0).getDate();
+    for (let day=1; day<=dim; day++) keys.push(dateKey(new Date(year, m, day)));
+  }
+  renderStatCards('year-stats', buildPeriodStats(keys));
 
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   document.getElementById('year-months').innerHTML = months.map((m,i) => {
@@ -1067,6 +1392,7 @@ function renderYear() {
   document.getElementById('year-months').style.position = 'relative';
   document.getElementById('year-months').style.height = '16px';
 
+  let html = '';
   for (let w=0; w<weeks; w++) {
     for (let dow=0; dow<7; dow++) {
       const dayIndex = w*7 + dow - startDow;
@@ -1075,19 +1401,10 @@ function renderYear() {
       const k = dateKey(d);
       const pct = getDayPct(k);
       const cls = scoreClass(pct);
-      if (cls === 'green') { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; }
-      else if (cls === 'yellow') { yellows++; curStreak=0; }
-      else if (cls === 'red') { curStreak=0; }
-      html += `<div class="year-cell ${cls==='none'?'':cls}" title="${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}${pct!==null?' — '+pct+'%':''}"></div>`;
+      html += `<div class="year-cell ${cls==='none'?'':cls}" title="${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}${pct!==null?' — '+pct+'%':''}" onclick="goToDay('${k}')"></div>`;
     }
   }
-
   document.getElementById('year-grid').innerHTML = html;
-  document.getElementById('year-stats').innerHTML = `
-    <div class="stat-card"><div class="stat-val green">${greens}</div><div class="stat-lbl">Green days</div></div>
-    <div class="stat-card"><div class="stat-val yellow">${yellows}</div><div class="stat-lbl">Yellow days</div></div>
-    <div class="stat-card"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
-  `;
 }
 
 function navWeek(d) { currentWeekOffset += d; renderWeek(); }
@@ -1095,8 +1412,11 @@ function navMonth(d) { currentMonthOffset += d; renderMonth(); }
 function navYear(d) { currentYearOffset += d; renderYear(); }
 
 function goToDay(key) {
-  if (key === todayKey()) switchView('today');
-  else showToast(key);
+  const target = new Date(key + 'T00:00:00');
+  const diff = Math.round((target - TODAY) / 86400000);
+  currentDayOffset = diff;
+  editingId = null;
+  switchView('today');
 }
 
 function switchView(v) {
@@ -1104,9 +1424,11 @@ function switchView(v) {
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
   document.querySelectorAll('.tab-btn')[['today','week','month','year'].indexOf(v)].classList.add('active');
-  if (v === 'week') renderWeek();
-  if (v === 'month') renderMonth();
-  if (v === 'year') renderYear();
+  // Reset offsets when switching to calendar tabs
+  if (v === 'week') { currentWeekOffset = 0; renderWeek(); }
+  if (v === 'month') { currentMonthOffset = 0; renderMonth(); }
+  if (v === 'year') { currentYearOffset = 0; renderYear(); }
+  if (v === 'today') renderToday();
 }
 
 document.getElementById('new-act-name').addEventListener('keydown', e => {
