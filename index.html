@@ -7,470 +7,308 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    /* Vivid, maximally distinct solid status colors */
-    --g: #00c853;        /* vivid green */
-    --g-bg: #e6f9ee;
-    --g-dk: #007a32;
+    --g: #16a34a;
+    --g-bg: #dcfce7;
+    --g-dk: #14532d;
     --g-text: #fff;
-
-    --y: #ff9800;        /* vivid amber/orange — clearly distinct from both green and red */
-    --y-bg: #fff3e0;
-    --y-dk: #b35a00;
+    --y: #d97706;
+    --y-bg: #fef3c7;
+    --y-dk: #78350f;
     --y-text: #fff;
-
-    --r: #e53935;        /* vivid crimson red */
-    --r-bg: #fce8e8;
-    --r-dk: #8b0000;
+    --r: #dc2626;
+    --r-bg: #fee2e2;
+    --r-dk: #7f1d1d;
     --r-text: #fff;
-
-    --bg: #f5f4f0;
+    --bg: #fafaf9;
     --card: #ffffff;
-    --border: rgba(0,0,0,0.08);
-    --border-md: rgba(0,0,0,0.16);
-    --text: #111110;
-    --muted: #777772;
-    --surface: #eceae3;
-    --info-bg: #e8f0fe;
-    --info-text: #1a56b0;
-    --warn-bg: #fff3e0;
-    --warn-text: #b35a00;
-    --radius-md: 10px;
-    --radius-lg: 16px;
-    --mono: 'Space Mono', monospace;
-    --display: 'Syne', sans-serif;
+    --border: rgba(0,0,0,0.07);
+    --border-md: rgba(0,0,0,0.14);
+    --text: #0c0a09;
+    --muted: #78716c;
+    --surface: #f5f5f4;
+    --info-bg: #eff6ff;
+    --info-text: #1d4ed8;
+    --warn-bg: #fffbeb;
+    --warn-text: #92400e;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #111110;
-      --card: #1c1c1a;
-      --border: rgba(255,255,255,0.08);
-      --border-md: rgba(255,255,255,0.18);
-      --text: #f0efe8;
-      --muted: #888880;
-      --surface: #222220;
-      --g-bg: #00391a; --g-dk: #5fffaa;
-      --y-bg: #3a2000; --y-dk: #ffcc80;
-      --r-bg: #3a0a0a; --r-dk: #ff8080;
-      --info-bg: #0a1f44; --info-text: #82b0f0;
-      --warn-bg: #3a2000; --warn-text: #ffb74d;
+      --bg: #0c0a09;
+      --card: #1c1917;
+      --border: rgba(255,255,255,0.07);
+      --border-md: rgba(255,255,255,0.15);
+      --text: #fafaf9;
+      --muted: #a8a29e;
+      --surface: #292524;
+      --g-bg: #052e16; --g-dk: #86efac;
+      --y-bg: #1c0a00; --y-dk: #fcd34d;
+      --r-bg: #1f0505; --r-dk: #fca5a5;
+      --info-bg: #0c1a3a; --info-text: #93c5fd;
+      --warn-bg: #1c0a00; --warn-text: #fbbf24;
     }
   }
 
   html, body {
     background: var(--bg);
     color: var(--text);
-    font-family: var(--mono);
+    font-family: var(--sans);
     font-size: 14px;
     min-height: 100vh;
   }
 
-  #app {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 16px 60px;
-  }
+  #app { max-width: 640px; margin: 0 auto; padding: 0 16px 80px; }
 
   /* ── Header ── */
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.75rem 0 1.25rem;
+    padding: 1.5rem 0 1rem;
     border-bottom: 1px solid var(--border);
     margin-bottom: 1.25rem;
   }
-
   .header-title {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing: -0.5px;
+    font-family: var(--sans);
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.8px;
     text-transform: uppercase;
   }
-
-  .header-date { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .header-date { font-size: 11px; color: var(--muted); font-family: var(--mono); }
 
   /* ── Nav tabs ── */
   .nav-tabs {
-    display: flex;
-    gap: 3px;
+    display: flex; gap: 2px;
     margin-bottom: 1.25rem;
     background: var(--surface);
     border-radius: var(--radius-md);
     padding: 3px;
   }
-
   .tab-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 8px 0;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--muted);
-    cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.15s;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    flex: 1; background: none; border: none;
+    padding: 7px 0;
+    font-family: var(--sans); font-size: 12px; font-weight: 700;
+    color: var(--muted); cursor: pointer;
+    border-radius: 6px; transition: all 0.15s;
+    letter-spacing: 0.02em; text-transform: uppercase;
   }
-
-  .tab-btn.active {
-    background: var(--card);
-    color: var(--text);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-
+  .tab-btn.active { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .tab-btn:hover:not(.active) { color: var(--text); }
 
   .view { display: none; }
   .view.active { display: block; }
 
+  /* ── Motivational banner ── */
+  .motto-bar {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1rem;
+    padding: 14px 18px;
+    background: var(--text); color: var(--bg);
+    border-radius: var(--radius-md);
+    position: relative; overflow: hidden;
+    transition: background 0.4s;
+  }
+  .motto-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(-55deg, transparent, transparent 6px, rgba(255,255,255,0.03) 6px, rgba(255,255,255,0.03) 12px);
+  }
+  .motto-icon { font-size: 20px; flex-shrink: 0; position: relative; z-index: 1; }
+  .motto-text {
+    font-family: var(--sans); font-weight: 700; font-size: 13px;
+    letter-spacing: -0.1px; line-height: 1.4;
+    position: relative; z-index: 1;
+  }
+  .motto-sub { font-size: 10px; font-family: var(--mono); opacity: 0.55; margin-top: 1px; display: block; }
+
   /* ── Score bar ── */
   .score-bar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 1.1rem 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex; align-items: center; gap: 14px;
+    padding: 1rem 1.25rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
-
   .score-ring {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--display);
-    font-size: 18px;
-    font-weight: 700;
-    flex-shrink: 0;
-    transition: all 0.3s;
-    border: none;
+    width: 68px; height: 68px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); font-size: 16px; font-weight: 900;
+    flex-shrink: 0; transition: all 0.3s; letter-spacing: -0.5px;
   }
-
-  .score-ring.green {
-    background: var(--g);
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(0,200,83,0.4);
-  }
-  .score-ring.yellow {
-    background: var(--y);
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(255,152,0,0.45);
-  }
-  .score-ring.red {
-    background: var(--r);
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(229,57,53,0.4);
-  }
-  .score-ring.none {
-    background: var(--surface);
-    color: var(--muted);
-    border: 2px dashed var(--border-md);
-  }
+  .score-ring.green { background: var(--g); color: #fff; box-shadow: 0 4px 14px rgba(22,163,74,0.4); }
+  .score-ring.yellow { background: var(--y); color: #fff; box-shadow: 0 4px 14px rgba(217,119,6,0.4); }
+  .score-ring.red { background: var(--r); color: #fff; box-shadow: 0 4px 14px rgba(220,38,38,0.4); }
+  .score-ring.none { background: var(--surface); color: var(--muted); border: 2px dashed var(--border-md); }
 
   .score-info { flex: 1; min-width: 0; }
-  .score-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .score-status { font-size: 14px; font-weight: 700; }
+  .score-label { font-size: 10px; color: var(--muted); margin-bottom: 3px; letter-spacing: 0.05em; text-transform: uppercase; font-family: var(--mono); }
+  .score-status { font-size: 14px; font-weight: 700; letter-spacing: -0.2px; }
 
-  /* Override */
   .override-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 6px;
-    font-size: 10px;
-    color: var(--muted);
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-family: var(--mono);
-    padding: 3px 6px;
-    border-radius: 5px;
-    transition: all 0.15s;
-    letter-spacing: 0.03em;
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 5px; font-size: 10px; color: var(--muted);
+    cursor: pointer; background: none; border: none;
+    font-family: var(--mono); padding: 3px 6px;
+    border-radius: 4px; transition: all 0.15s;
   }
   .override-trigger:hover { color: var(--text); background: var(--surface); }
   .override-trigger.has-override { color: var(--warn-text); background: var(--warn-bg); }
 
   .override-panel {
-    display: none;
-    align-items: center;
-    gap: 6px;
-    margin-top: 6px;
-    padding: 8px 10px;
-    background: var(--surface);
-    border-radius: var(--radius-md);
+    display: none; align-items: center; gap: 6px;
+    margin-top: 6px; padding: 8px 10px;
+    background: var(--surface); border-radius: var(--radius-md);
     border: 1px solid var(--border);
   }
   .override-panel.open { display: flex; }
-  .override-panel-label { font-size: 10px; color: var(--muted); white-space: nowrap; }
+  .override-panel-label { font-size: 10px; color: var(--muted); white-space: nowrap; font-family: var(--mono); }
   .override-btns { display: flex; gap: 4px; }
-
-  .dot-btn {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.15s;
-    position: relative;
-  }
+  .dot-btn { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; }
   .dot-btn.g-btn { background: var(--g); border-color: var(--g-dk); }
   .dot-btn.y-btn { background: var(--y); border-color: var(--y-dk); }
   .dot-btn.r-btn { background: var(--r); border-color: var(--r-dk); }
   .dot-btn.none-btn { background: var(--surface); border-color: var(--border-md); }
-  .dot-btn.active-dot {
-    outline: 3px solid var(--text);
-    outline-offset: 2px;
-  }
+  .dot-btn.active-dot { outline: 3px solid var(--text); outline-offset: 2px; }
   .dot-btn:hover { transform: scale(1.15); }
 
   .streak-badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: var(--g);
-    color: #fff;
-    white-space: nowrap;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 700; padding: 5px 12px;
+    border-radius: 20px; background: var(--g); color: #fff;
+    white-space: nowrap; font-family: var(--sans);
   }
-  .streak-badge .streak-num { font-size: 15px; }
+  .streak-badge .streak-num { font-size: 15px; font-weight: 900; }
 
   /* ── Day navigation ── */
-  .day-nav {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-  }
+  .day-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
   .day-nav-btn {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    width: 32px; height: 32px;
-    cursor: pointer;
-    color: var(--text);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); width: 32px; height: 32px;
+    cursor: pointer; color: var(--text);
     display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-    transition: all 0.15s;
-    flex-shrink: 0;
+    font-size: 15px; transition: all 0.15s; flex-shrink: 0;
   }
   .day-nav-btn:hover { background: var(--surface); border-color: var(--border-md); }
   .day-nav-label {
-    flex: 1;
-    text-align: center;
-    font-family: var(--display);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -0.2px;
+    flex: 1; text-align: center;
+    font-family: var(--sans); font-size: 14px; font-weight: 700; letter-spacing: -0.2px;
   }
   .day-nav-today-btn {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border-md);
-    background: var(--card);
-    color: var(--muted);
-    cursor: pointer;
-    font-family: var(--mono);
-    transition: all 0.15s;
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-size: 10px; font-weight: 700; padding: 4px 10px;
+    border-radius: 20px; border: 1px solid var(--border-md);
+    background: var(--card); color: var(--muted); cursor: pointer;
+    font-family: var(--mono); transition: all 0.15s;
+    white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em;
   }
   .day-nav-today-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
   .day-nav-today-btn.hidden { visibility: hidden; }
 
-  /* future day banner */
   .future-banner {
-    display: none;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    background: var(--info-bg);
-    color: var(--info-text);
-    border-radius: var(--radius-md);
-    font-size: 11px;
-    margin-bottom: 0.75rem;
-    border: 1px solid rgba(26,86,176,0.15);
+    display: none; align-items: center; gap: 8px;
+    padding: 10px 14px; background: var(--info-bg); color: var(--info-text);
+    border-radius: var(--radius-md); font-size: 11px; margin-bottom: 0.75rem;
+    border: 1px solid rgba(29,78,216,0.12); font-family: var(--mono);
   }
   .future-banner.show { display: flex; }
 
   /* ── Section header ── */
   .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 0.75rem;
   }
-
-  .section-title {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+  .section-title { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); }
 
   .add-btn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: var(--text);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: 7px 14px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--bg);
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.03em;
+    display: flex; align-items: center; gap: 5px;
+    background: var(--text); border: none; border-radius: var(--radius-md);
+    padding: 7px 14px; font-family: var(--sans); font-size: 11px;
+    font-weight: 700; color: var(--bg); cursor: pointer; transition: all 0.15s;
   }
   .add-btn:hover { opacity: 0.8; }
 
-  .activity-list { display: flex; flex-direction: column; gap: 6px; }
+  .activity-list { display: flex; flex-direction: column; gap: 5px; }
 
   .activity-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-md);
     transition: border-color 0.2s, box-shadow 0.2s;
-    cursor: grab;
-    position: relative;
-    overflow: hidden;
+    cursor: grab; position: relative; overflow: hidden;
   }
-  .activity-row:hover { border-color: var(--border-md); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .activity-row.dragging { opacity: 0.5; box-shadow: 0 6px 20px rgba(0,0,0,0.2); cursor: grabbing; }
+  .activity-row:hover { border-color: var(--border-md); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+  .activity-row.dragging { opacity: 0.5; box-shadow: 0 6px 20px rgba(0,0,0,0.18); cursor: grabbing; }
   .activity-row.drag-over { border-color: var(--text); box-shadow: 0 0 0 2px var(--text); }
 
-  /* Colored left accent bar — solid, vivid */
   .activity-row::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    border-radius: var(--radius-md) 0 0 var(--radius-md); transition: background 0.2s;
     background: var(--surface);
-    border-radius: var(--radius-md) 0 0 var(--radius-md);
-    transition: background 0.2s;
   }
-  .activity-row.has-green::before { background: var(--g); }
-  .activity-row.has-yellow::before { background: var(--y); }
-  .activity-row.has-red::before { background: var(--r); }
+  .activity-row[data-priority="H"]::before { background: var(--r); }
+  .activity-row[data-priority="M"]::before { background: var(--y); }
+  .activity-row[data-priority="L"]::before { background: var(--g); }
 
-  /* Solid left band + very subtle tint — no gradient */
-  .activity-row.has-green { background: var(--g-bg); border-color: rgba(0,200,83,0.25); }
-  .activity-row.has-yellow { background: var(--y-bg); border-color: rgba(255,152,0,0.3); }
-  .activity-row.has-red { background: var(--r-bg); border-color: rgba(229,57,53,0.25); }
+  .activity-row.has-done { background: var(--g-bg); border-color: rgba(22,163,74,0.2); }
+  .activity-row.has-started { background: var(--y-bg); border-color: rgba(217,119,6,0.22); }
+  .activity-row.has-notstart { background: var(--r-bg); border-color: rgba(220,38,38,0.18); }
 
-  /* Drag handle */
   .drag-handle {
-    display: flex;
-    align-items: center;
-    color: var(--muted);
-    opacity: 0.3;
-    cursor: grab;
-    padding: 0 2px 0 6px;
-    font-size: 14px;
-    flex-shrink: 0;
+    display: flex; align-items: center; color: var(--muted);
+    opacity: 0.3; cursor: grab; padding: 0 2px 0 4px; font-size: 14px; flex-shrink: 0;
   }
-  .activity-row:hover .drag-handle { opacity: 0.6; }
+  .activity-row:hover .drag-handle { opacity: 0.55; }
 
-  .act-name { flex: 1; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+  .act-name { flex: 1; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 
-  .weight-badge {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--muted);
-    padding: 2px 7px;
-    background: var(--surface);
-    border-radius: 4px;
-    white-space: nowrap;
-    letter-spacing: 0.03em;
+  .priority-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 4px; white-space: nowrap; letter-spacing: 0.05em;
+    font-family: var(--mono); flex-shrink: 0;
   }
+  .priority-badge.H { background: var(--r-bg); color: var(--r-dk); }
+  .priority-badge.M { background: var(--y-bg); color: var(--y-dk); }
+  .priority-badge.L { background: var(--g-bg); color: var(--g-dk); }
 
-  /* GYR rating buttons — solid, vivid, clearly distinct */
-  .rating-btns { display: flex; gap: 4px; }
+  /* Done / Started / Not Started buttons */
+  .rating-btns { display: flex; gap: 3px; }
   .rate-btn {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    border: 1.5px solid var(--border-md);
-    font-size: 11px;
-    font-family: var(--mono);
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
+    height: 30px; padding: 0 9px;
+    border-radius: 6px; border: 1.5px solid var(--border-md);
+    font-size: 10px; font-family: var(--mono); font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
     display: flex; align-items: center; justify-content: center;
-    letter-spacing: 0.04em;
-    background: var(--surface);
-    color: var(--muted);
+    letter-spacing: 0.02em; background: var(--surface); color: var(--muted);
+    white-space: nowrap;
   }
-  .rate-btn.g { color: var(--g-dk); }
-  .rate-btn.y { color: var(--y-dk); }
-  .rate-btn.r { color: var(--r-dk); }
-  .rate-btn.g.sel {
-    background: var(--g);
-    color: #fff;
-    border-color: var(--g-dk);
-    box-shadow: 0 2px 10px rgba(0,200,83,0.5);
-  }
-  .rate-btn.y.sel {
-    background: var(--y);
-    color: #fff;
-    border-color: var(--y-dk);
-    box-shadow: 0 2px 10px rgba(255,152,0,0.55);
-  }
-  .rate-btn.r.sel {
-    background: var(--r);
-    color: #fff;
-    border-color: var(--r-dk);
-    box-shadow: 0 2px 10px rgba(229,57,53,0.5);
-  }
-  .rate-btn:hover:not(.sel) { transform: scale(1.1); border-color: var(--text); }
-  .rate-btn.g:hover:not(.sel) { color: #fff; background: var(--g); border-color: var(--g-dk); }
-  .rate-btn.y:hover:not(.sel) { color: #fff; background: var(--y); border-color: var(--y-dk); }
-  .rate-btn.r:hover:not(.sel) { color: #fff; background: var(--r); border-color: var(--r-dk); }
-  .rate-btn.sel:hover { transform: scale(1.08); }
+  .rate-btn.done { color: var(--g-dk); }
+  .rate-btn.started { color: var(--y-dk); }
+  .rate-btn.notstart { color: var(--r-dk); }
+  .rate-btn.done.sel { background: var(--g); color: #fff; border-color: var(--g-dk); box-shadow: 0 2px 8px rgba(22,163,74,0.4); }
+  .rate-btn.started.sel { background: var(--y); color: #fff; border-color: var(--y-dk); box-shadow: 0 2px 8px rgba(217,119,6,0.4); }
+  .rate-btn.notstart.sel { background: var(--r); color: #fff; border-color: var(--r-dk); box-shadow: 0 2px 8px rgba(220,38,38,0.4); }
+  .rate-btn:hover:not(.sel) { transform: scale(1.05); border-color: var(--text); }
+  .rate-btn.done:hover:not(.sel) { color: #fff; background: var(--g); border-color: var(--g-dk); }
+  .rate-btn.started:hover:not(.sel) { color: #fff; background: var(--y); border-color: var(--y-dk); }
+  .rate-btn.notstart:hover:not(.sel) { color: #fff; background: var(--r); border-color: var(--r-dk); }
+  .rate-btn.sel:hover { transform: scale(1.05); }
 
-  /* Edit/delete divider */
-  .act-divider {
-    width: 1px;
-    height: 20px;
-    background: var(--border-md);
-    margin: 0 2px;
-    flex-shrink: 0;
-  }
-
+  .act-divider { width: 1px; height: 18px; background: var(--border-md); margin: 0 1px; flex-shrink: 0; }
   .act-actions { display: flex; gap: 2px; }
   .icon-btn {
     background: none; border: none; cursor: pointer;
-    color: var(--muted); padding: 5px; border-radius: 6px;
+    color: var(--muted); padding: 5px; border-radius: 5px;
     display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s;
-    opacity: 0.45;
+    transition: all 0.15s; opacity: 0.4;
   }
   .activity-row:hover .icon-btn { opacity: 1; }
   .icon-btn:hover { color: var(--text); background: var(--surface); }
@@ -478,405 +316,206 @@
 
   /* Add form */
   .add-form {
-    display: none;
-    padding: 16px;
-    background: var(--card);
-    border: 1px solid var(--border-md);
-    border-radius: var(--radius-md);
-    gap: 10px;
-    margin-top: 6px;
-    flex-direction: column;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    display: none; padding: 14px; background: var(--card);
+    border: 1px solid var(--border-md); border-radius: var(--radius-md);
+    gap: 10px; margin-top: 6px; flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   }
   .add-form.open { display: flex; }
 
-  .form-row { display: flex; gap: 8px; align-items: center; }
-  .form-label { font-size: 10px; font-weight: 700; color: var(--muted); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.06em; }
+  .form-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .form-label { font-size: 10px; font-weight: 700; color: var(--muted); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--mono); }
 
   input[type="text"], input[type="number"] {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 8px 12px;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 8px 12px;
+    font-family: var(--sans); font-size: 13px; color: var(--text);
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s;
     -moz-appearance: textfield;
   }
   input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type="text"]:focus, input[type="number"]:focus {
-    border-color: var(--text);
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
-  }
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="text"]:focus, input[type="number"]:focus { border-color: var(--text); box-shadow: 0 0 0 3px rgba(0,0,0,0.07); }
   input[type="text"] { width: 100%; }
   input[type="number"] { width: 80px; }
+
+  .priority-select-row { display: flex; gap: 5px; align-items: center; }
+  .priority-opt {
+    padding: 5px 12px; border-radius: 6px;
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
+    cursor: pointer; border: 1.5px solid var(--border-md);
+    background: var(--surface); color: var(--muted); transition: all 0.15s;
+  }
+  .priority-opt.H.active { background: var(--r); color: #fff; border-color: var(--r-dk); }
+  .priority-opt.M.active { background: var(--y); color: #fff; border-color: var(--y-dk); }
+  .priority-opt.L.active { background: var(--g); color: #fff; border-color: var(--g-dk); }
+  .priority-opt:hover:not(.active) { border-color: var(--text); color: var(--text); }
 
   .form-actions { display: flex; gap: 6px; justify-content: flex-end; }
 
   .btn-primary {
-    background: var(--text);
-    color: var(--bg);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: 8px 18px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.15s;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    background: var(--text); color: var(--bg); border: none;
+    border-radius: var(--radius-md); padding: 8px 18px;
+    font-family: var(--sans); font-size: 11px; font-weight: 700;
+    cursor: pointer; transition: opacity 0.15s;
+    letter-spacing: 0.02em; text-transform: uppercase;
   }
   .btn-primary:hover { opacity: 0.75; }
 
   .btn-cancel {
-    background: none;
-    border: 1px solid var(--border-md);
-    border-radius: var(--radius-md);
-    padding: 8px 18px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    background: none; border: 1px solid var(--border-md);
+    border-radius: var(--radius-md); padding: 8px 18px;
+    font-family: var(--sans); font-size: 11px; font-weight: 700;
+    color: var(--muted); cursor: pointer; transition: all 0.15s;
+    letter-spacing: 0.02em; text-transform: uppercase;
   }
   .btn-cancel:hover { color: var(--text); border-color: var(--text); }
 
   .edit-inline {
-    display: none;
-    gap: 8px;
-    align-items: center;
-    padding: 10px 12px;
-    background: var(--surface);
-    border-radius: var(--radius-md);
-    margin-top: 4px;
-    border: 1px solid var(--border);
+    display: none; gap: 8px; align-items: center;
+    padding: 10px 12px; background: var(--surface);
+    border-radius: var(--radius-md); margin-top: 4px;
+    border: 1px solid var(--border); flex-wrap: wrap;
   }
   .edit-inline.open { display: flex; }
-  .edit-inline input[type="text"] { flex: 1; }
-  .edit-inline input[type="number"] { width: 70px; }
+  .edit-inline input[type="text"] { flex: 1; min-width: 120px; }
 
   /* ── Calendar nav ── */
-  .cal-nav {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 1rem;
-  }
+  .cal-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
   .cal-period {
-    flex: 1;
-    text-align: center;
-    font-family: var(--display);
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
+    flex: 1; text-align: center;
+    font-family: var(--sans); font-size: 17px; font-weight: 900; letter-spacing: -0.4px;
   }
   .nav-btn {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    width: 34px; height: 34px;
-    cursor: pointer;
-    color: var(--text);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); width: 34px; height: 34px;
+    cursor: pointer; color: var(--text);
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    transition: all 0.15s;
+    font-size: 16px; transition: all 0.15s;
   }
   .nav-btn:hover { background: var(--surface); border-color: var(--border-md); }
 
   /* ── Stats row ── */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 1rem;
-  }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1rem; }
   .stat-card {
-    background: var(--card);
-    border-radius: var(--radius-md);
-    padding: 0.9rem 1rem;
-    text-align: center;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
+    background: var(--card); border-radius: var(--radius-md);
+    padding: 0.85rem 1rem; text-align: center; border: 1px solid var(--border);
   }
-  /* Solid left colored border on stat cards */
-  .stat-card:has(.stat-val.green) { border-left: 4px solid var(--g); }
-  .stat-card:has(.stat-val.yellow) { border-left: 4px solid var(--y); }
-  .stat-card:has(.stat-val.red) { border-left: 4px solid var(--r); }
-  .stat-val {
-    font-family: var(--display);
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 2px;
-    letter-spacing: -0.5px;
-  }
-  .stat-val.green { color: var(--g-dk); }
-  .stat-val.yellow { color: var(--y-dk); }
-  .stat-val.red { color: var(--r-dk); }
-  .stat-lbl { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .stat-card:has(.stat-val.green) { border-left: 3px solid var(--g); }
+  .stat-card:has(.stat-val.yellow) { border-left: 3px solid var(--y); }
+  .stat-card:has(.stat-val.red) { border-left: 3px solid var(--r); }
+  .stat-val { font-family: var(--sans); font-size: 24px; font-weight: 900; margin-bottom: 2px; letter-spacing: -0.5px; }
+  .stat-val.green { color: var(--g); }
+  .stat-val.yellow { color: var(--y); }
+  .stat-val.red { color: var(--r); }
+  .stat-lbl { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
 
   /* ── Pct bar ── */
-  .pct-bar-wrap {
-    margin-top: 6px;
-    height: 4px;
-    border-radius: 2px;
-    background: var(--border);
-    overflow: hidden;
-  }
-  .pct-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
+  .pct-bar-wrap { margin-top: 6px; height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; }
+  .pct-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
   .pct-bar-fill.green { background: var(--g); }
   .pct-bar-fill.yellow { background: var(--y); }
   .pct-bar-fill.red { background: var(--r); }
 
   /* ── Week grid ── */
-  .day-header-row {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 4px;
-  }
-  .day-header {
-    text-align: center;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--muted);
-    padding-bottom: 4px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-  }
+  .day-header-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 4px; }
+  .day-header { text-align: center; font-size: 10px; font-weight: 700; color: var(--muted); padding-bottom: 3px; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); }
 
-  .week-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-  }
-
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
   .day-cell {
-    aspect-ratio: 1;
-    border-radius: var(--radius-md);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    gap: 2px;
-    position: relative;
-    overflow: hidden;
+    aspect-ratio: 1; border-radius: var(--radius-md);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 12px; cursor: pointer; transition: all 0.15s;
+    border: 1px solid var(--border); background: var(--surface);
+    gap: 2px; position: relative; overflow: hidden;
   }
   .day-cell .day-num { font-size: 13px; font-weight: 700; position: relative; z-index: 1; }
-  .day-cell .day-pct { font-size: 9px; position: relative; z-index: 1; font-weight: 700; opacity: 0.85; }
-
-  /* Solid color day cells — no gradients */
-  .day-cell.green {
-    background: var(--g);
-    border-color: var(--g-dk);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(0,200,83,0.35);
-  }
-  .day-cell.green .day-pct { color: rgba(255,255,255,0.9); }
-  .day-cell.yellow {
-    background: var(--y);
-    border-color: var(--y-dk);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(255,152,0,0.35);
-  }
-  .day-cell.yellow .day-pct { color: rgba(255,255,255,0.9); }
-  .day-cell.red {
-    background: var(--r);
-    border-color: var(--r-dk);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.35);
-  }
-  .day-cell.red .day-pct { color: rgba(255,255,255,0.9); }
-  .day-cell.today { outline: 2.5px solid var(--text); outline-offset: 2px; }
+  .day-cell .day-pct { font-size: 9px; position: relative; z-index: 1; font-weight: 700; opacity: 0.85; font-family: var(--mono); }
+  .day-cell.green { background: var(--g); border-color: var(--g-dk); color: #fff; box-shadow: 0 2px 6px rgba(22,163,74,0.3); }
+  .day-cell.yellow { background: var(--y); border-color: var(--y-dk); color: #fff; box-shadow: 0 2px 6px rgba(217,119,6,0.3); }
+  .day-cell.red { background: var(--r); border-color: var(--r-dk); color: #fff; box-shadow: 0 2px 6px rgba(220,38,38,0.3); }
+  .day-cell.today { outline: 2px solid var(--text); outline-offset: 2px; }
   .day-cell:hover { transform: scale(1.05); z-index: 2; }
+  .streak-bar { position: absolute; top: 0; left: -4px; right: -4px; bottom: 0; background: rgba(22,163,74,0.1); z-index: 0; pointer-events: none; }
 
-  .streak-bar {
-    position: absolute;
-    top: 0; left: -4px; right: -4px; bottom: 0;
-    background: rgba(0,200,83,0.12);
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* ── Month grid — solid colored cells ── */
-  .month-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
+  /* ── Month grid ── */
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .month-cell {
-    aspect-ratio: 1;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-    background: var(--surface);
-    color: var(--muted);
-    border: 1px solid transparent;
+    aspect-ratio: 1; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+    background: var(--surface); color: var(--muted); border: 1px solid transparent;
   }
-  .month-cell.green {
-    background: var(--g);
-    color: #fff;
-    box-shadow: 0 1px 5px rgba(0,200,83,0.4);
-  }
-  .month-cell.yellow {
-    background: var(--y);
-    color: #fff;
-    box-shadow: 0 1px 5px rgba(255,152,0,0.4);
-  }
-  .month-cell.red {
-    background: var(--r);
-    color: #fff;
-    box-shadow: 0 1px 5px rgba(229,57,53,0.4);
-  }
-  .month-cell.today { outline: 2.5px solid var(--text); outline-offset: 2px; }
+  .month-cell.green { background: var(--g); color: #fff; box-shadow: 0 1px 4px rgba(22,163,74,0.35); }
+  .month-cell.yellow { background: var(--y); color: #fff; box-shadow: 0 1px 4px rgba(217,119,6,0.35); }
+  .month-cell.red { background: var(--r); color: #fff; box-shadow: 0 1px 4px rgba(220,38,38,0.35); }
+  .month-cell.today { outline: 2px solid var(--text); outline-offset: 2px; }
   .month-cell.empty { opacity: 0; pointer-events: none; }
   .month-cell:not(.empty):hover { transform: scale(1.1); z-index: 2; }
 
-  /* ── Year grid ── */
-  .year-months-grid {
+  /* ── Year — 12 month rows × 31 day columns ── */
+  .year-heatmap { margin-top: 6px; overflow-x: auto; }
+  .year-heatmap-inner { min-width: 520px; }
+  .year-day-numbers {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-top: 4px;
+    grid-template-columns: 30px repeat(31, 1fr);
+    gap: 2px; margin-bottom: 4px;
   }
-  @media (max-width: 500px) {
-    .year-months-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  .year-month-block { }
-  .year-month-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 5px;
-  }
-  .year-month-dow-row {
+  .year-day-num-lbl { font-size: 7px; font-weight: 700; color: var(--muted); text-align: center; font-family: var(--mono); opacity: 0.6; }
+  .year-month-row {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
-    margin-bottom: 2px;
+    grid-template-columns: 30px repeat(31, 1fr);
+    gap: 2px; margin-bottom: 2px; align-items: center;
   }
-  .year-month-dow {
-    font-size: 7px;
-    font-weight: 700;
-    color: var(--muted);
-    text-align: center;
-    opacity: 0.5;
-    text-transform: uppercase;
+  .year-month-lbl {
+    font-size: 9px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    font-family: var(--mono); text-align: right; padding-right: 5px; white-space: nowrap;
   }
-  .year-month-cells {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+  .year-day-cell {
+    aspect-ratio: 1; border-radius: 2px;
+    background: var(--surface); cursor: pointer; transition: all 0.1s; min-width: 0;
   }
-  .year-cell {
-    aspect-ratio: 1;
-    border-radius: 2px;
-    background: var(--surface);
-    cursor: pointer;
-    transition: all 0.1s;
-  }
-  /* Solid vivid colors — no opacity reduction */
-  .year-cell.green { background: var(--g); }
-  .year-cell.yellow { background: var(--y); }
-  .year-cell.red { background: var(--r); }
-  .year-cell.today-cell { outline: 1.5px solid var(--text); outline-offset: 1px; }
-  .year-cell:hover { transform: scale(1.4); z-index: 10; position: relative; }
+  .year-day-cell.empty { opacity: 0; pointer-events: none; cursor: default; }
+  .year-day-cell.green { background: var(--g); }
+  .year-day-cell.yellow { background: var(--y); }
+  .year-day-cell.red { background: var(--r); }
+  .year-day-cell.today-cell { outline: 1.5px solid var(--text); outline-offset: 1px; }
+  .year-day-cell:not(.empty):hover { transform: scale(1.5); z-index: 10; position: relative; }
 
   /* ── Legend ── */
-  .legend {
-    display: flex;
-    gap: 14px;
-    margin-top: 0.75rem;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--muted);
-    flex-wrap: wrap;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+  .legend { display: flex; gap: 12px; margin-top: 0.75rem; font-size: 10px; font-weight: 700; color: var(--muted); flex-wrap: wrap; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--mono); }
   .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 3px;
-    flex-shrink: 0;
-  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
   .legend-dot.green { background: var(--g); }
   .legend-dot.yellow { background: var(--y); }
   .legend-dot.red { background: var(--r); }
 
-  .empty-state {
-    text-align: center;
-    padding: 2.5rem;
-    color: var(--muted);
-    font-size: 12px;
-    border: 1px dashed var(--border-md);
-    border-radius: var(--radius-lg);
-  }
+  .empty-state { text-align: center; padding: 2.5rem; color: var(--muted); font-size: 12px; border: 1px dashed var(--border-md); border-radius: var(--radius-lg); font-family: var(--mono); }
 
   .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
+    position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(10px);
-    background: var(--text);
-    color: var(--bg);
-    padding: 10px 20px;
-    border-radius: 24px;
-    font-size: 11px;
-    font-weight: 700;
-    font-family: var(--mono);
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
-    pointer-events: none;
-    z-index: 999;
-    white-space: nowrap;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    background: var(--text); color: var(--bg);
+    padding: 10px 20px; border-radius: 24px;
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
+    opacity: 0; transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none; z-index: 999; white-space: nowrap;
+    letter-spacing: 0.03em; text-transform: uppercase;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   .reset-btn {
-    background: none;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    color: var(--muted);
-    padding: 6px 8px;
-    border-radius: var(--radius-md);
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s;
+    background: none; border: 1px solid var(--border); cursor: pointer;
+    color: var(--muted); padding: 6px 8px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
   }
   .reset-btn:hover { color: var(--text); background: var(--surface); border-color: var(--border-md); }
 
   @media (max-width: 480px) {
-    .rate-btn { width: 32px; height: 32px; font-size: 10px; }
+    .rate-btn { padding: 0 6px; font-size: 9px; }
     .act-name { font-size: 13px; }
-    .score-ring { width: 60px; height: 60px; font-size: 16px; }
-    .year-months-grid { grid-template-columns: repeat(2, 1fr); }
+    .score-ring { width: 58px; height: 58px; font-size: 14px; }
   }
 </style>
 </head>
@@ -893,9 +532,9 @@
   </div>
 
   <div id="reset-dialog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;">
-    <div style="background:var(--card);border:1px solid var(--border-md);border-radius:var(--radius-lg);padding:1.75rem;max-width:320px;width:90%;font-family:var(--mono);box-shadow:0 20px 60px rgba(0,0,0,0.25);">
-      <div style="font-family:var(--display);font-size:20px;font-weight:800;margin-bottom:0.5rem;letter-spacing:-0.3px;">Reset all data?</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">This will clear all tracked days and activities, and reset weights to x1. This cannot be undone.</div>
+    <div style="background:var(--card);border:1px solid var(--border-md);border-radius:var(--radius-lg);padding:1.75rem;max-width:320px;width:90%;font-family:var(--sans);box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+      <div style="font-family:var(--sans);font-size:20px;font-weight:900;margin-bottom:0.5rem;letter-spacing:-0.4px;">Reset all data?</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">This will clear all tracked days and activities. This cannot be undone.</div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button class="btn-cancel" onclick="closeReset()">cancel</button>
         <button class="btn-primary" style="background:var(--r);" onclick="doReset()">reset everything</button>
@@ -912,6 +551,15 @@
 
   <!-- TODAY -->
   <div id="view-today" class="view active">
+
+    <!-- Motivational banner -->
+    <div class="motto-bar" id="motto-bar">
+      <div class="motto-icon">&#9889;</div>
+      <div>
+        <div class="motto-text" id="motto-text">Your time is now.</div>
+        <span class="motto-sub" id="motto-sub">Make today count</span>
+      </div>
+    </div>
 
     <!-- Day navigation -->
     <div class="day-nav">
@@ -933,7 +581,6 @@
       <div class="score-info">
         <div class="score-label" id="score-label">Overall score</div>
         <div class="score-status" id="score-status">Rate your activities below</div>
-        <!-- Override: subtle button, expands inline panel -->
         <button class="override-trigger" id="override-trigger" onclick="toggleOverridePanel()">
           <i class="ti ti-adjustments-horizontal" style="font-size:10px"></i>
           <span id="override-trigger-text">override</span>
@@ -967,9 +614,13 @@
         <input type="text" id="new-act-name" placeholder="Activity name…" maxlength="50" />
       </div>
       <div class="form-row">
-        <span class="form-label">Weight:</span>
-        <input type="number" id="new-act-weight" value="1" min="0.1" max="10" step="0.1" />
-        <span class="form-label" style="font-size:10px;">(importance multiplier)</span>
+        <span class="form-label">Priority:</span>
+        <div class="priority-select-row" id="new-priority-btns">
+          <button class="priority-opt H active" onclick="selectNewPriority('H')">H</button>
+          <button class="priority-opt M" onclick="selectNewPriority('M')">M</button>
+          <button class="priority-opt L" onclick="selectNewPriority('L')">L</button>
+        </div>
+        <span class="form-label" style="font-size:9px;opacity:0.65;">H=3 M=2 L=1</span>
       </div>
       <div class="form-actions">
         <button class="btn-cancel" onclick="toggleAddForm()">cancel</button>
@@ -994,9 +645,9 @@
     </div>
     <div class="week-grid" id="week-grid"></div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot green"></div> Green ≥80%</div>
-      <div class="legend-item"><div class="legend-dot yellow"></div> Yellow 60–79%</div>
-      <div class="legend-item"><div class="legend-dot red"></div> Red &lt;60%</div>
+      <div class="legend-item"><div class="legend-dot green"></div> Great (&ge;80%)</div>
+      <div class="legend-item"><div class="legend-dot yellow"></div> OK (50–79%)</div>
+      <div class="legend-item"><div class="legend-dot red"></div> Missed (&lt;50%)</div>
     </div>
   </div>
 
@@ -1014,9 +665,9 @@
     </div>
     <div class="month-grid" id="month-grid"></div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot green"></div> Green</div>
-      <div class="legend-item"><div class="legend-dot yellow"></div> Yellow</div>
-      <div class="legend-item"><div class="legend-dot red"></div> Red</div>
+      <div class="legend-item"><div class="legend-dot green"></div> Great</div>
+      <div class="legend-item"><div class="legend-dot yellow"></div> OK</div>
+      <div class="legend-item"><div class="legend-dot red"></div> Missed</div>
     </div>
   </div>
 
@@ -1028,12 +679,17 @@
       <button class="nav-btn" onclick="navYear(1)"><i class="ti ti-chevron-right"></i></button>
     </div>
     <div class="stats-row" id="year-stats"></div>
-    <div class="year-months-grid" id="year-months-grid"></div>
+    <div class="year-heatmap">
+      <div class="year-heatmap-inner">
+        <div class="year-day-numbers" id="year-day-numbers"></div>
+        <div id="year-heatmap-rows"></div>
+      </div>
+    </div>
     <div class="legend" style="margin-top:0.75rem;">
-      <div class="legend-item"><div class="legend-dot green"></div> Green</div>
-      <div class="legend-item"><div class="legend-dot yellow"></div> Yellow</div>
-      <div class="legend-item"><div class="legend-dot red"></div> Red</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--surface);border:1px solid var(--border-md);border-radius:3px;"></div> No data</div>
+      <div class="legend-item"><div class="legend-dot green"></div> Great</div>
+      <div class="legend-item"><div class="legend-dot yellow"></div> OK</div>
+      <div class="legend-item"><div class="legend-dot red"></div> Missed</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--surface);border:1px solid var(--border-md);"></div> No data</div>
     </div>
   </div>
 </div>
@@ -1048,24 +704,14 @@ function dateKey(d) {
   const dt = d instanceof Date ? d : new Date(d);
   return dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0');
 }
-
 function todayKey() { return dateKey(TODAY); }
 
-const STORAGE_KEY = 'dpt_v4'; // bumped version to force fresh start
-
+const STORAGE_KEY = 'dpt_v5';
 let state = loadState();
 
 function loadState() {
-  // Clear all old storage keys so old activity lists never bleed through
-  try {
-    localStorage.removeItem('dpt_v3');
-    localStorage.removeItem('dpt_v2');
-    localStorage.removeItem('dpt_v1');
-  } catch(e) {}
-  try {
-    const s = localStorage.getItem(STORAGE_KEY);
-    if (s) return JSON.parse(s);
-  } catch(e) {}
+  try { ['dpt_v4','dpt_v3','dpt_v2','dpt_v1'].forEach(k => localStorage.removeItem(k)); } catch(e) {}
+  try { const s = localStorage.getItem(STORAGE_KEY); if (s) return JSON.parse(s); } catch(e) {}
   return getDefaultState();
 }
 
@@ -1073,12 +719,12 @@ function getDefaultState() {
   return {
     days: {},
     defaultActivities: [
-      { id: uid(), name: 'Reading', weight: 1 },
-      { id: uid(), name: 'Exercise', weight: 1 },
-      { id: uid(), name: 'Web Dev', weight: 1 },
-      { id: uid(), name: 'Vibe Coding', weight: 1 },
-      { id: uid(), name: 'App Dev', weight: 1 },
-      { id: uid(), name: 'Investing', weight: 1 }
+      { id: uid(), name: 'Reading', priority: 'M' },
+      { id: uid(), name: 'Exercise', priority: 'H' },
+      { id: uid(), name: 'Web Dev', priority: 'H' },
+      { id: uid(), name: 'Vibe Coding', priority: 'M' },
+      { id: uid(), name: 'App Dev', priority: 'H' },
+      { id: uid(), name: 'Investing', priority: 'M' }
     ]
   };
 }
@@ -1086,83 +732,58 @@ function getDefaultState() {
 function saveState() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
 }
-
 function uid() { return Math.random().toString(36).slice(2,9); }
 
-// ── Day offset for Today tab navigation ──
-let currentDayOffset = 0;
-
-function viewedKey() {
-  const d = new Date(TODAY);
-  d.setDate(d.getDate() + currentDayOffset);
-  return dateKey(d);
+// ── Priority weight: H=3, M=2, L=1 ──
+function priorityWeight(p) {
+  if (p === 'H') return 3;
+  if (p === 'M') return 2;
+  return 1;
 }
 
-function viewedDate() {
-  const d = new Date(TODAY);
-  d.setDate(d.getDate() + currentDayOffset);
-  return d;
-}
-
-// getDay: for past/today, create from closest prior day or defaults.
-// For future days, ALWAYS mirror today's activities unless user has explicitly edited that day.
-// A day is "user-edited" if its `userEdited` flag is true (set when user adds/removes/edits activities).
-function getDay(key) {
-  const isFutureKey = key > todayKey();
-
-  if (isFutureKey) {
-    // If the day exists and was explicitly edited by the user, return it as-is
-    if (state.days[key] && state.days[key].userEdited) {
-      return state.days[key];
-    }
-    // Otherwise always regenerate from today's activities (fresh mirror of today)
-    const todayDay = state.days[todayKey()];
-    const baseActivities = todayDay
-      ? todayDay.activities.map(a => ({ ...a, id: uid(), rating: null }))
-      : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
-    // Preserve override if previously set, but regenerate activities
-    const existingOverride = state.days[key] ? state.days[key].override : null;
-    state.days[key] = { activities: baseActivities, override: existingOverride, userEdited: false };
-    return state.days[key];
-  }
-
-  // Past / today: create from closest prior day or defaults if not yet stored
-  if (!state.days[key]) {
-    const target = new Date(key);
-    let basePrev = null;
-    for (let i = 1; i <= 365; i++) {
-      const pd = new Date(target);
-      pd.setDate(pd.getDate() - i);
-      const pk = dateKey(pd);
-      if (state.days[pk]) { basePrev = state.days[pk]; break; }
-    }
-    const baseActivities = basePrev
-      ? basePrev.activities.map(a => ({ ...a, id: uid(), rating: null }))
-      : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
-    state.days[key] = { activities: baseActivities, override: null };
-  }
-  return state.days[key];
-}
-
-function calcScore(day) {
-  const rated = day.activities.filter(a => a.rating !== null);
-  if (!rated.length) return null;
-  const total = rated.reduce((s,a) => s + a.weight * ratingVal(a.rating), 0);
-  const wsum = rated.reduce((s,a) => s + a.weight, 0);
-  return Math.round(total / wsum);
-}
-
+// ── Task completion: Done=100, Started=50, Not Start=0 ──
 function ratingVal(r) {
-  if (r === 'green') return 90;
-  if (r === 'yellow') return 70;
-  if (r === 'red') return 40;
+  if (r === 'done'     || r === 'green')  return 100;
+  if (r === 'started'  || r === 'yellow') return 50;
+  if (r === 'notstart' || r === 'red')    return 0;
   return 0;
 }
 
+function calcScore(day) {
+  const rated = day.activities.filter(a => a.rating !== null && a.rating !== undefined);
+  if (!rated.length) return null;
+
+  // Weighted average
+  let wSum = 0, wTotal = 0;
+  rated.forEach(a => {
+    const w = priorityWeight(a.priority || 'M');
+    wSum += w * ratingVal(a.rating);
+    wTotal += w;
+  });
+  let score = Math.round(wSum / wTotal);
+
+  // Override rules:
+  // 1) All rated = Not Started → 0
+  const allNotStart = rated.every(a => ratingVal(a.rating) === 0);
+  if (allNotStart) return 0;
+
+  // 2) All rated H tasks = Not Started → cap at 40
+  const highRated = rated.filter(a => (a.priority || 'M') === 'H');
+  if (highRated.length > 0) {
+    const allHighNotStart = highRated.every(a => ratingVal(a.rating) === 0);
+    if (allHighNotStart) score = Math.min(score, 40);
+    // 3) All rated H tasks = Done → floor at 70
+    const allHighDone = highRated.every(a => ratingVal(a.rating) === 100);
+    if (allHighDone) score = Math.max(score, 70);
+  }
+
+  return score;
+}
+
 function scoreClass(pct) {
-  if (pct === null) return 'none';
+  if (pct === null || pct === undefined) return 'none';
   if (pct >= 80) return 'green';
-  if (pct >= 60) return 'yellow';
+  if (pct >= 50) return 'yellow';
   return 'red';
 }
 
@@ -1179,48 +800,95 @@ function calcStreak() {
   return streak;
 }
 
+let currentDayOffset = 0, currentWeekOffset = 0, currentMonthOffset = 0, currentYearOffset = 0;
+
+function viewedKey() {
+  const d = new Date(TODAY); d.setDate(d.getDate() + currentDayOffset); return dateKey(d);
+}
+function viewedDate() {
+  const d = new Date(TODAY); d.setDate(d.getDate() + currentDayOffset); return d;
+}
+
+function getDay(key) {
+  const isFutureKey = key > todayKey();
+  if (isFutureKey) {
+    if (state.days[key] && state.days[key].userEdited) return state.days[key];
+    const todayDay = state.days[todayKey()];
+    const baseActivities = todayDay
+      ? todayDay.activities.map(a => ({ ...a, id: uid(), rating: null }))
+      : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
+    const existingOverride = state.days[key] ? state.days[key].override : null;
+    state.days[key] = { activities: baseActivities, override: existingOverride, userEdited: false };
+    return state.days[key];
+  }
+  if (!state.days[key]) {
+    const target = new Date(key);
+    let basePrev = null;
+    for (let i = 1; i <= 365; i++) {
+      const pd = new Date(target); pd.setDate(pd.getDate() - i);
+      const pk = dateKey(pd);
+      if (state.days[pk]) { basePrev = state.days[pk]; break; }
+    }
+    const base = basePrev
+      ? basePrev.activities.map(a => ({ ...a, id: uid(), rating: null }))
+      : state.defaultActivities.map(a => ({ ...a, id: uid(), rating: null }));
+    state.days[key] = { activities: base, override: null };
+  }
+  return state.days[key];
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
 let editingId = null;
 
-function confirmReset() {
-  document.getElementById('reset-dialog').style.display = 'flex';
-}
-function closeReset() {
-  document.getElementById('reset-dialog').style.display = 'none';
-}
+function confirmReset() { document.getElementById('reset-dialog').style.display = 'flex'; }
+function closeReset() { document.getElementById('reset-dialog').style.display = 'none'; }
 function doReset() {
-  localStorage.removeItem('dpt_v4');
-  localStorage.removeItem('dpt_v3');
-  localStorage.removeItem('dpt_v2');
-  state = getDefaultState();
-  currentDayOffset = 0;
-  editingId = null;
-  closeReset();
-  renderToday();
-  showToast('Data reset — fresh start!');
+  ['dpt_v5','dpt_v4','dpt_v3','dpt_v2'].forEach(k => { try { localStorage.removeItem(k); } catch(e){} });
+  state = getDefaultState(); currentDayOffset = 0; editingId = null;
+  closeReset(); renderToday(); showToast('Data reset — fresh start!');
 }
-let currentWeekOffset = 0;
-let currentMonthOffset = 0;
-let currentYearOffset = 0;
+
+// ── Motivational quotes ──
+const MOTTOS = [
+  { icon: '&#9889;', text: 'Your time is now.', sub: 'Make today count' },
+  { icon: '&#127981;', text: 'One focused day builds a life.', sub: 'Start with your hardest task' },
+  { icon: '&#128200;', text: 'Progress, not perfection.', sub: 'Move the needle every day' },
+  { icon: '&#128293;', text: 'Done beats perfect.', sub: 'Ship it, learn, repeat' },
+  { icon: '&#9876;', text: 'Small actions, compounding results.', sub: 'Show up again today' },
+  { icon: '&#9203;', text: 'You only get today once.', sub: 'Use it with intention' },
+  { icon: '&#127919;', text: 'Close the gap — who you are vs who you want to be.', sub: 'One task at a time' },
+  { icon: '&#128170;', text: 'Discipline is freedom.', sub: 'Do the work' },
+];
+
+let lastMottoIdx = -1;
+function updateMotto(pct) {
+  let idx = Math.floor(Math.random() * MOTTOS.length);
+  if (idx === lastMottoIdx) idx = (idx + 1) % MOTTOS.length;
+  lastMottoIdx = idx;
+  const m = MOTTOS[idx];
+  document.getElementById('motto-text').textContent = m.text;
+  document.getElementById('motto-sub').textContent = m.sub;
+  document.querySelector('.motto-icon').innerHTML = m.icon;
+  const bar = document.getElementById('motto-bar');
+  bar.style.background = pct === null ? 'var(--text)' :
+    pct >= 80 ? 'var(--g)' : pct >= 50 ? 'var(--y)' : 'var(--r)';
+}
 
 // ── Today tab ──
+function navDay(delta) { currentDayOffset += delta; editingId = null; renderToday(); }
+function goToToday() { currentDayOffset = 0; editingId = null; renderToday(); }
 
-function navDay(delta) {
-  currentDayOffset += delta;
-  editingId = null;
-  renderToday();
-}
-
-function goToToday() {
-  currentDayOffset = 0;
-  editingId = null;
-  renderToday();
+let newPriority = 'H';
+function selectNewPriority(p) {
+  newPriority = p;
+  document.querySelectorAll('#new-priority-btns .priority-opt').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === p);
+  });
 }
 
 function renderToday() {
@@ -1230,61 +898,43 @@ function renderToday() {
   const isToday = currentDayOffset === 0;
   const isFuture = currentDayOffset > 0;
 
-  // Day nav label
   const navLabel = document.getElementById('day-nav-label');
-  if (isToday) {
-    navLabel.textContent = 'Today — ' + TODAY.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-  } else if (currentDayOffset === -1) {
-    navLabel.textContent = 'Yesterday — ' + vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-  } else if (currentDayOffset === 1) {
-    navLabel.textContent = 'Tomorrow — ' + vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-  } else {
-    navLabel.textContent = vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-  }
+  if (isToday) navLabel.textContent = 'Today — ' + TODAY.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  else if (currentDayOffset === -1) navLabel.textContent = 'Yesterday — ' + vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  else if (currentDayOffset === 1) navLabel.textContent = 'Tomorrow — ' + vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  else navLabel.textContent = vDate.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
 
-  // Show/hide jump to today
-  const goBtn = document.getElementById('go-today-btn');
-  if (isToday) goBtn.classList.add('hidden');
-  else goBtn.classList.remove('hidden');
-
-  // Future banner
+  document.getElementById('go-today-btn').classList.toggle('hidden', isToday);
   document.getElementById('future-banner').classList.toggle('show', isFuture);
 
-  // Score
   const pct = day.override ? ratingVal(day.override) : calcScore(day);
   const cls = scoreClass(pct);
   const ring = document.getElementById('score-ring');
   ring.textContent = pct !== null ? pct + '%' : '—';
   ring.className = 'score-ring ' + cls;
 
-  const scoreLabel = document.getElementById('score-label');
-  scoreLabel.textContent = isToday ? 'Overall score' : (isFuture ? 'Planned score' : 'Day score');
-
+  document.getElementById('score-label').textContent = isToday ? 'Overall score' : (isFuture ? 'Planned score' : 'Day score');
   const status = document.getElementById('score-status');
   if (pct === null) status.textContent = isFuture ? 'Plan your activities below' : 'Rate your activities below';
-  else if (cls === 'green') status.textContent = 'Green day — great work!';
-  else if (cls === 'yellow') status.textContent = 'Yellow day — room to grow';
-  else status.textContent = 'Red day — keep pushing';
+  else if (cls === 'green') status.textContent = 'Great day — all priorities met!';
+  else if (cls === 'yellow') status.textContent = 'In progress — keep pushing';
+  else status.textContent = 'Behind — time to focus';
 
-  // Override trigger
   const trigger = document.getElementById('override-trigger');
-  const triggerText = document.getElementById('override-trigger-text');
   if (day.override) {
     trigger.classList.add('has-override');
-    triggerText.textContent = 'override: ' + day.override;
+    document.getElementById('override-trigger-text').textContent = 'override: ' + day.override;
   } else {
     trigger.classList.remove('has-override');
-    triggerText.textContent = 'override';
+    document.getElementById('override-trigger-text').textContent = 'override';
   }
 
-  // Override dot buttons
   document.querySelectorAll('.dot-btn').forEach(b => b.classList.remove('active-dot'));
   if (day.override) {
     const map = { green: 'g-btn', yellow: 'y-btn', red: 'r-btn' };
     document.querySelector('.dot-btn.' + map[day.override])?.classList.add('active-dot');
   }
 
-  // Streak (only meaningful for today)
   const streak = calcStreak();
   document.getElementById('streak-num').textContent = streak;
   document.getElementById('streak-badge').style.display = (streak > 0 && isToday) ? 'flex' : 'none';
@@ -1293,6 +943,7 @@ function renderToday() {
     weekday:'short', month:'short', day:'numeric', year:'numeric'
   });
 
+  updateMotto(pct);
   renderActivities(day);
 }
 
@@ -1308,15 +959,19 @@ function renderActivities(day) {
     list.innerHTML = '<div class="empty-state">No activities yet — add one above</div>';
     return;
   }
-  list.innerHTML = day.activities.map(a => `
-    <div class="activity-row ${a.rating ? 'has-'+a.rating : ''}" id="act-${a.id}" draggable="true" data-id="${a.id}">
+  list.innerHTML = day.activities.map(a => {
+    const p = a.priority || 'M';
+    const rv = a.rating !== null && a.rating !== undefined ? ratingVal(a.rating) : null;
+    const ratingCls = rv === 100 ? 'has-done' : rv === 50 ? 'has-started' : rv === 0 ? 'has-notstart' : '';
+    return `
+    <div class="activity-row ${ratingCls}" id="act-${a.id}" draggable="true" data-id="${a.id}" data-priority="${p}">
       <div class="drag-handle" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></div>
       <div class="act-name">${escHtml(a.name)}</div>
-      <div class="weight-badge">×${a.weight}</div>
+      <div class="priority-badge ${p}">${p}</div>
       <div class="rating-btns">
-        <button class="rate-btn g ${a.rating==='green'?'sel':''}" onclick="rateActivity('${a.id}','green')" title="Green">G</button>
-        <button class="rate-btn y ${a.rating==='yellow'?'sel':''}" onclick="rateActivity('${a.id}','yellow')" title="Yellow">Y</button>
-        <button class="rate-btn r ${a.rating==='red'?'sel':''}" onclick="rateActivity('${a.id}','red')" title="Red">R</button>
+        <button class="rate-btn done ${ratingVal(a.rating)===100?'sel':''}" onclick="rateActivity('${a.id}','done')" title="Done — 100%">&#10003;</button>
+        <button class="rate-btn started ${ratingVal(a.rating)===50?'sel':''}" onclick="rateActivity('${a.id}','started')" title="Started — 50%">&#126;</button>
+        <button class="rate-btn notstart ${(a.rating==='notstart'||a.rating==='red')?'sel':''}" onclick="rateActivity('${a.id}','notstart')" title="Not Started — 0%">&#10007;</button>
       </div>
       <div class="act-divider"></div>
       <div class="act-actions">
@@ -1326,38 +981,41 @@ function renderActivities(day) {
     </div>
     <div class="edit-inline ${editingId===a.id?'open':''}" id="edit-${a.id}">
       <input type="text" id="edit-name-${a.id}" value="${escHtml(a.name)}" maxlength="50" onkeydown="if(event.key==='Enter') saveEdit('${a.id}')" />
-      <span style="font-size:11px;color:var(--muted);">×</span>
-      <input type="number" id="edit-weight-${a.id}" value="${a.weight}" min="0.1" max="10" step="0.1" style="width:70px;" />
+      <span style="font-size:10px;color:var(--muted);font-family:var(--mono);">P:</span>
+      <div style="display:flex;gap:4px;" id="edit-prio-${a.id}">
+        <button class="priority-opt H ${p==='H'?'active':''}" onclick="setEditPriority('${a.id}','H')">H</button>
+        <button class="priority-opt M ${p==='M'?'active':''}" onclick="setEditPriority('${a.id}','M')">M</button>
+        <button class="priority-opt L ${p==='L'?'active':''}" onclick="setEditPriority('${a.id}','L')">L</button>
+      </div>
       <button class="btn-primary" style="padding:5px 12px;font-size:11px;" onclick="saveEdit('${a.id}')">save</button>
-      <button class="btn-cancel" style="padding:5px 12px;font-size:11px;" onclick="cancelEdit()">✕</button>
+      <button class="btn-cancel" style="padding:5px 12px;font-size:11px;" onclick="cancelEdit()">&#10005;</button>
     </div>
-  `).join('');
+    `;
+  }).join('');
 
-  if (editingId) {
-    document.getElementById('edit-name-' + editingId)?.focus();
-  }
-
-  // Wire up drag-and-drop
+  if (editingId) document.getElementById('edit-name-' + editingId)?.focus();
   setupDragReorder(list, day);
 }
 
-let dragSrcId = null;
+// Track edit priority in memory
+const editPriorityMap = {};
+function setEditPriority(id, p) {
+  editPriorityMap[id] = p;
+  const container = document.getElementById('edit-prio-' + id);
+  if (!container) return;
+  container.querySelectorAll('.priority-opt').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === p);
+  });
+}
 
+let dragSrcId = null;
 function setupDragReorder(list, day) {
   const rows = list.querySelectorAll('.activity-row[draggable]');
   rows.forEach(row => {
-    row.addEventListener('dragstart', e => {
-      dragSrcId = row.dataset.id;
-      row.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    row.addEventListener('dragend', e => {
-      row.classList.remove('dragging');
-      list.querySelectorAll('.activity-row').forEach(r => r.classList.remove('drag-over'));
-    });
+    row.addEventListener('dragstart', e => { dragSrcId = row.dataset.id; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+    row.addEventListener('dragend', () => { row.classList.remove('dragging'); list.querySelectorAll('.activity-row').forEach(r => r.classList.remove('drag-over')); });
     row.addEventListener('dragover', e => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
+      e.preventDefault(); e.dataTransfer.dropEffect = 'move';
       list.querySelectorAll('.activity-row').forEach(r => r.classList.remove('drag-over'));
       if (row.dataset.id !== dragSrcId) row.classList.add('drag-over');
     });
@@ -1365,20 +1023,16 @@ function setupDragReorder(list, day) {
       e.preventDefault();
       const targetId = row.dataset.id;
       if (!dragSrcId || dragSrcId === targetId) return;
-      const key = viewedKey();
-      const d = getDay(key);
+      const key = viewedKey(); const d = getDay(key);
       const srcIdx = d.activities.findIndex(a => a.id === dragSrcId);
       const tgtIdx = d.activities.findIndex(a => a.id === targetId);
       if (srcIdx === -1 || tgtIdx === -1) return;
       const [moved] = d.activities.splice(srcIdx, 1);
       d.activities.splice(tgtIdx, 0, moved);
-      // Propagate order to defaultActivities if editing today
       if (viewedKey() === todayKey()) {
-        state.defaultActivities = d.activities.map(a => ({ id: a.id, name: a.name, weight: a.weight }));
+        state.defaultActivities = d.activities.map(a => ({ id: a.id, name: a.name, priority: a.priority || 'M' }));
       }
-      markUserEdited(key);
-      saveState();
-      renderActivities(d);
+      markUserEdited(key); saveState(); renderActivities(d);
     });
   });
 }
@@ -1391,32 +1045,28 @@ function rateActivity(id, rating) {
   const day = getDay(viewedKey());
   const act = day.activities.find(a => a.id === id);
   if (!act) return;
-  act.rating = act.rating === rating ? null : rating;
-  saveState();
-  renderToday();
+  // Toggle off if already selected
+  const already = (act.rating === rating) ||
+    (rating === 'done' && act.rating === 'green') ||
+    (rating === 'started' && act.rating === 'yellow') ||
+    (rating === 'notstart' && act.rating === 'red');
+  act.rating = already ? null : rating;
+  saveState(); renderToday();
 }
 
 function markUserEdited(key) {
-  // Mark a future day as explicitly edited so it won't be overwritten by today's template
   if (key > todayKey() && state.days[key]) state.days[key].userEdited = true;
 }
 
 function removeActivity(id) {
-  const key = viewedKey();
-  const day = getDay(key);
+  const key = viewedKey(); const day = getDay(key);
   day.activities = day.activities.filter(a => a.id !== id);
-  markUserEdited(key);
-  saveState();
-  renderToday();
+  markUserEdited(key); saveState(); renderToday();
 }
 
 function setOverride(val) {
-  const key = viewedKey();
-  const day = getDay(key);
-  day.override = val;
-  // Don't mark userEdited for override — it's a score override, not an activity list change
-  saveState();
-  renderToday();
+  const key = viewedKey(); const day = getDay(key);
+  day.override = val; saveState(); renderToday();
 }
 
 function toggleAddForm() {
@@ -1428,62 +1078,44 @@ function toggleAddForm() {
 function addActivity() {
   const name = document.getElementById('new-act-name').value.trim();
   if (!name) { showToast('Enter an activity name'); return; }
-  const weight = parseFloat(document.getElementById('new-act-weight').value) || 1;
-  const key = viewedKey();
-  const day = getDay(key);
-  day.activities.push({ id: uid(), name, weight, rating: null });
+  const key = viewedKey(); const day = getDay(key);
+  day.activities.push({ id: uid(), name, priority: newPriority, rating: null });
   markUserEdited(key);
   document.getElementById('new-act-name').value = '';
-  document.getElementById('new-act-weight').value = '1';
+  newPriority = 'H'; selectNewPriority('H');
   document.getElementById('add-form').classList.remove('open');
-  saveState();
-  renderToday();
+  saveState(); renderToday();
 }
 
-function startEdit(id) {
-  editingId = id;
-  renderActivities(getDay(viewedKey()));
-}
+function startEdit(id) { editingId = id; renderActivities(getDay(viewedKey())); }
 
 function saveEdit(id) {
   const name = document.getElementById('edit-name-'+id)?.value.trim();
-  const weight = parseFloat(document.getElementById('edit-weight-'+id)?.value) || 1;
   if (!name) return;
-  const key = viewedKey();
-  const day = getDay(key);
+  const key = viewedKey(); const day = getDay(key);
   const act = day.activities.find(a => a.id === id);
   if (act) {
     const oldName = act.name;
     act.name = name;
-    act.weight = weight;
-    // Propagate to user-edited future days that have a matching activity name
-    propagateEdit(key, oldName, name, weight);
+    if (editPriorityMap[id]) act.priority = editPriorityMap[id];
+    delete editPriorityMap[id];
+    propagateEdit(key, oldName, name, act.priority);
   }
-  markUserEdited(key);
-  editingId = null;
-  saveState();
-  renderToday();
+  markUserEdited(key); editingId = null; saveState(); renderToday();
 }
 
-// Propagate name/weight changes to explicitly-edited future days.
-// Non-edited future days will automatically mirror today via getDay(), so no need to touch them.
-function propagateEdit(fromKey, oldName, newName, newWeight) {
+function propagateEdit(fromKey, oldName, newName, newPriority) {
   Object.keys(state.days).forEach(k => {
-    if (k <= fromKey) return;
-    if (!state.days[k].userEdited) return; // only propagate to days user has customised
+    if (k <= fromKey || !state.days[k].userEdited) return;
     state.days[k].activities.forEach(a => {
-      if (a.name === oldName) { a.name = newName; a.weight = newWeight; }
+      if (a.name === oldName) { a.name = newName; a.priority = newPriority; }
     });
   });
 }
 
-function cancelEdit() {
-  editingId = null;
-  renderActivities(getDay(viewedKey()));
-}
+function cancelEdit() { editingId = null; renderActivities(getDay(viewedKey())); }
 
-// ── Period stats helpers ──
-
+// ── Period stats ──
 function getDayPct(key) {
   const day = state.days[key];
   if (!day) return null;
@@ -1492,19 +1124,17 @@ function getDayPct(key) {
 }
 
 function buildPeriodStats(keys) {
-  let greens = 0, yellows = 0, reds = 0, rated = 0;
-  let bestStreak = 0, curStreak = 0;
-  const periodTotal = keys.length; // denominator = all days in the period
+  let greens = 0, yellows = 0, reds = 0, bestStreak = 0, curStreak = 0;
+  const periodTotal = keys.length;
   keys.forEach(k => {
     const pct = getDayPct(k);
     if (pct !== null) {
-      rated++;
       if (pct >= 80) { greens++; curStreak++; if(curStreak>bestStreak) bestStreak=curStreak; }
-      else if (pct >= 60) { yellows++; curStreak = 0; }
+      else if (pct >= 50) { yellows++; curStreak = 0; }
       else { reds++; curStreak = 0; }
-    } else { curStreak = 0; }
+    } else curStreak = 0;
   });
-  return { greens, yellows, reds, total: periodTotal, rated, bestStreak };
+  return { greens, yellows, reds, total: periodTotal, bestStreak };
 }
 
 function pctLabel(count, total) {
@@ -1516,16 +1146,15 @@ function renderStatCards(containerId, stats) {
   const { greens, yellows, reds, total, bestStreak } = stats;
   const gPct = total ? Math.round(greens/total*100) : 0;
   const yPct = total ? Math.round(yellows/total*100) : 0;
-  const rPct = total ? Math.round(reds/total*100) : 0;
   document.getElementById(containerId).innerHTML = `
     <div class="stat-card">
       <div class="stat-val green">${pctLabel(greens, total)}</div>
-      <div class="stat-lbl">Green days</div>
+      <div class="stat-lbl">Great days</div>
       <div class="pct-bar-wrap"><div class="pct-bar-fill green" style="width:${gPct}%"></div></div>
     </div>
     <div class="stat-card">
       <div class="stat-val yellow">${pctLabel(yellows, total)}</div>
-      <div class="stat-lbl">Yellow days</div>
+      <div class="stat-lbl">OK days</div>
       <div class="pct-bar-wrap"><div class="pct-bar-fill yellow" style="width:${yPct}%"></div></div>
     </div>
     <div class="stat-card">
@@ -1536,27 +1165,19 @@ function renderStatCards(containerId, stats) {
 }
 
 // ── Week ──
-
 function renderWeek() {
   const base = new Date(TODAY);
   base.setDate(base.getDate() - base.getDay() + (currentWeekOffset * 7));
   const days = [];
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(base); d.setDate(base.getDate() + i); days.push(d);
-  }
+  for (let i=0; i<7; i++) { const d = new Date(base); d.setDate(base.getDate()+i); days.push(d); }
 
   const fmt = d => d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
   document.getElementById('week-period').textContent = fmt(days[0]) + ' – ' + fmt(days[6]) + ', ' + days[0].getFullYear();
 
   const keys = days.map(d => dateKey(d));
-  const stats = buildPeriodStats(keys);
-  renderStatCards('week-stats', stats);
+  renderStatCards('week-stats', buildPeriodStats(keys));
 
-  const inStreak = days.map(d => {
-    const pct = getDayPct(dateKey(d));
-    return pct !== null && pct >= 80;
-  });
-
+  const inStreak = days.map(d => { const pct = getDayPct(dateKey(d)); return pct !== null && pct >= 80; });
   let html = '';
   days.forEach((d, i) => {
     const key = dateKey(d);
@@ -1576,20 +1197,14 @@ function renderWeek() {
 }
 
 // ── Month ──
-
 function renderMonth() {
   const d = new Date(TODAY.getFullYear(), TODAY.getMonth() + currentMonthOffset, 1);
   document.getElementById('month-period').textContent = d.toLocaleDateString('en-US', { month:'long', year:'numeric' });
-
   const daysInMonth = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
   const startDay = d.getDay();
-
   const keys = [];
-  for (let day=1; day<=daysInMonth; day++) {
-    keys.push(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
-  }
+  for (let day=1; day<=daysInMonth; day++) keys.push(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
   renderStatCards('month-stats', buildPeriodStats(keys));
-
   let html = '';
   for (let i=0; i<startDay; i++) html += `<div class="month-cell empty"></div>`;
   for (let day=1; day<=daysInMonth; day++) {
@@ -1602,8 +1217,7 @@ function renderMonth() {
   document.getElementById('month-grid').innerHTML = html;
 }
 
-// ── Year ──
-
+// ── Year — 12 rows (months) × 31 columns (days) ──
 function renderYear() {
   const year = TODAY.getFullYear() + currentYearOffset;
   document.getElementById('year-period').textContent = String(year);
@@ -1615,37 +1229,35 @@ function renderYear() {
   }
   renderStatCards('year-stats', buildPeriodStats(keys));
 
-  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const dowLabels = ['S','M','T','W','T','F','S'];
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const tkToday = todayKey();
 
+  // Day number header (1–31)
+  let numHtml = '<div class="year-day-num-lbl"></div>';
+  for (let d=1; d<=31; d++) numHtml += `<div class="year-day-num-lbl">${d}</div>`;
+  document.getElementById('year-day-numbers').innerHTML = numHtml;
+
+  // Month rows
   let html = '';
   for (let m=0; m<12; m++) {
-    const firstDay = new Date(year, m, 1);
-    const startDow = firstDay.getDay();
     const daysInMonth = new Date(year, m+1, 0).getDate();
-
-    html += `<div class="year-month-block">
-      <div class="year-month-label">${monthNames[m]}</div>
-      <div class="year-month-dow-row">${dowLabels.map(l=>`<div class="year-month-dow">${l}</div>`).join('')}</div>
-      <div class="year-month-cells">`;
-
-    // empty leading cells
-    for (let e=0; e<startDow; e++) html += `<div class="year-cell" style="opacity:0;pointer-events:none"></div>`;
-
-    for (let day=1; day<=daysInMonth; day++) {
-      const k = dateKey(new Date(year, m, day));
-      const pct = getDayPct(k);
-      const cls = scoreClass(pct);
-      const isToday = k === tkToday;
-      const d = new Date(year, m, day);
-      const title = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + (pct!==null?' — '+pct+'%':'');
-      html += `<div class="year-cell ${cls==='none'?'':cls}${isToday?' today-cell':''}" title="${title}" onclick="goToDay('${k}')"></div>`;
+    html += `<div class="year-month-row"><div class="year-month-lbl">${monthNames[m]}</div>`;
+    for (let day=1; day<=31; day++) {
+      if (day > daysInMonth) {
+        html += `<div class="year-day-cell empty"></div>`;
+      } else {
+        const k = dateKey(new Date(year, m, day));
+        const pct = getDayPct(k);
+        const cls = scoreClass(pct);
+        const isToday = k === tkToday;
+        const dt = new Date(year, m, day);
+        const title = dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + (pct!==null?' — '+pct+'%':'');
+        html += `<div class="year-day-cell ${cls==='none'?'':cls}${isToday?' today-cell':''}" title="${title}" onclick="goToDay('${k}')"></div>`;
+      }
     }
-
-    html += `</div></div>`;
+    html += `</div>`;
   }
-  document.getElementById('year-months-grid').innerHTML = html;
+  document.getElementById('year-heatmap-rows').innerHTML = html;
 }
 
 function navWeek(d) { currentWeekOffset += d; renderWeek(); }
@@ -1655,9 +1267,7 @@ function navYear(d) { currentYearOffset += d; renderYear(); }
 function goToDay(key) {
   const target = new Date(key + 'T00:00:00');
   const diff = Math.round((target - TODAY) / 86400000);
-  currentDayOffset = diff;
-  editingId = null;
-  switchView('today');
+  currentDayOffset = diff; editingId = null; switchView('today');
 }
 
 function switchView(v) {
@@ -1665,7 +1275,6 @@ function switchView(v) {
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
   document.querySelectorAll('.tab-btn')[['today','week','month','year'].indexOf(v)].classList.add('active');
-  // Reset offsets when switching to calendar tabs
   if (v === 'week') { currentWeekOffset = 0; renderWeek(); }
   if (v === 'month') { currentMonthOffset = 0; renderMonth(); }
   if (v === 'year') { currentYearOffset = 0; renderYear(); }
