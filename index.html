@@ -240,7 +240,7 @@
 
   .activity-row {
     display: flex; align-items: center; gap: 10px;
-    padding: 11px 14px; background: var(--card);
+    padding: 11px 14px 11px 30px; background: var(--card);
     border: 1px solid var(--border); border-radius: var(--radius-md);
     transition: border-color 0.2s, box-shadow 0.2s;
     cursor: grab; position: relative; overflow: hidden;
@@ -250,13 +250,18 @@
   .activity-row.drag-over { border-color: var(--text); box-shadow: 0 0 0 2px var(--text); }
 
   .activity-row::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 22px;
     border-radius: var(--radius-md) 0 0 var(--radius-md); transition: background 0.2s;
     background: var(--surface);
   }
   .activity-row[data-priority="H"]::before { background: var(--r); }
   .activity-row[data-priority="M"]::before { background: var(--y); }
   .activity-row[data-priority="L"]::before { background: var(--g); }
+
+  /* Status overrides priority edge color */
+  .activity-row.has-done::before { background: var(--g) !important; }
+  .activity-row.has-started::before { background: var(--y) !important; }
+  .activity-row.has-notstart::before { background: var(--r) !important; }
 
   .activity-row.has-done { background: var(--g-bg); border-color: rgba(22,163,74,0.2); }
   .activity-row.has-started { background: var(--y-bg); border-color: rgba(217,119,6,0.22); }
@@ -271,7 +276,7 @@
   .act-name { flex: 1; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 
   .priority-badge {
-    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    font-size: 13px; font-weight: 900; padding: 2px 7px;
     border-radius: 4px; white-space: nowrap; letter-spacing: 0.05em;
     font-family: var(--mono); flex-shrink: 0;
   }
@@ -401,9 +406,9 @@
     background: var(--card); border-radius: var(--radius-md);
     padding: 0.85rem 1rem; text-align: center; border: 1px solid var(--border);
   }
-  .stat-card:has(.stat-val.green) { border-left: 3px solid var(--g); }
-  .stat-card:has(.stat-val.yellow) { border-left: 3px solid var(--y); }
-  .stat-card:has(.stat-val.red) { border-left: 3px solid var(--r); }
+  .stat-card:has(.stat-val.green) { border-left: 5px solid var(--g); }
+  .stat-card:has(.stat-val.yellow) { border-left: 5px solid var(--y); }
+  .stat-card:has(.stat-val.red) { border-left: 5px solid var(--r); }
   .stat-val { font-family: var(--sans); font-size: 24px; font-weight: 900; margin-bottom: 2px; letter-spacing: -0.5px; }
   .stat-val.green { color: var(--g); }
   .stat-val.yellow { color: var(--y); }
@@ -411,8 +416,8 @@
   .stat-lbl { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
 
   /* ── Pct bar ── */
-  .pct-bar-wrap { margin-top: 6px; height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; }
-  .pct-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+  .pct-bar-wrap { margin-top: 8px; height: 7px; border-radius: 4px; background: var(--border); overflow: hidden; }
+  .pct-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
   .pct-bar-fill.green { background: var(--g); }
   .pct-bar-fill.yellow { background: var(--y); }
   .pct-bar-fill.red { background: var(--r); }
@@ -1006,9 +1011,9 @@ function renderActivities(day) {
       <div class="act-name">${escHtml(a.name)}</div>
       <div class="priority-badge ${p}">${p}</div>
       <div class="rating-btns">
-        <button class="rate-btn done ${ratingVal(a.rating)===100?'sel':''}" onclick="rateActivity('${a.id}','done')" title="Done — 100%">&#10003;</button>
-        <button class="rate-btn started ${ratingVal(a.rating)===50?'sel':''}" onclick="rateActivity('${a.id}','started')" title="In Progress — 50%">&#9654;</button>
-        <button class="rate-btn notstart ${(a.rating==='notstart'||a.rating==='red')?'sel':''}" onclick="rateActivity('${a.id}','notstart')" title="Not Started — 0%">&#8212;</button>
+        <button class="rate-btn done ${ratingVal(a.rating)===100?'sel':''}" onclick="rateActivity('${a.id}','done')" title="Done — 100%">&#10003;&#10003;</button>
+        <button class="rate-btn started ${ratingVal(a.rating)===50?'sel':''}" onclick="rateActivity('${a.id}','started')" title="In Progress — 50%">&#9654;&#9654;</button>
+        <button class="rate-btn notstart ${(a.rating==='notstart'||a.rating==='red')?'sel':''}" onclick="rateActivity('${a.id}','notstart')" title="Not Started — 0%">&#10005;</button>
       </div>
       <div class="act-divider"></div>
       <div class="act-actions">
