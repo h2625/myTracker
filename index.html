@@ -250,7 +250,7 @@
   .activity-row.drag-over { border-color: var(--text); box-shadow: 0 0 0 2px var(--text); }
 
   .activity-row::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
     border-radius: var(--radius-md) 0 0 var(--radius-md); transition: background 0.2s;
     background: var(--surface);
   }
@@ -280,15 +280,15 @@
   .priority-badge.L { background: var(--g-bg); color: var(--g-dk); }
 
   /* Done / Started / Not Started buttons */
-  .rating-btns { display: flex; gap: 3px; }
+  .rating-btns { display: flex; gap: 4px; }
   .rate-btn {
-    height: 30px; padding: 0 9px;
-    border-radius: 6px; border: 1.5px solid var(--border-md);
-    font-size: 10px; font-family: var(--mono); font-weight: 700;
+    height: 34px; padding: 0 11px;
+    border-radius: 7px; border: 2px solid var(--border-md);
+    font-size: 16px; font-family: var(--mono); font-weight: 900;
     cursor: pointer; transition: all 0.15s;
     display: flex; align-items: center; justify-content: center;
     letter-spacing: 0.02em; background: var(--surface); color: var(--muted);
-    white-space: nowrap;
+    white-space: nowrap; line-height: 1;
   }
   .rate-btn.done { color: var(--g-dk); }
   .rate-btn.started { color: var(--y-dk); }
@@ -513,7 +513,7 @@
   .reset-btn:hover { color: var(--text); background: var(--surface); border-color: var(--border-md); }
 
   @media (max-width: 480px) {
-    .rate-btn { padding: 0 6px; font-size: 9px; }
+    .rate-btn { padding: 0 8px; font-size: 14px; height: 30px; }
     .act-name { font-size: 13px; }
     .score-ring { width: 58px; height: 58px; font-size: 14px; }
   }
@@ -865,8 +865,43 @@ const MOTTOS = [
   { icon: '&#128170;', text: 'Discipline is freedom.', sub: 'Do the work' },
 ];
 
+const ACTIVITY_MOTTOS = {
+  done: [
+    { icon: '&#10003;', text: 'That\'s how it\'s done.', sub: 'Tick it off and keep going' },
+    { icon: '&#127942;', text: 'Completed. Momentum builds.', sub: 'One down, more to go' },
+    { icon: '&#128293;', text: 'Done. Next.', sub: 'Consistent action wins' },
+    { icon: '&#9889;', text: 'You delivered.', sub: 'Now do it again tomorrow' },
+  ],
+  started: [
+    { icon: '&#9654;', text: 'Started is halfway there.', sub: 'Keep the momentum going' },
+    { icon: '&#128200;', text: 'You\'re in motion.', sub: 'Don\'t stop now' },
+    { icon: '&#9203;', text: 'Progress over perfection.', sub: 'Finish what you started' },
+    { icon: '&#127981;', text: 'The hardest step was starting.', sub: 'See it through' },
+  ],
+  notstart: [
+    { icon: '&#8212;', text: 'Tomorrow is another chance.', sub: 'Plan to show up' },
+    { icon: '&#127919;', text: 'Honest tracking is the first step.', sub: 'Tomorrow, do the work' },
+    { icon: '&#9876;', text: 'Note it. Learn from it.', sub: 'Adjust, don\'t quit' },
+    { icon: '&#128170;', text: 'Acknowledging the gap is growth.', sub: 'Recommit and go again' },
+  ],
+};
+
 let lastMottoIdx = -1;
-function updateMotto(pct) {
+function updateMotto(pct, activityRating, activityName) {
+  const bar = document.getElementById('motto-bar');
+
+  // If triggered by an activity click, show activity-specific message
+  if (activityRating && ACTIVITY_MOTTOS[activityRating]) {
+    const pool = ACTIVITY_MOTTOS[activityRating];
+    const m = pool[Math.floor(Math.random() * pool.length)];
+    document.getElementById('motto-text').textContent = m.text;
+    document.getElementById('motto-sub').textContent = activityName ? activityName + ' — ' + m.sub : m.sub;
+    document.querySelector('.motto-icon').innerHTML = m.icon;
+    bar.style.background = activityRating === 'done' ? 'var(--g)' : activityRating === 'started' ? 'var(--y)' : 'var(--r)';
+    return;
+  }
+
+  // Default: random motto, color by day score
   let idx = Math.floor(Math.random() * MOTTOS.length);
   if (idx === lastMottoIdx) idx = (idx + 1) % MOTTOS.length;
   lastMottoIdx = idx;
@@ -874,7 +909,6 @@ function updateMotto(pct) {
   document.getElementById('motto-text').textContent = m.text;
   document.getElementById('motto-sub').textContent = m.sub;
   document.querySelector('.motto-icon').innerHTML = m.icon;
-  const bar = document.getElementById('motto-bar');
   bar.style.background = pct === null ? 'var(--text)' :
     pct >= 80 ? 'var(--g)' : pct >= 50 ? 'var(--y)' : 'var(--r)';
 }
@@ -891,7 +925,10 @@ function selectNewPriority(p) {
   });
 }
 
-function renderToday() {
+function renderToday() { _renderToday(true); }
+function renderTodayExceptMotto() { _renderToday(false); }
+
+function _renderToday(updateMottoFlag) {
   const key = viewedKey();
   const day = getDay(key);
   const vDate = viewedDate();
@@ -943,7 +980,7 @@ function renderToday() {
     weekday:'short', month:'short', day:'numeric', year:'numeric'
   });
 
-  updateMotto(pct);
+  if (updateMottoFlag) updateMotto(pct);
   renderActivities(day);
 }
 
@@ -970,8 +1007,8 @@ function renderActivities(day) {
       <div class="priority-badge ${p}">${p}</div>
       <div class="rating-btns">
         <button class="rate-btn done ${ratingVal(a.rating)===100?'sel':''}" onclick="rateActivity('${a.id}','done')" title="Done — 100%">&#10003;</button>
-        <button class="rate-btn started ${ratingVal(a.rating)===50?'sel':''}" onclick="rateActivity('${a.id}','started')" title="Started — 50%">&#126;</button>
-        <button class="rate-btn notstart ${(a.rating==='notstart'||a.rating==='red')?'sel':''}" onclick="rateActivity('${a.id}','notstart')" title="Not Started — 0%">&#10007;</button>
+        <button class="rate-btn started ${ratingVal(a.rating)===50?'sel':''}" onclick="rateActivity('${a.id}','started')" title="In Progress — 50%">&#9654;</button>
+        <button class="rate-btn notstart ${(a.rating==='notstart'||a.rating==='red')?'sel':''}" onclick="rateActivity('${a.id}','notstart')" title="Not Started — 0%">&#8212;</button>
       </div>
       <div class="act-divider"></div>
       <div class="act-actions">
@@ -1051,7 +1088,17 @@ function rateActivity(id, rating) {
     (rating === 'started' && act.rating === 'yellow') ||
     (rating === 'notstart' && act.rating === 'red');
   act.rating = already ? null : rating;
-  saveState(); renderToday();
+  saveState();
+
+  // Update banner with activity-specific message (only when setting, not clearing)
+  if (!already) {
+    const pct = day.override ? ratingVal(day.override) : calcScore(day);
+    updateMotto(pct, rating, act.name);
+    // Re-render everything except the motto
+    renderTodayExceptMotto();
+  } else {
+    renderToday();
+  }
 }
 
 function markUserEdited(key) {
