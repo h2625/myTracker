@@ -522,6 +522,396 @@
     .act-name { font-size: 13px; }
     .score-ring { width: 58px; height: 58px; font-size: 14px; }
   }
+
+  /* ── Flow View ── */
+  .flow-header-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .flow-settings-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--surface); border: 1px solid var(--border-md);
+    border-radius: var(--radius-md); padding: 6px 12px;
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
+    color: var(--muted); cursor: pointer; transition: all .15s;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .flow-settings-btn:hover { color: var(--text); border-color: var(--text); background: var(--card); }
+
+  .flow-setup-panel {
+    background: var(--card); border: 1px solid var(--border-md);
+    border-radius: var(--radius-lg); padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  }
+  .flow-setup-title {
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .08em;
+    font-family: var(--mono); margin-bottom: .65rem;
+  }
+  .flow-setup-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: .65rem; }
+  .flow-setup-item { display: flex; flex-direction: column; gap: 4px; }
+  .flow-setup-label { font-size: 10px; font-weight: 700; color: var(--muted); font-family: var(--mono); text-transform: uppercase; }
+  .flow-time-input {
+    background: var(--surface); border: 1px solid var(--border-md);
+    border-radius: var(--radius-md); padding: 7px 10px;
+    font-family: var(--mono); font-size: 13px; color: var(--text);
+    outline: none; transition: border-color .15s;
+    color-scheme: light dark;
+  }
+  .flow-time-input:focus { border-color: var(--text); }
+  .flow-setup-note {
+    font-size: 10px; color: var(--muted); font-family: var(--mono);
+    line-height: 1.6; opacity: .8;
+  }
+
+  /* Summary row */
+  .flow-summary-row {
+    display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap;
+  }
+  .flow-summary-chip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 10px;
+    font-size: 12px; font-weight: 800; font-family: var(--sans);
+    letter-spacing: .01em; flex: 1; min-width: 100px;
+    justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform 0.15s;
+  }
+  .flow-summary-chip:hover { transform: translateY(-1px); }
+  .flow-summary-chip .chip-count { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; font-family: var(--sans); }
+  .flow-summary-chip .chip-label { font-size: 10px; font-weight: 700; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; }
+  .flow-summary-chip-inner { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .flow-summary-chip.done-chip { background: var(--g); color: #fff; }
+  .flow-summary-chip.prog-chip { background: var(--y); color: #fff; }
+  .flow-summary-chip.skip-chip { background: var(--r); color: #fff; }
+  .flow-summary-chip.free-chip { background: var(--surface); color: var(--muted); border: 1.5px solid var(--border-md); box-shadow: none; }
+  /* Focus/completion bar styles handled inline */
+
+  /* Timeline canvas */
+  .flow-canvas-wrap {
+    display: flex; gap: 0;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); overflow: auto;
+    margin-bottom: 1rem;
+    min-height: 500px;
+    max-height: 75vh;
+  }
+  .flow-time-axis {
+    width: 44px; flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .flow-time-tick {
+    position: absolute; right: 0; left: 0;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+  }
+  .flow-time-tick-label {
+    font-size: 9px; font-weight: 700; font-family: var(--mono);
+    color: var(--muted); opacity: .75; white-space: nowrap;
+  }
+  .flow-time-tick-line {
+    position: absolute; right: -1px; width: 6px; height: 1px;
+    background: var(--border-md);
+  }
+
+  .flow-lanes {
+    flex: 1; position: relative; overflow: hidden;
+  }
+
+  /* External lane label bar (above canvas) */
+  .flow-lane-labels-bar {
+    display: flex; margin-bottom: 0;
+    border: 1px solid var(--border); border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    overflow: hidden; background: var(--card);
+  }
+  .flow-axis-spacer {
+    width: 44px; flex-shrink: 0; background: var(--surface);
+    border-right: 1px solid var(--border); padding: 7px 0;
+  }
+  .flow-lane-label {
+    flex: 1; text-align: center; padding: 7px 0;
+    font-size: 9px; font-weight: 700; font-family: var(--mono);
+    color: var(--muted); text-transform: uppercase; letter-spacing: .1em;
+  }
+  .flow-lane-label.left-label { border-right: 1px solid var(--border); }
+  .flow-lane-labels-bar + .flow-canvas-wrap {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    border-top: none;
+  }
+
+  /* Horizontal hour guides */
+  .flow-hour-guide {
+    position: absolute; left: 0; right: 0; height: 1px;
+    background: var(--border);
+    pointer-events: none; z-index: 0;
+  }
+  .flow-hour-guide.half { background: var(--border); opacity: .4; border-top: 1px dashed var(--border); height: 0; }
+
+  /* Current time needle */
+  .flow-now-line {
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #f43f5e, #fb7185);
+    z-index: 20; border-radius: 1px;
+    box-shadow: 0 0 6px rgba(244,63,94,.5);
+  }
+  .flow-now-dot {
+    position: absolute; left: -5px; top: -4px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #f43f5e; box-shadow: 0 0 8px rgba(244,63,94,.6);
+  }
+  .flow-now-label {
+    position: absolute; right: 4px; top: -9px;
+    font-size: 8px; font-weight: 900; font-family: var(--mono);
+    color: #f43f5e; white-space: nowrap;
+  }
+
+  /* Lane columns: left=planned, right=actual */
+  .flow-lane-planned, .flow-lane-actual {
+    position: absolute; top: 0; bottom: 0; width: calc(50% - 2px);
+  }
+  .flow-lane-planned { left: 2px; }
+  .flow-lane-actual { right: 2px; }
+
+
+  /* Blocks */
+  .flow-block {
+    position: absolute; left: 3px; right: 3px;
+    border-radius: 8px; overflow: hidden;
+    cursor: pointer; transition: transform .1s, box-shadow .1s;
+    z-index: 2; display: flex; flex-direction: column;
+    justify-content: flex-start; padding: 5px 7px;
+    min-height: 20px;
+  }
+  .flow-block:hover { transform: scaleX(1.03); box-shadow: 0 4px 16px rgba(0,0,0,.15); z-index: 10; }
+  .flow-block-name {
+    font-size: 10px; font-weight: 700; font-family: var(--sans);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.3;
+  }
+  .flow-block-time {
+    font-size: 8px; font-family: var(--mono); opacity: .8; margin-top: 1px;
+    white-space: nowrap; overflow: hidden;
+  }
+
+  /* sleep block */
+  .flow-block.sleep {
+    background: linear-gradient(160deg, #64748b, #475569);
+    color: rgba(255,255,255,.9);
+    cursor: default;
+  }
+  /* planned block */
+  .flow-block.planned {
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: #fff;
+  }
+  /* actual blocks */
+  .flow-block.actual-done {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(22,163,74,.3);
+  }
+  .flow-block.actual-started {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(217,119,6,.3);
+  }
+  .flow-block.actual-notstart {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(220,38,38,.25);
+  }
+  .flow-block.actual-unrated {
+    background: var(--surface);
+    color: var(--muted);
+    border: 1.5px dashed var(--border-md);
+  }
+
+  /* Gap / procrastination highlight */
+  .flow-gap-stripe {
+    position: absolute; left: 3px; right: 3px;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 4px,
+      rgba(220,38,38,.08) 4px,
+      rgba(220,38,38,.08) 8px
+    );
+    border: 1px dashed rgba(220,38,38,.2);
+    border-radius: 6px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Popup detail */
+  .flow-popup {
+    position: fixed; z-index: 500;
+    background: var(--card); border: 1px solid var(--border-md);
+    border-radius: var(--radius-lg); padding: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.22);
+    width: 280px;
+    font-family: var(--sans);
+    animation: popupIn .12s ease;
+    display: none;
+  }
+  .flow-popup.open { display: block; }
+  @keyframes popupIn { from { opacity:0; transform: scale(.92); } to { opacity:1; transform: scale(1); } }
+  .flow-popup-name { font-size: 13px; font-weight: 700; margin-bottom: 6px; padding-right: 20px; }
+  .flow-popup-section { 
+    background: var(--surface); border-radius: 8px; padding: 10px 12px;
+    margin-bottom: 8px; border: 1px solid var(--border);
+  }
+  .flow-popup-section-title {
+    font-size: 9px; font-weight: 700; font-family: var(--mono); color: var(--muted);
+    text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+  }
+  .flow-popup-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
+  .flow-popup-field:last-child { margin-bottom: 0; }
+  .flow-popup-field-label { font-size: 9px; font-weight: 700; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .flow-popup-row { display: flex; gap: 8px; align-items: flex-end; }
+  .flow-popup-label { font-size: 10px; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: .05em; flex-shrink: 0; width: 46px; }
+  .flow-popup-time { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .flow-popup-time-input {
+    background: var(--card); border: 1px solid var(--border-md);
+    border-radius: 5px; padding: 5px 8px;
+    font-size: 12px; font-family: var(--mono); color: var(--text);
+    width: 100%; outline: none;
+    color-scheme: light dark;
+    box-sizing: border-box;
+  }
+  .flow-popup-time-input:focus { border-color: var(--text); box-shadow: 0 0 0 2px rgba(0,0,0,.07); }
+  .flow-popup-dur-row { display: flex; gap: 6px; align-items: center; }
+  .flow-popup-dur-btn {
+    width: 28px; height: 28px; background: var(--surface); border: 1px solid var(--border-md);
+    border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: all .1s;
+  }
+  .flow-popup-dur-btn:hover { background: var(--text); color: var(--bg); }
+  .flow-popup-save { 
+    margin-top: 8px; width: 100%; padding: 8px 0;
+    background: var(--text); color: var(--bg);
+    border: none; border-radius: var(--radius-md);
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
+    cursor: pointer; text-transform: uppercase; letter-spacing: .04em;
+    transition: opacity .15s;
+  }
+  .flow-popup-save:hover { opacity: .8; }
+  .flow-popup-close {
+    position: absolute; top: 10px; right: 10px;
+    background: none; border: none; color: var(--muted);
+    cursor: pointer; font-size: 18px; line-height: 1;
+    padding: 2px; width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px; transition: all .1s;
+  }
+  .flow-popup-close:hover { color: var(--text); background: var(--surface); }
+
+  /* Lane divider label */
+  .flow-lane-divider {
+    position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+    background: var(--border); z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Flow legend */
+  .flow-legend {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    font-size: 9px; font-weight: 700; font-family: var(--mono);
+    color: var(--muted); text-transform: uppercase; letter-spacing: .05em;
+    margin-top: .25rem;
+  }
+  .flow-legend-item { display: flex; align-items: center; gap: 4px; }
+  .flow-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  /* Edit duration handle */
+  .flow-duration-row { display: flex; gap: 4px; align-items: center; }
+  .flow-dur-input {
+    background: var(--surface); border: 1px solid var(--border-md);
+    border-radius: 5px; padding: 3px 6px;
+    font-size: 11px; font-family: var(--mono); color: var(--text);
+    width: 52px; outline: none;
+    -moz-appearance: textfield;
+  }
+  .flow-dur-input::-webkit-inner-spin-button,
+  .flow-dur-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .flow-dur-input:focus { border-color: var(--text); }
+
+  /* Bottom drag resize handle */
+  .flow-block-resize {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 8px; cursor: ns-resize; z-index: 20;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .15s;
+  }
+  .flow-block:hover .flow-block-resize { opacity: 1; }
+  .flow-block-resize::after {
+    content: ''; display: block;
+    width: 24px; height: 3px; border-radius: 2px;
+    background: rgba(255,255,255,0.6);
+  }
+
+  /* Overlap warning */
+  .flow-block.overlap-warn {
+    outline: 2px solid #f43f5e;
+    outline-offset: 1px;
+    z-index: 15 !important;
+  }
+  .flow-overlap-badge {
+    position: absolute; top: 3px; right: 5px;
+    background: #f43f5e; color: #fff; border-radius: 4px;
+    font-size: 8px; font-weight: 900; font-family: var(--mono);
+    padding: 1px 4px; z-index: 25; pointer-events: none; white-space: nowrap;
+  }
+
+  /* 24hr pie visual */
+  .flow-pie-section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .flow-pie-title {
+    font-size: 10px; font-weight: 700; font-family: var(--mono);
+    color: var(--muted); text-transform: uppercase; letter-spacing: .08em;
+    margin-bottom: 1rem;
+  }
+  .flow-pie-layout { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .flow-pie-wrap { flex-shrink: 0; position: relative; width: 320px; height: 320px; }
+  .flow-pie-center-text {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; pointer-events: none;
+  }
+  .flow-pie-center-pct { font-size: 28px; font-weight: 900; font-family: var(--sans); letter-spacing: -1px; }
+  .flow-pie-center-label { font-size: 10px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
+  .flow-pie-legend { width: 100%; display: flex; flex-direction: column; gap: 4px; }
+  .flow-pie-legend-item {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .flow-pie-legend-dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
+  .flow-pie-legend-name { font-size: 12px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .flow-pie-legend-hrs { font-size: 11px; font-family: var(--mono); color: var(--muted); font-weight: 700; white-space: nowrap; }
+
+  /* Signal bar below pie */
+  .flow-time-signal {
+    margin-top: 1rem; padding: 12px 16px;
+    border-radius: var(--radius-md); display: flex; align-items: center; gap: 12px;
+  }
+  .flow-time-signal.abundant { background: var(--g-bg); border: 1px solid rgba(22,163,74,.2); }
+  .flow-time-signal.moderate { background: var(--y-bg); border: 1px solid rgba(217,119,6,.2); }
+  .flow-time-signal.tight { background: var(--r-bg); border: 1px solid rgba(220,38,38,.2); }
+  .flow-time-signal-icon { font-size: 22px; flex-shrink: 0; }
+  .flow-time-signal-body { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-width: 0; }
+  .flow-time-signal-text { font-size: 15px; font-weight: 900; letter-spacing: -0.3px; line-height: 1.2; white-space: nowrap; }
+  .flow-time-signal-sub { font-size: 11px; font-family: var(--mono); opacity: .75; font-weight: 600; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -549,7 +939,7 @@
 
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchView('today')">Day</button>
-    <button class="tab-btn" onclick="switchView('week')">Week</button>
+    <button class="tab-btn" onclick="switchView('flow')">Flow</button>
     <button class="tab-btn" onclick="switchView('month')">Month</button>
     <button class="tab-btn" onclick="switchView('year')">Year</button>
   </div>
@@ -634,26 +1024,7 @@
     </div>
 
     <div class="activity-list" id="activity-list"></div>
-  </div>
 
-  <!-- WEEK -->
-  <div id="view-week" class="view">
-    <div class="cal-nav">
-      <button class="nav-btn" onclick="navWeek(-1)"><i class="ti ti-chevron-left"></i></button>
-      <div class="cal-period" id="week-period"></div>
-      <button class="nav-btn" onclick="navWeek(1)"><i class="ti ti-chevron-right"></i></button>
-    </div>
-    <div class="stats-row" id="week-stats"></div>
-    <div class="day-header-row">
-      <div class="day-header">Sun</div><div class="day-header">Mon</div><div class="day-header">Tue</div>
-      <div class="day-header">Wed</div><div class="day-header">Thu</div><div class="day-header">Fri</div><div class="day-header">Sat</div>
-    </div>
-    <div class="week-grid" id="week-grid"></div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot green"></div> Great (&ge;80%)</div>
-      <div class="legend-item"><div class="legend-dot yellow"></div> OK (50–79%)</div>
-      <div class="legend-item"><div class="legend-dot red"></div> Missed (&lt;50%)</div>
-    </div>
   </div>
 
   <!-- MONTH -->
@@ -664,15 +1035,21 @@
       <button class="nav-btn" onclick="navMonth(1)"><i class="ti ti-chevron-right"></i></button>
     </div>
     <div class="stats-row" id="month-stats"></div>
+    <!-- Current week summary boxes (shown only for the current month) -->
+    <div id="month-week-summary" style="display:none;margin-bottom:1rem;">
+      <div style="font-size:10px;font-weight:700;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">This Week</div>
+      <div id="month-week-summary-boxes" style="display:flex;gap:8px;margin-bottom:8px;"></div>
+      <div id="month-week-summary-days" style="display:flex;gap:6px;"></div>
+    </div>
     <div class="day-header-row">
       <div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div>
       <div class="day-header">We</div><div class="day-header">Th</div><div class="day-header">Fr</div><div class="day-header">Sa</div>
     </div>
     <div class="month-grid" id="month-grid"></div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot green"></div> Great</div>
-      <div class="legend-item"><div class="legend-dot yellow"></div> OK</div>
-      <div class="legend-item"><div class="legend-dot red"></div> Missed</div>
+      <div class="legend-item"><div class="legend-dot green"></div> Great (&ge;80%)</div>
+      <div class="legend-item"><div class="legend-dot yellow"></div> OK (50–79%)</div>
+      <div class="legend-item"><div class="legend-dot red"></div> Missed (&lt;50%)</div>
     </div>
   </div>
 
@@ -695,6 +1072,93 @@
       <div class="legend-item"><div class="legend-dot yellow"></div> OK</div>
       <div class="legend-item"><div class="legend-dot red"></div> Missed</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--surface);border:1px solid var(--border-md);"></div> No data</div>
+    </div>
+  </div>
+
+  <!-- FLOW -->
+  <div id="view-flow" class="view">
+    <div class="flow-header-row">
+      <div class="section-title" style="font-size:11px;letter-spacing:.08em;">⚡ DAY ARENA</div>
+      <button class="flow-settings-btn" onclick="toggleFlowSettings()" title="Configure sleep & wake">
+        <i class="ti ti-settings-2" style="font-size:13px"></i> Setup
+      </button>
+    </div>
+
+    <!-- Flow date navigation (mirrors Day tab) -->
+    <div class="day-nav" style="margin-bottom:0.75rem;">
+      <button class="day-nav-btn" onclick="navFlowDay(-1)" title="Previous day"><i class="ti ti-chevron-left"></i></button>
+      <div class="day-nav-label" id="flow-day-nav-label"></div>
+      <button class="day-nav-btn" onclick="navFlowDay(1)" title="Next day"><i class="ti ti-chevron-right"></i></button>
+      <button class="day-nav-today-btn hidden" id="flow-go-today-btn" onclick="goToFlowToday()">jump to today</button>
+    </div>
+
+    <div class="flow-setup-panel" id="flow-setup-panel" style="display:none;">
+      <div class="flow-setup-title">Sleep &amp; Wake Times <span style="font-size:9px;font-weight:400;opacity:.6;margin-left:6px;">· applied to all days</span></div>
+      <div class="flow-setup-grid">
+        <div class="flow-setup-item">
+          <label class="flow-setup-label">Bed time</label>
+          <input type="time" id="flow-sleep-start" value="23:00" onchange="saveFlowSettings()" class="flow-time-input" />
+        </div>
+        <div class="flow-setup-item">
+          <label class="flow-setup-label">Wake up</label>
+          <input type="time" id="flow-wake-up" value="07:00" onchange="saveFlowSettings()" class="flow-time-input" />
+        </div>
+      </div>
+      <div class="flow-setup-note">Sleep/wake times apply globally to all days. Activities from your Day tab are laid out in order, 1 hr each by default. Adjust planned &amp; actual times directly on each block.</div>
+    </div>
+
+    <div class="flow-summary-row" id="flow-summary-row"></div>
+
+    <!-- 24hr Pie Visual -->
+    <div class="flow-pie-section" id="flow-pie-section">
+      <div class="flow-pie-title" id="flow-pie-title">🕐 Day Clock — <span id="flow-pie-date-label"></span></div>
+
+      <!-- Signal bar ABOVE the ring -->
+      <div class="flow-time-signal" id="flow-time-signal" style="margin-top:0;margin-bottom:1rem;">
+        <div class="flow-time-signal-icon" id="flow-time-signal-icon">⏳</div>
+        <div class="flow-time-signal-body">
+          <div class="flow-time-signal-text" id="flow-time-signal-text">Calculating...</div>
+          <div class="flow-time-signal-sub" id="flow-time-signal-sub"></div>
+        </div>
+      </div>
+
+      <div class="flow-pie-layout">
+        <div class="flow-pie-wrap">
+          <svg id="flow-pie-svg" width="320" height="320" viewBox="-18 -18 396 396"></svg>
+          <div class="flow-pie-center-text">
+            <div class="flow-pie-center-pct" id="flow-pie-pct">—</div>
+            <div class="flow-pie-center-label" id="flow-pie-center-label">active</div>
+          </div>
+        </div>
+        <div class="flow-pie-legend" id="flow-pie-legend"></div>
+      </div>
+
+      <!-- Day Summary below ring (shown for past/completed days) -->
+      <div id="flow-day-stats" style="display:none;margin-top:1rem;padding:12px 14px;background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">📊 Day Summary</div>
+        <div id="flow-day-stats-content"></div>
+      </div>
+    </div>
+
+    <!-- Day Activity Summary (from Day tab) shown in Flow tab -->
+    <div id="today-day-summary" style="display:none;margin-bottom:1rem;"></div>
+
+    <div class="flow-lane-labels-bar">
+      <div class="flow-axis-spacer"></div>
+      <div class="flow-lane-label left-label">📋 Planned <span style="font-size:8px;opacity:.5;font-weight:400;">(tap to copy)</span></div>
+      <div class="flow-lane-label">⚡ Actual</div>
+    </div>
+    <div class="flow-canvas-wrap">
+      <div class="flow-time-axis" id="flow-time-axis"></div>
+      <div class="flow-lanes" id="flow-lanes"></div>
+    </div>
+
+    <div class="flow-legend">
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:linear-gradient(135deg,#6366f1,#818cf8)"></div>Planned</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--g)"></div>Done ✓</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--y)"></div>In Progress ▶</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:#1e3a5f;opacity:.7;"></div>💤 Sleep</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:#e2e8f0;border:1.5px dashed #94a3b8;"></div>Free time</div>
     </div>
   </div>
 </div>
@@ -805,7 +1269,7 @@ function calcStreak() {
   return streak;
 }
 
-let currentDayOffset = 0, currentWeekOffset = 0, currentMonthOffset = 0, currentYearOffset = 0;
+let currentDayOffset = 0, currentWeekOffset = 0, currentMonthOffset = 0, currentYearOffset = 0, currentFlowDayOffset = 0;
 
 function viewedKey() {
   const d = new Date(TODAY); d.setDate(d.getDate() + currentDayOffset); return dateKey(d);
@@ -922,6 +1386,22 @@ function updateMotto(pct, activityRating, activityName) {
 function navDay(delta) { currentDayOffset += delta; editingId = null; renderToday(); }
 function goToToday() { currentDayOffset = 0; editingId = null; renderToday(); }
 
+// ── Flow tab navigation (independent from Day tab) ──
+function flowViewedKey() {
+  const d = new Date(TODAY); d.setDate(d.getDate() + currentFlowDayOffset); return dateKey(d);
+}
+function flowViewedDate() {
+  const d = new Date(TODAY); d.setDate(d.getDate() + currentFlowDayOffset); return d;
+}
+function navFlowDay(delta) {
+  currentFlowDayOffset += delta;
+  renderFlow();
+}
+function goToFlowToday() {
+  currentFlowDayOffset = 0;
+  renderFlow();
+}
+
 let newPriority = 'H';
 function selectNewPriority(p) {
   newPriority = p;
@@ -987,6 +1467,97 @@ function _renderToday(updateMottoFlag) {
 
   if (updateMottoFlag) updateMotto(pct);
   renderActivities(day);
+}
+
+function renderTodayDaySummary(day, isToday, key) {
+  const summaryEl = document.getElementById('today-day-summary');
+  if (!summaryEl) return;
+
+  let fs = { sleepStart: '23:00', wakeUp: '07:00' };
+  try {
+    const s = localStorage.getItem('dpt_flow_v1');
+    if (s) { const d = JSON.parse(s); if (d.settings) fs = d.settings; }
+  } catch(e) {}
+
+  const wakeMin = timeToMin(fs.wakeUp);
+  let sleepMin = timeToMin(fs.sleepStart);
+  if (sleepMin <= wakeMin) sleepMin += 24 * 60;
+  const daySpanMins = sleepMin - wakeMin;
+
+  const acts = day.activities;
+  let doneC = 0, progC = 0, skipC = 0;
+  acts.forEach(a => {
+    const r = a.rating;
+    if (r === 'done' || r === 'green') doneC++;
+    else if (r === 'started' || r === 'yellow') progC++;
+    else if (r === 'notstart' || r === 'red') skipC++;
+  });
+  const ratedTotal = doneC + progC + skipC;
+
+  let activeMinutes = 0;
+  try {
+    const fb = localStorage.getItem('dpt_flow_v1');
+    if (fb) {
+      const fd = JSON.parse(fb);
+      const blocks = fd.blocks || {};
+      acts.forEach(a => {
+        const isRed = a.rating === 'notstart' || a.rating === 'red';
+        if (isRed || !a.rating) return;
+        const bKey = key + '_' + a.id;
+        const b = blocks[bKey];
+        const dur = b ? (b.actualDur || b.plannedDur || 60) : 60;
+        activeMinutes += dur;
+      });
+    }
+  } catch(e) {}
+  if (activeMinutes === 0 && (doneC + progC) > 0) activeMinutes = (doneC + progC) * 60;
+
+  const idleMins = Math.max(0, daySpanMins - activeMinutes);
+  const actPct = daySpanMins > 0 ? Math.min(100, Math.round((activeMinutes / daySpanMins) * 100)) : 0;
+  const idlePct = 100 - actPct;
+
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  let remainingMins = isToday ? Math.max(0, sleepMin - nowMin) : 0;
+
+  let html = '<div style="font-size:10px;font-weight:700;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">\u{1F4CA} Day Summary</div>';
+
+  if (isToday && remainingMins > 0) {
+    const remH = Math.floor(remainingMins / 60), remM = remainingMins % 60;
+    const remStr = remH + 'h' + (remM > 0 ? remM + 'm' : '');
+    const remColor = remainingMins < 120 ? 'var(--r)' : remainingMins < 240 ? 'var(--y)' : 'var(--g)';
+    html += `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:26px;font-weight:900;font-family:var(--sans);color:${remColor};letter-spacing:-0.5px;line-height:1;flex-shrink:0;">${remStr}</div>
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        <div style="font-size:12px;font-weight:700;line-height:1.2;">Until bedtime</div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--muted);white-space:nowrap;">${fs.wakeUp}–${fs.sleepStart} · ${(daySpanMins/60).toFixed(0)}h window</div>
+      </div>
+    </div>`;
+  }
+
+  if (ratedTotal > 0) {
+    html += `<div style="display:flex;gap:8px;margin-bottom:8px;">
+      <div style="flex:1;background:var(--g-bg);border:1px solid rgba(22,163,74,.2);border-radius:8px;padding:10px 12px;text-align:center;">
+        <div style="font-size:20px;font-weight:900;font-family:var(--sans);color:var(--g);letter-spacing:-1px;">${actPct}%</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;">Active</div>
+        <div style="font-size:10px;font-weight:600;color:var(--g);margin-top:2px;">${(activeMinutes/60).toFixed(1)}h</div>
+      </div>
+      <div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center;">
+        <div style="font-size:20px;font-weight:900;font-family:var(--sans);color:var(--muted);letter-spacing:-1px;">${idlePct}%</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;">Idle</div>
+        <div style="font-size:10px;font-weight:600;color:var(--muted);margin-top:2px;">${(idleMins/60).toFixed(1)}h</div>
+      </div>
+    </div>
+    <div style="height:7px;background:var(--surface);border-radius:4px;overflow:hidden;margin-bottom:5px;">
+      <div style="width:${actPct}%;height:100%;background:var(--g);border-radius:4px;transition:width .5s;"></div>
+    </div>
+    <div style="font-size:9px;font-family:var(--mono);color:var(--muted);">Estimated from flow blocks · configure in Flow tab</div>`;
+  } else if (!isToday || remainingMins === 0) {
+    html += '<div style="font-size:11px;color:var(--muted);font-family:var(--mono);padding:4px 0;">Rate activities to see breakdown.</div>';
+  }
+
+  summaryEl.style.display = 'block';
+  summaryEl.innerHTML = `<div style="padding:12px 14px;background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border);">${html}</div>`;
 }
 
 let overridePanelOpen = false;
@@ -1257,6 +1828,62 @@ function renderMonth() {
   const keys = [];
   for (let day=1; day<=daysInMonth; day++) keys.push(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
   renderStatCards('month-stats', buildPeriodStats(keys));
+
+  // Current week summary boxes (only show if viewing current month)
+  const weekSummaryEl = document.getElementById('month-week-summary');
+  const weekBoxesEl = document.getElementById('month-week-summary-boxes');
+  const weekDaysEl = document.getElementById('month-week-summary-days');
+  if (weekSummaryEl && weekBoxesEl && weekDaysEl && currentMonthOffset === 0) {
+    const weekBase = new Date(TODAY);
+    weekBase.setDate(weekBase.getDate() - weekBase.getDay());
+    const weekDays = [];
+    for (let i=0; i<7; i++) { const wd = new Date(weekBase); wd.setDate(weekBase.getDate()+i); weekDays.push(wd); }
+    const weekKeys = weekDays.map(wd => dateKey(wd));
+    const weekStats = buildPeriodStats(weekKeys);
+    const { greens, yellows, reds, total: wTotal, bestStreak: wBestStreak } = weekStats;
+    const gPct = wTotal ? Math.round(greens / wTotal * 100) : 0;
+    const yPct = wTotal ? Math.round(yellows / wTotal * 100) : 0;
+
+    // Summary boxes
+    weekBoxesEl.innerHTML = `
+      <div style="flex:1;background:var(--g-bg);border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:12px 10px;text-align:center;">
+        <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--g);letter-spacing:-1px;">${wTotal ? gPct + '%' : '—'}</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--g-dk);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;font-weight:700;">Great Days</div>
+        <div style="font-size:10px;color:var(--g);font-weight:600;margin-top:2px;opacity:.8;">${greens} of ${wTotal}</div>
+      </div>
+      <div style="flex:1;background:var(--y-bg);border:1px solid rgba(217,119,6,.2);border-radius:10px;padding:12px 10px;text-align:center;">
+        <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--y);letter-spacing:-1px;">${wTotal ? yPct + '%' : '—'}</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--y-dk);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;font-weight:700;">OK Days</div>
+        <div style="font-size:10px;color:var(--y);font-weight:600;margin-top:2px;opacity:.8;">${yellows} of ${wTotal}</div>
+      </div>
+      <div style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;">
+        <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--text);letter-spacing:-1px;">${wBestStreak}</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;font-weight:700;">Best Streak</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:600;margin-top:2px;opacity:.8;">this week</div>
+      </div>`;
+
+    // Day pills
+    const dayNames = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+    let daysHtml = '';
+    weekDays.forEach((wd, i) => {
+      const wk = weekKeys[i];
+      const wp = getDayPct(wk);
+      const wc = scoreClass(wp);
+      const isT = wk === todayKey();
+      const bgColor = wc === 'green' ? 'var(--g)' : wc === 'yellow' ? 'var(--y)' : wc === 'red' ? 'var(--r)' : 'var(--surface)';
+      const txtColor = wc !== 'none' ? '#fff' : 'var(--muted)';
+      daysHtml += `<div onclick="goToDay('${wk}')" style="flex:1;text-align:center;cursor:pointer;background:${bgColor};border-radius:8px;padding:7px 2px;${isT?'outline:2px solid var(--text);outline-offset:2px;':''}border:1px solid ${wc!=='none'?'transparent':'var(--border)'};">
+        <div style="font-size:9px;font-weight:700;font-family:var(--mono);color:${txtColor};opacity:0.85;text-transform:uppercase;">${dayNames[i]}</div>
+        <div style="font-size:12px;font-weight:900;font-family:var(--sans);color:${txtColor};margin-top:2px;">${wd.getDate()}</div>
+        ${wp !== null ? `<div style="font-size:8px;font-family:var(--mono);color:${txtColor};opacity:0.85;margin-top:1px;">${wp}%</div>` : ''}
+      </div>`;
+    });
+    weekDaysEl.innerHTML = daysHtml;
+    weekSummaryEl.style.display = 'block';
+  } else if (weekSummaryEl) {
+    weekSummaryEl.style.display = 'none';
+  }
+
   let html = '';
   for (let i=0; i<startDay; i++) html += `<div class="month-cell empty"></div>`;
   for (let day=1; day<=daysInMonth; day++) {
@@ -1319,19 +1946,1018 @@ function navYear(d) { currentYearOffset += d; renderYear(); }
 function goToDay(key) {
   const target = new Date(key + 'T00:00:00');
   const diff = Math.round((target - TODAY) / 86400000);
-  currentDayOffset = diff; editingId = null; switchView('today');
+  currentDayOffset = diff;
+  currentFlowDayOffset = diff; // keep them in sync
+  editingId = null; switchView('today');
 }
 
 function switchView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
-  document.querySelectorAll('.tab-btn')[['today','week','month','year'].indexOf(v)].classList.add('active');
-  if (v === 'week') { currentWeekOffset = 0; renderWeek(); }
+  document.querySelectorAll('.tab-btn')[['today','flow','month','year'].indexOf(v)].classList.add('active');
   if (v === 'month') { currentMonthOffset = 0; renderMonth(); }
   if (v === 'year') { currentYearOffset = 0; renderYear(); }
-  if (v === 'today') renderToday();
+  if (v === 'today') {
+    // Sync Day tab to Flow tab's current day
+    currentDayOffset = currentFlowDayOffset;
+    renderToday();
+  }
+  if (v === 'flow') {
+    // Sync Flow tab to Day tab's current day
+    currentFlowDayOffset = currentDayOffset;
+    renderFlow();
+  }
 }
+
+// ═══════════════════════════════════════════════════════
+// FLOW VIEW
+// ═══════════════════════════════════════════════════════
+
+let flowSettings = { sleepStart: '23:00', wakeUp: '07:00' };
+let flowBlocks = {}; // keyed by dateKey + activityId: { plannedStart, plannedDur, actualStart, actualDur }
+let activePopup = null;
+
+function loadFlowData() {
+  try {
+    const s = localStorage.getItem('dpt_flow_v1');
+    if (s) { const d = JSON.parse(s); flowSettings = d.settings || flowSettings; flowBlocks = d.blocks || {}; }
+  } catch(e) {}
+  // sync inputs
+  const ss = document.getElementById('flow-sleep-start');
+  const wu = document.getElementById('flow-wake-up');
+  if (ss) ss.value = flowSettings.sleepStart;
+  if (wu) wu.value = flowSettings.wakeUp;
+}
+
+function saveFlowData() {
+  try { localStorage.setItem('dpt_flow_v1', JSON.stringify({ settings: flowSettings, blocks: flowBlocks })); } catch(e) {}
+}
+
+function saveFlowSettings() {
+  flowSettings.sleepStart = document.getElementById('flow-sleep-start').value || '23:00';
+  flowSettings.wakeUp = document.getElementById('flow-wake-up').value || '07:00';
+  saveFlowData(); renderFlow();
+}
+
+function toggleFlowSettings() {
+  const p = document.getElementById('flow-setup-panel');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+
+// Convert "HH:MM" to minutes from midnight
+function timeToMin(t) {
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+function minToTime(m) {
+  const h = Math.floor(m / 60) % 24;
+  const mm = m % 60;
+  return String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+}
+function fmtTime(t) {
+  const [h, m] = t.split(':').map(Number);
+  const ampm = h < 12 ? 'am' : 'pm';
+  const hh = h % 12 || 12;
+  return hh + (m ? ':' + String(m).padStart(2,'0') : '') + ampm;
+}
+
+function getFlowDayRange() {
+  // Wake = start of display, sleepStart = end of display (could be next-day if <wakeUp, so add 24h)
+  let wakeMin = timeToMin(flowSettings.wakeUp);
+  let sleepMin = timeToMin(flowSettings.sleepStart);
+  if (sleepMin <= wakeMin) sleepMin += 24 * 60; // crosses midnight
+  return { wakeMin, sleepMin, totalMin: sleepMin - wakeMin };
+}
+
+function getOrInitBlock(key, actId, defaultStart, defaultDur) {
+  const bKey = key + '_' + actId;
+  if (!flowBlocks[bKey]) {
+    flowBlocks[bKey] = {
+      plannedStart: defaultStart,
+      plannedDur: defaultDur,
+      actualStart: defaultStart,
+      actualDur: defaultDur
+    };
+  }
+  return flowBlocks[bKey];
+}
+
+function renderFlow() {
+  loadFlowData();
+  const key = flowViewedKey();
+  const vDate = flowViewedDate();
+  const isToday = currentFlowDayOffset === 0;
+  const isFuture = currentFlowDayOffset > 0;
+
+  // Update flow date nav label (same style as Day tab)
+  const navLabel = document.getElementById('flow-day-nav-label');
+  if (navLabel) {
+    if (isToday) {
+      navLabel.textContent = 'Today — ' + vDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    } else {
+      navLabel.textContent = vDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    }
+  }
+  const todayBtn = document.getElementById('flow-go-today-btn');
+  if (todayBtn) todayBtn.classList.toggle('hidden', isToday);
+
+  // Update pie date label
+  const pieDateLabel = document.getElementById('flow-pie-date-label');
+  if (pieDateLabel) {
+    pieDateLabel.textContent = isToday
+      ? vDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
+      : vDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  const day = getDay(key);
+  const activities = day.activities;
+  const { wakeMin, sleepMin, totalMin } = getFlowDayRange();
+
+  const CANVAS_H = Math.max(480, totalMin * 1.2); // px per full range
+  const PX_PER_MIN = CANVAS_H / totalMin;
+
+  // Build sleep block
+  // Sleep before wake: yesterday's sleep → wake  (rendered at top, 0 to 0, essentially a header)
+  // Sleep at end: sleepStart → end of canvas
+
+  // ── Assign default planned slots ──
+  // Starts after wake + 30 min buffer, each 1h
+  const WAKE_BUFFER = 30; // mins after wake before first task
+  let cursor = wakeMin + WAKE_BUFFER;
+
+  const blockData = activities.map((act, i) => {
+    const defaultDur = 60;
+    const defaultStart = Math.min(cursor, sleepMin - defaultDur);
+    cursor += defaultDur + 10; // 10 min buffer between tasks
+    const b = getOrInitBlock(key, act.id, minToTime(defaultStart), defaultDur);
+    return { act, b };
+  });
+  saveFlowData();
+
+  // ── Build summary ──
+  let doneCount = 0, progCount = 0, skipCount = 0, unratedCount = 0;
+  activities.forEach(a => {
+    const r = a.rating;
+    if (r === 'done' || r === 'green') doneCount++;
+    else if (r === 'started' || r === 'yellow') progCount++;
+    else if (r === 'notstart' || r === 'red') skipCount++;
+    else unratedCount++;
+  });
+  const total = activities.length;
+  const procPct = total ? Math.round((skipCount / total) * 100) : 0;
+
+  let summaryHtml = '';
+  if (doneCount) summaryHtml += `<div class="flow-summary-chip done-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${doneCount}</span><span class="chip-label">Done</span></div></div>`;
+  if (progCount) summaryHtml += `<div class="flow-summary-chip prog-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${progCount}</span><span class="chip-label">In Progress</span></div></div>`;
+  if (skipCount) summaryHtml += `<div class="flow-summary-chip skip-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${skipCount}</span><span class="chip-label">Skipped</span></div></div>`;
+  if (unratedCount) summaryHtml += `<div class="flow-summary-chip free-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${unratedCount}</span><span class="chip-label">Unrated</span></div></div>`;
+
+  // Focus bar: % of rated activities that were done or in-progress (not skipped)
+  const ratedTotal = doneCount + progCount + skipCount;
+  document.getElementById('flow-summary-row').innerHTML = summaryHtml;
+
+  // ── Day Summary in Flow tab (only for today; past days show flow-day-stats) ──
+  const summaryContainer = document.getElementById('today-day-summary');
+  if (!isToday) {
+    if (summaryContainer) summaryContainer.style.display = 'none';
+  } else {
+    renderTodayDaySummary(day, isToday, key);
+  }
+
+  // ── Time axis ──
+  const axisEl = document.getElementById('flow-time-axis');
+  axisEl.style.height = CANVAS_H + 'px';
+  let axisHtml = '';
+  // Draw a tick every hour
+  const startHour = Math.ceil(wakeMin / 60);
+  const endHour = Math.floor(sleepMin / 60) + 1;
+  for (let h = startHour; h <= endHour; h++) {
+    const absMin = h * 60;
+    const relMin = absMin - wakeMin;
+    if (relMin < 0 || relMin > totalMin) continue;
+    const top = relMin * PX_PER_MIN;
+    const label = (h % 24 === 0) ? '12am' : (h % 24 < 12) ? (h % 24) + 'am' : (h % 24 === 12 ? '12pm' : (h % 24 - 12) + 'pm');
+    axisHtml += `<div class="flow-time-tick" style="top:${top}px;height:16px;">
+      <span class="flow-time-tick-label">${label}</span>
+      <div class="flow-time-tick-line" style="top:8px;"></div>
+    </div>`;
+  }
+  axisEl.innerHTML = axisHtml;
+
+  // ── Lanes ──
+  const lanesEl = document.getElementById('flow-lanes');
+  lanesEl.style.height = CANVAS_H + 'px';
+
+  let lanesHtml = '';
+
+  // Hour guide lines
+  for (let h = startHour; h <= endHour; h++) {
+    const absMin = h * 60;
+    const relMin = absMin - wakeMin;
+    if (relMin < 0 || relMin > totalMin) continue;
+    const top = relMin * PX_PER_MIN;
+    lanesHtml += `<div class="flow-hour-guide" style="top:${top}px;"></div>`;
+    // half-hour
+    const relHalf = relMin + 30;
+    if (relHalf < totalMin) {
+      lanesHtml += `<div class="flow-hour-guide half" style="top:${relHalf * PX_PER_MIN}px;"></div>`;
+    }
+  }
+
+  // Lane divider
+  lanesHtml += `<div class="flow-lane-divider"></div>`;
+
+  // Sleep block – end of day (top and bottom caps)
+  // Top sleep cap (previous night's sleep → wake time) - small header
+  lanesHtml += `
+    <div class="flow-block sleep" style="left:3px;right:3px;top:4px;height:24px;z-index:3;border-radius:6px;">
+      <div class="flow-block-name" style="font-size:9px;opacity:.85;">💤 Woke at ${fmtTime(flowSettings.wakeUp)}</div>
+    </div>`;
+
+  // Bottom sleep block
+  const sleepTopPx = (sleepMin - wakeMin) * PX_PER_MIN;
+  const sleepH = CANVAS_H - sleepTopPx;
+  if (sleepH > 0) {
+    lanesHtml += `
+      <div class="flow-block sleep" style="left:3px;right:3px;top:${sleepTopPx}px;height:${Math.max(sleepH, 24)}px;z-index:3;border-radius:6px;">
+        <div class="flow-block-name" style="font-size:9px;opacity:.85;">💤 Sleep at ${fmtTime(flowSettings.sleepStart)}</div>
+      </div>`;
+  }
+
+  // Activity blocks
+  const leftOffset = '3px';
+  blockData.forEach(({ act, b }, i) => {
+    const plannedStartMin = timeToMin(b.plannedStart);
+    const plannedEndMin = plannedStartMin + b.plannedDur;
+
+    const relPlanned = plannedStartMin - wakeMin;
+    const plannedTop = Math.max(30, relPlanned * PX_PER_MIN + 30);
+    const plannedH = Math.max(22, b.plannedDur * PX_PER_MIN - 3);
+
+    // Detect overlaps with earlier planned blocks
+    let plannedOverlap = false;
+    for (let j = 0; j < i; j++) {
+      const { b: bj } = blockData[j];
+      const pjS = timeToMin(bj.plannedStart), pjE = pjS + bj.plannedDur;
+      if (plannedStartMin < pjE && plannedEndMin > pjS) plannedOverlap = true;
+    }
+
+    // Planned block (left half) — tap to copy, drag to move, handle at bottom to resize
+    // Color: use activity's Day tab rating color if rated, else indigo default
+    const plannedBg = act.rating === 'done' || act.rating === 'green'
+      ? 'linear-gradient(135deg,#15803d,#16a34a)'
+      : act.rating === 'started' || act.rating === 'yellow'
+      ? 'linear-gradient(135deg,#b45309,#d97706)'
+      : act.rating === 'notstart' || act.rating === 'red'
+      ? 'linear-gradient(135deg,#b91c1c,#dc2626)'
+      : 'linear-gradient(135deg,#6366f1,#818cf8)';
+
+    lanesHtml += `
+      <div class="flow-block planned${plannedOverlap?' overlap-warn':''}" 
+           data-act-id="${act.id}" data-key="${key}" data-lane="planned"
+           draggable="true"
+           style="top:${plannedTop}px;height:${plannedH}px;left:${leftOffset};width:calc(50% - 6px);cursor:pointer;background:${plannedBg};"
+           title="${escHtml(act.name)} – tap to copy to Actual, drag to move">
+        ${plannedOverlap?`<div class="flow-overlap-badge">⚠ overlap</div>`:''}
+        <div class="flow-block-name">${escHtml(act.name)}</div>
+        <div class="flow-block-time">${fmtTime(b.plannedStart)} · ${b.plannedDur}m</div>
+        <div style="position:absolute;bottom:3px;right:5px;font-size:8px;opacity:.55;font-family:var(--mono);">tap→copy</div>
+        <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="planned" title="Drag to resize duration"></div>
+      </div>`;
+
+    // Actual block — only shown if activity has been dropped (has actualDropped flag) AND not red
+    const isRed = act.rating === 'notstart' || act.rating === 'red';
+    if (b.actualDropped && !isRed) {
+      const actualStartMin = timeToMin(b.actualStart);
+      const actualEndMin = actualStartMin + b.actualDur;
+      const relActual = actualStartMin - wakeMin;
+      const actualTop = Math.max(30, relActual * PX_PER_MIN + 30);
+      const actualH = Math.max(22, b.actualDur * PX_PER_MIN - 3);
+
+      // Detect overlaps with earlier actual blocks
+      let actualOverlap = false;
+      for (let j = 0; j < i; j++) {
+        const { b: bj } = blockData[j];
+        if (!bj.actualDropped) continue;
+        const ajS = timeToMin(bj.actualStart), ajE = ajS + bj.actualDur;
+        if (actualStartMin < ajE && actualEndMin > ajS) actualOverlap = true;
+      }
+
+      const ratingCls = act.rating === 'done' || act.rating === 'green' ? 'actual-done'
+        : act.rating === 'started' || act.rating === 'yellow' ? 'actual-started'
+        : 'actual-unrated';
+      const ratingEmoji = act.rating === 'done' || act.rating === 'green' ? '✓'
+        : act.rating === 'started' || act.rating === 'yellow' ? '▶'
+        : '◌';
+
+      lanesHtml += `
+        <div class="flow-block ${ratingCls}${actualOverlap?' overlap-warn':''}"
+             data-act-id="${act.id}" data-key="${key}" data-lane="actual"
+             style="top:${actualTop}px;height:${actualH}px;left:calc(50% + 3px);width:calc(50% - 6px);cursor:grab;"
+             title="${escHtml(act.name)} – actual ${fmtTime(b.actualStart)}, ${b.actualDur}min">
+          ${actualOverlap?`<div class="flow-overlap-badge">⚠ overlap</div>`:''}
+          <div class="flow-block-name">${ratingEmoji} ${escHtml(act.name)}</div>
+          <div class="flow-block-time">${fmtTime(b.actualStart)} · ${b.actualDur}m</div>
+          <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="actual" title="Drag to resize duration"></div>
+        </div>`;
+    }
+  });
+
+  // Drop zone overlay for actual column (covers right half)
+  lanesHtml += `<div class="flow-drop-zone" id="flow-drop-zone" style="position:absolute;top:0;bottom:0;left:50%;right:0;z-index:1;pointer-events:none;"></div>`;
+
+  // Current time line (only for today)
+  if (key === todayKey()) {
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const nowRel = nowMin - wakeMin;
+    if (nowRel > 0 && nowRel < totalMin) {
+      const nowTop = nowRel * PX_PER_MIN;
+      lanesHtml += `
+        <div class="flow-now-line" style="top:${nowTop}px;">
+          <div class="flow-now-dot"></div>
+          <div class="flow-now-label">NOW ${fmtTime(minToTime(nowMin))}</div>
+        </div>`;
+    }
+  }
+
+  lanesEl.innerHTML = lanesHtml;
+
+  // Render pie
+  renderFlowPie(blockData, key);
+}
+
+function openBlockPopup(e, actId, key) {
+  e.stopPropagation();
+  const bKey = key + '_' + actId;
+  const b = flowBlocks[bKey];
+  if (!b) return;
+  const day = getDay(key);
+  const act = day.activities.find(a => a.id === actId);
+  if (!act) return;
+  const lane = e.target.closest('.flow-block')?.dataset?.lane || 'planned';
+
+  let popup = document.getElementById('flow-popup');
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.id = 'flow-popup';
+    popup.className = 'flow-popup';
+    document.body.appendChild(popup);
+  }
+
+  // Simple direct time input popup
+  popup.innerHTML = `
+    <button class="flow-popup-close" onclick="closeBlockPopup()">×</button>
+    <div class="flow-popup-name">${escHtml(act.name)}</div>
+    <div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">
+      ${act.priority || 'M'} priority · ${act.rating || 'unrated'}
+    </div>
+
+    <div class="flow-popup-section">
+      <div class="flow-popup-section-title">📋 Planned</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+        <span style="font-size:10px;color:var(--muted);font-family:var(--mono);width:36px;">Start</span>
+        <input type="time" class="flow-popup-time-input" id="fp-plan-start" value="${b.plannedStart}" style="flex:1;" />
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:10px;color:var(--muted);font-family:var(--mono);width:36px;">End</span>
+        <input type="time" class="flow-popup-time-input" id="fp-plan-end" value="${minToTime(timeToMin(b.plannedStart)+b.plannedDur)}" style="flex:1;" />
+      </div>
+    </div>
+
+    <div class="flow-popup-section">
+      <div class="flow-popup-section-title">⚡ Actual ${b.actualDropped?'':'<span style="font-size:9px;opacity:.6;">(drag from planned to set)</span>'}</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+        <span style="font-size:10px;color:var(--muted);font-family:var(--mono);width:36px;">Start</span>
+        <input type="time" class="flow-popup-time-input" id="fp-act-start" value="${b.actualStart}" style="flex:1;" ${!b.actualDropped?'disabled':''} />
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:10px;color:var(--muted);font-family:var(--mono);width:36px;">End</span>
+        <input type="time" class="flow-popup-time-input" id="fp-act-end" value="${minToTime(timeToMin(b.actualStart)+b.actualDur)}" style="flex:1;" ${!b.actualDropped?'disabled':''} />
+      </div>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-top:8px;">
+      <button class="flow-popup-save" style="flex:1;" onclick="saveBlockPopup('${actId}','${key}')">Save</button>
+      ${b.actualDropped?`<button class="flow-popup-save" style="flex:0 0 auto;background:var(--r);font-size:10px;" onclick="removeActualBlock('${actId}','${key}')">Remove actual</button>`:''}
+    </div>
+  `;
+
+  popup.classList.add('open');
+  const rect = e.target.closest('.flow-block')?.getBoundingClientRect() || e.target.getBoundingClientRect();
+  let left = rect.right + 10;
+  let top = rect.top;
+  if (left + 290 > window.innerWidth) left = rect.left - 295;
+  if (top + 400 > window.innerHeight) top = window.innerHeight - 410;
+  popup.style.left = Math.max(8, left) + 'px';
+  popup.style.top = Math.max(8, top) + 'px';
+
+  activePopup = { actId, key };
+  setTimeout(() => { document.addEventListener('click', outsidePopupClose, { once: true }); }, 50);
+}
+
+function outsidePopupClose(e) {
+  const popup = document.getElementById('flow-popup');
+  if (popup && !popup.contains(e.target)) closeBlockPopup();
+}
+
+function closeBlockPopup() {
+  const popup = document.getElementById('flow-popup');
+  if (popup) popup.classList.remove('open');
+  activePopup = null;
+}
+
+function removeActualBlock(actId, key) {
+  const bKey = key + '_' + actId;
+  if (flowBlocks[bKey]) {
+    flowBlocks[bKey].actualDropped = false;
+  }
+  saveFlowData();
+  closeBlockPopup();
+  renderFlow();
+}
+
+function saveBlockPopup(actId, key) {
+  const bKey = key + '_' + actId;
+  if (!flowBlocks[bKey]) return;
+  const ps = document.getElementById('fp-plan-start')?.value;
+  const pe = document.getElementById('fp-plan-end')?.value;
+  const as = document.getElementById('fp-act-start')?.value;
+  const ae = document.getElementById('fp-act-end')?.value;
+  if (ps) flowBlocks[bKey].plannedStart = ps;
+  if (ps && pe) {
+    const dur = timeToMin(pe) - timeToMin(ps);
+    if (dur > 0) flowBlocks[bKey].plannedDur = dur;
+  }
+  if (as && flowBlocks[bKey].actualDropped) flowBlocks[bKey].actualStart = as;
+  if (as && ae && flowBlocks[bKey].actualDropped) {
+    const dur = timeToMin(ae) - timeToMin(as);
+    if (dur > 0) flowBlocks[bKey].actualDur = dur;
+  }
+  saveFlowData();
+  closeBlockPopup();
+  renderFlow();
+}
+
+// Close popup when clicking elsewhere
+document.addEventListener('click', e => {
+  if (activePopup) {
+    const popup = document.getElementById('flow-popup');
+    if (popup && !popup.contains(e.target) && !e.target.closest('.flow-block')) {
+      closeBlockPopup();
+    }
+  }
+});
+
+// ── Drag-to-resize blocks (bottom handle) ──
+let resizeDrag = null;
+document.addEventListener('mousedown', e => {
+  const handle = e.target.closest('.flow-block-resize');
+  if (!handle) return;
+  e.stopPropagation(); e.preventDefault();
+  const actId = handle.dataset.actId;
+  const key = handle.dataset.key;
+  const lane = handle.dataset.lane;
+  const bKey = key + '_' + actId;
+  const b = flowBlocks[bKey]; if (!b) return;
+  const startY = e.clientY;
+  const startDur = lane === 'planned' ? b.plannedDur : b.actualDur;
+  const { totalMin } = getFlowDayRange();
+  const CANVAS_H = Math.max(480, totalMin * 1.2);
+  const PX_PER_MIN = CANVAS_H / totalMin;
+
+  resizeDrag = { actId, key, lane, bKey, startY, startDur, PX_PER_MIN };
+  document.body.style.cursor = 'ns-resize';
+  document.body.style.userSelect = 'none';
+});
+
+document.addEventListener('mousemove', e => {
+  if (!resizeDrag) return;
+  const { bKey, lane, startY, startDur, PX_PER_MIN } = resizeDrag;
+  const dy = e.clientY - startY;
+  const deltaMins = Math.round(dy / PX_PER_MIN / 5) * 5;
+  const newDur = Math.max(15, Math.min(480, startDur + deltaMins));
+  const b = flowBlocks[bKey]; if (!b) return;
+  if (lane === 'planned') b.plannedDur = newDur;
+  else b.actualDur = newDur;
+  saveFlowData();
+  renderFlow();
+});
+
+document.addEventListener('mouseup', () => {
+  if (!resizeDrag) return;
+  resizeDrag = null;
+  document.body.style.cursor = '';
+  document.body.style.userSelect = '';
+});
+
+// ── Drag-to-move blocks (vertical position) ──
+let moveDrag = null;
+document.addEventListener('mousedown', e => {
+  const block = e.target.closest('.flow-block');
+  if (!block || e.target.closest('.flow-block-resize')) return;
+  if (block.classList.contains('sleep')) return;
+  const actId = block.dataset.actId;
+  const key = block.dataset.key;
+  const lane = block.dataset.lane;
+  if (!actId || !key || !lane) return;
+  const bKey = key + '_' + actId;
+  const b = flowBlocks[bKey]; if (!b) return;
+  const startY = e.clientY;
+  const startMin = lane === 'planned' ? timeToMin(b.plannedStart) : timeToMin(b.actualStart);
+  const { totalMin } = getFlowDayRange();
+  const CANVAS_H = Math.max(480, totalMin * 1.2);
+  const PX_PER_MIN = CANVAS_H / totalMin;
+  const { wakeMin } = getFlowDayRange();
+
+  moveDrag = { actId, key, lane, bKey, startY, startMin, PX_PER_MIN, wakeMin, moved: false };
+  document.body.style.userSelect = 'none';
+}, true);
+
+document.addEventListener('mousemove', e => {
+  if (!moveDrag) return;
+  const { bKey, lane, startY, startMin, PX_PER_MIN, wakeMin } = moveDrag;
+  const dy = e.clientY - startY;
+  if (Math.abs(dy) > 4) moveDrag.moved = true;
+  const deltaMins = Math.round(dy / PX_PER_MIN / 5) * 5;
+  const newMin = Math.max(wakeMin, startMin + deltaMins);
+  const b = flowBlocks[bKey]; if (!b) return;
+  if (lane === 'planned') b.plannedStart = minToTime(newMin);
+  else b.actualStart = minToTime(newMin);
+  saveFlowData();
+  renderFlow();
+}, true);
+
+document.addEventListener('mouseup', e => {
+  if (!moveDrag) return;
+  const { moved, actId, key, lane } = moveDrag;
+  moveDrag = null;
+  document.body.style.userSelect = '';
+  document.body.style.cursor = '';
+  // Only open popup if it was a click, not a drag
+  if (!moved) {
+    const block = e.target.closest('.flow-block');
+    if (block) {
+      const blockLane = block.dataset.lane;
+      if (blockLane === 'planned') {
+        // Show copy-to-actual banner on tap
+        showCopyBanner(actId, key);
+      } else {
+        openBlockPopup(e, actId, key);
+      }
+    }
+  }
+}, true);
+
+// ── Tap-to-copy: planned block → copy to actual column ──
+let pendingCopyActId = null, pendingCopyKey = null;
+
+function showCopyBanner(actId, key) {
+  pendingCopyActId = actId;
+  pendingCopyKey = key;
+
+  let banner = document.getElementById('flow-copy-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'flow-copy-banner';
+    banner.style.cssText = `
+      position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+      background:var(--text);color:var(--bg);
+      padding:12px 20px;border-radius:40px;
+      font-family:var(--sans);font-size:12px;font-weight:700;
+      display:flex;align-items:center;gap:12px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.25);z-index:600;
+      animation:popupIn .15s ease;
+    `;
+    document.body.appendChild(banner);
+  }
+
+  const day = getDay(key);
+  const act = day.activities.find(a => a.id === actId);
+  if (!act) return;
+
+  banner.innerHTML = `
+    <span>Copy <strong>${escHtml(act.name)}</strong> to Actual?</span>
+    <button onclick="doCopyToActual()" style="
+      background:#6366f1;color:#fff;border:none;
+      padding:6px 14px;border-radius:20px;
+      font-family:var(--sans);font-size:11px;font-weight:700;cursor:pointer;
+    ">Copy ✚</button>
+    <button onclick="cancelCopy()" style="
+      background:none;border:none;color:var(--bg);opacity:.6;
+      font-size:18px;cursor:pointer;padding:0 4px;font-weight:700;
+    ">✕</button>
+  `;
+  banner.style.display = 'flex';
+}
+
+function cancelCopy() {
+  pendingCopyActId = null; pendingCopyKey = null;
+  const banner = document.getElementById('flow-copy-banner');
+  if (banner) banner.style.display = 'none';
+}
+
+function doCopyToActual() {
+  if (!pendingCopyActId || !pendingCopyKey) return;
+  const bKey = pendingCopyKey + '_' + pendingCopyActId;
+  if (!flowBlocks[bKey]) { cancelCopy(); return; }
+  const b = flowBlocks[bKey];
+
+  // Place at top of actual column = wakeMin + buffer, same duration
+  const { wakeMin } = getFlowDayRange();
+  b.actualStart = minToTime(wakeMin + 30);
+  b.actualDur = b.actualDur || b.plannedDur;
+  b.actualDropped = true;
+  saveFlowData();
+  cancelCopy();
+  renderFlow();
+  showToast('Copied to Actual — drag it to the right time');
+}
+
+// Keep legacy HTML5 drag-and-drop as fallback on desktop
+let dragActId = null, dragKey = null;
+
+document.addEventListener('dragstart', e => {
+  const block = e.target.closest('.flow-block[data-lane="planned"]');
+  if (!block) return;
+  dragActId = block.dataset.actId;
+  dragKey = block.dataset.key;
+  e.dataTransfer.effectAllowed = 'copy';
+  e.dataTransfer.setData('text/plain', dragActId);
+  block.style.opacity = '0.5';
+  const dz = document.getElementById('flow-drop-zone');
+  if (dz) { dz.style.pointerEvents = 'all'; dz.style.background = 'rgba(99,102,241,0.08)'; dz.style.border = '2px dashed #6366f1'; dz.style.borderRadius = '4px'; }
+});
+
+document.addEventListener('dragend', e => {
+  const block = e.target.closest('.flow-block[data-lane="planned"]');
+  if (block) block.style.opacity = '';
+  dragActId = null; dragKey = null;
+  const dz = document.getElementById('flow-drop-zone');
+  if (dz) { dz.style.pointerEvents = 'none'; dz.style.background = ''; dz.style.border = ''; }
+});
+
+document.addEventListener('dragover', e => {
+  const lanesEl = document.getElementById('flow-lanes');
+  if (!lanesEl || !dragActId) return;
+  const rect = lanesEl.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (x < rect.width / 2) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+});
+
+document.addEventListener('drop', e => {
+  if (!dragActId || !dragKey) return;
+  const lanesEl = document.getElementById('flow-lanes');
+  if (!lanesEl) return;
+  const rect = lanesEl.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (x < rect.width / 2) return;
+
+  e.preventDefault();
+  const { wakeMin, totalMin } = getFlowDayRange();
+  const CANVAS_H = Math.max(480, totalMin * 1.2);
+  const PX_PER_MIN = CANVAS_H / totalMin;
+  const y = e.clientY - rect.top + lanesEl.scrollTop;
+  const dropMin = Math.round(y / PX_PER_MIN / 5) * 5 + wakeMin;
+
+  const bKey = dragKey + '_' + dragActId;
+  if (!flowBlocks[bKey]) return;
+  const b = flowBlocks[bKey];
+  b.actualStart = minToTime(Math.max(wakeMin, dropMin));
+  b.actualDur = b.actualDur || b.plannedDur;
+  b.actualDropped = true;
+  saveFlowData();
+  dragActId = null; dragKey = null;
+  renderFlow();
+});
+
+// ── Clock-style Pie Renderer (true 24-hour clock) ──
+function renderFlowPie(blockData, key) {
+  const SVG_SIZE = 360, CX = 180, CY = 180;
+  const OUTER = 155;  // outer radius of ring
+  const INNER = 90;   // inner radius (donut hole)
+  const SLEEP_INNER = INNER - 1; // sleep arc uses full ring
+
+  // Absolute minutes → clock angle: 12 o'clock = midnight = 0°, clockwise
+  function absMinToClockAngle(absMin) {
+    return (absMin / (24 * 60)) * 360; // 0° = midnight top
+  }
+
+  function polarToXY(angleDeg, r) {
+    const rad = (angleDeg - 90) * Math.PI / 180;
+    return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
+  }
+
+  function arcPath(startDeg, endDeg, rOuter, rInner) {
+    let sweep = endDeg - startDeg;
+    if (sweep <= 0) return '';
+    if (sweep >= 360) sweep = 359.99;
+    const large = sweep > 180 ? 1 : 0;
+    const s1 = polarToXY(startDeg, rOuter), e1 = polarToXY(startDeg + sweep, rOuter);
+    const s2 = polarToXY(startDeg + sweep, rInner), e2 = polarToXY(startDeg, rInner);
+    return `M${s1.x},${s1.y} A${rOuter},${rOuter} 0 ${large},1 ${e1.x},${e1.y} L${s2.x},${s2.y} A${rInner},${rInner} 0 ${large},0 ${e2.x},${e2.y} Z`;
+  }
+
+  const wakeMin = timeToMin(flowSettings.wakeUp); // e.g. 420 for 7:00
+  let sleepMin = timeToMin(flowSettings.sleepStart); // e.g. 1380 for 23:00
+  if (sleepMin <= wakeMin) sleepMin += 24 * 60; // crosses midnight
+
+  const wakeAngle = absMinToClockAngle(wakeMin);
+  // sleepMin may be > 1440 if it crosses midnight; handle mod
+  const sleepAngleDeg = absMinToClockAngle(sleepMin % (24 * 60));
+  // For sleep arc: from sleepMin to wakeMin next day (wrapping around 360)
+  let sleepStartAngle = absMinToClockAngle(sleepMin % (24 * 60));
+  let sleepEndAngle = absMinToClockAngle(wakeMin) + (wakeMin < sleepMin % (24*60) ? 360 : 0);
+  // If sleep wraps midnight: sleepMin > 1440
+  // sleep arc: sleepStartAngle → wakeAngle (going clockwise, possibly wrapping)
+  let sleepSweep = (360 - (sleepStartAngle - wakeAngle) + 360) % 360;
+  if (sleepSweep === 0) sleepSweep = 359.99;
+
+  const daySpanMins = sleepMin - wakeMin;
+
+  const now = new Date();
+  const nowMinAbs = now.getHours() * 60 + now.getMinutes();
+  const isToday = key === todayKey();
+  const dayDone = isToday ? (nowMinAbs >= sleepMin % (24 * 60) && nowMinAbs >= sleepMin - 24*60) : (key < todayKey());
+
+  let svgPaths = '';
+  let svgLabels = '';
+
+  // ── 1. Background ring (neutral, full circle) ──
+  const fullBg = arcPath(0, 359.99, OUTER, INNER);
+  svgPaths += `<path d="${fullBg}" fill="var(--surface)" opacity="0.6"/>`;
+
+  // ── 2. Sleep arc (the non-waking period) ──
+  // Draw from sleepStart → wakeUp going clockwise
+  const sleepPath = arcPath(sleepStartAngle, sleepStartAngle + sleepSweep, OUTER, INNER);
+  svgPaths += `<path d="${sleepPath}" fill="#1e3a5f" opacity="0.45"/>`;
+  // Subtle pattern on sleep
+  svgPaths += `<path d="${sleepPath}" fill="url(#sleepPattern)" opacity="0.3"/>`;
+
+  // Define sleep pattern
+  svgPaths = `<defs>
+    <pattern id="sleepPattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="8" x2="8" y2="0" stroke="#7dd3fc" stroke-width="0.8" opacity="0.25"/>
+    </pattern>
+  </defs>` + svgPaths;
+
+  // ── 3. Waking-day arc (background, lighter) ──
+  // wakeAngle → sleepStartAngle
+  let wakeSweep = sleepStartAngle - wakeAngle;
+  if (wakeSweep <= 0) wakeSweep += 360;
+  const wakeBg = arcPath(wakeAngle, wakeAngle + wakeSweep, OUTER, INNER);
+  svgPaths += `<path d="${wakeBg}" fill="#f0f9ff" opacity="0.55"/>`;
+
+  // ── 4. Activity arcs (actual times on the real clock) ──
+  const actColors = [];
+  let totalActivityMins = 0;
+
+  blockData.forEach(({ act, b }) => {
+    const isRed = act.rating === 'notstart' || act.rating === 'red';
+    if (isRed) return;
+    const isUnrated = !act.rating;
+    if (isUnrated) return;
+
+    const color = act.rating === 'done' || act.rating === 'green' ? '#16a34a'
+      : act.rating === 'started' || act.rating === 'yellow' ? '#d97706'
+      : '#6366f1';
+
+    const actualStartAbs = timeToMin(b.actualStart);
+    const dur = b.actualDur || 60;
+    const actualEndAbs = actualStartAbs + dur;
+
+    const startAngle = absMinToClockAngle(actualStartAbs);
+    let endAngle = absMinToClockAngle(actualEndAbs);
+    if (endAngle < startAngle) endAngle += 360; // crosses midnight
+
+    const path = arcPath(startAngle, endAngle, OUTER, INNER);
+    if (path) {
+      svgPaths += `<path d="${path}" fill="${color}" opacity="0.9"/>`;
+      totalActivityMins += dur;
+      actColors.push({ act, color, dur, startAngle, endAngle });
+    }
+  });
+
+  // ── 5. Hour tick marks (all 24 hours around the clock) ──
+  for (let h = 0; h < 24; h++) {
+    const angle = (h / 24) * 360;
+    const isMajor = (h % 6 === 0); // major at 12, 6, 18, 0
+    const isMinor3 = (h % 3 === 0);
+    const r1 = OUTER + 2;
+    const r2 = OUTER + (isMajor ? 16 : isMinor3 ? 10 : 6);
+    const p1 = polarToXY(angle, r1), p2 = polarToXY(angle, r2);
+    svgPaths += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" stroke="${isMajor ? 'var(--text)' : '#94a3b8'}" stroke-width="${isMajor ? 2.5 : isMinor3 ? 1.5 : 0.8}" opacity="${isMajor ? 0.85 : 0.5}"/>`;
+
+    // Labels at major ticks (0, 6, 12, 18)
+    if (isMajor) {
+      const lp = polarToXY(angle, OUTER + 26);
+      const label = h === 0 ? '12a' : h === 6 ? '6a' : h === 12 ? '12p' : '6p';
+      svgPaths += `<text x="${lp.x}" y="${lp.y}" text-anchor="middle" dominant-baseline="central" font-size="13" font-family="monospace" fill="var(--text)" font-weight="900" opacity="0.85">${label}</text>`;
+    }
+  }
+
+  // Wake marker at top of waking arc
+  const wakePt = polarToXY(wakeAngle, OUTER + 5);
+  svgPaths += `<circle cx="${wakePt.x}" cy="${wakePt.y}" r="7" fill="#22d3ee" stroke="#fff" stroke-width="2" opacity="0.95"/>`;
+  // Sleep marker
+  const sleepPt = polarToXY(sleepStartAngle, OUTER + 5);
+  svgPaths += `<circle cx="${sleepPt.x}" cy="${sleepPt.y}" r="7" fill="#818cf8" stroke="#fff" stroke-width="2" opacity="0.95"/>`;
+
+  // ── 6. NOW marker — prominent red clock hand ──
+  if (isToday) {
+    const nowAngle = absMinToClockAngle(nowMinAbs);
+    // Long hand from center-ish to outer edge
+    const handTip = polarToXY(nowAngle, OUTER - 4);
+    const handMid = polarToXY(nowAngle, INNER + 6);
+    const handBase = polarToXY(nowAngle + 180, 12); // slight tail opposite direction for clock look
+    // Draw hand as a thick line with center pivot
+    svgPaths += `<line x1="${handBase.x}" y1="${handBase.y}" x2="${handTip.x}" y2="${handTip.y}" stroke="#dc2626" stroke-width="4" stroke-linecap="round" opacity="1"/>`;
+    // Tip circle
+    svgPaths += `<circle cx="${handTip.x}" cy="${handTip.y}" r="6" fill="#dc2626" opacity="1"/>`;
+    // Glow effect
+    svgPaths += `<line x1="${handBase.x}" y1="${handBase.y}" x2="${handTip.x}" y2="${handTip.y}" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" opacity="0.5"/>`;
+    // Center pivot dot
+    svgPaths += `<circle cx="${CX}" cy="${CY}" r="9" fill="#dc2626" opacity="1"/>`;
+    svgPaths += `<circle cx="${CX}" cy="${CY}" r="4.5" fill="#fff" opacity="0.9"/>`;
+  }
+
+  // ── 7. Center hole (white/card background) ──
+  svgPaths += `<circle cx="${CX}" cy="${CY}" r="${INNER}" fill="var(--card)" opacity="1"/>`;
+
+  const svgEl = document.getElementById('flow-pie-svg');
+  if (svgEl) svgEl.innerHTML = svgPaths + svgLabels;
+
+  // ── Center text ──
+  const actPct = Math.round((totalActivityMins / daySpanMins) * 100);
+  let remainingMins = 0;
+  if (isToday && !dayDone) {
+    remainingMins = Math.max(0, sleepMin - nowMinAbs);
+  }
+
+  const pctEl = document.getElementById('flow-pie-pct');
+  const labelEl = document.getElementById('flow-pie-center-label');
+  if (pctEl) {
+    if (isToday && !dayDone) {
+      const remH = Math.floor(remainingMins / 60);
+      const remM = remainingMins % 60;
+      pctEl.textContent = remH + 'h' + (remM > 0 ? remM + 'm' : '');
+      pctEl.style.color = remainingMins < 120 ? 'var(--r)' : remainingMins < 240 ? 'var(--y)' : 'var(--g)';
+      if (labelEl) labelEl.textContent = 'left today';
+    } else {
+      pctEl.textContent = actPct + '%';
+      pctEl.style.color = actPct >= 70 ? 'var(--g)' : actPct >= 40 ? 'var(--y)' : 'var(--r)';
+      if (labelEl) labelEl.textContent = 'active';
+    }
+  }
+
+  // ── Legend ──
+  const legendEl = document.getElementById('flow-pie-legend');
+  if (legendEl) {
+    let legendHtml = '';
+    actColors.forEach(({ act, color, dur }) => {
+      const hrs = (dur / 60).toFixed(1);
+      legendHtml += `<div class="flow-pie-legend-item">
+        <div class="flow-pie-legend-dot" style="background:${color};"></div>
+        <div class="flow-pie-legend-name">${escHtml(act.name)}</div>
+        <div class="flow-pie-legend-hrs">${hrs}h</div>
+      </div>`;
+    });
+
+    // Sleep indicator
+    const sleepHrs = ((24 * 60 - daySpanMins) / 60).toFixed(1);
+    legendHtml += `<div class="flow-pie-legend-item">
+      <div class="flow-pie-legend-dot" style="background:#1e3a5f;border:1px solid #475569;opacity:.7;"></div>
+      <div class="flow-pie-legend-name" style="color:var(--muted);">💤 Sleep</div>
+      <div class="flow-pie-legend-hrs">${sleepHrs}h</div>
+    </div>`;
+
+    if (isToday && !dayDone && remainingMins > 0) {
+      legendHtml += `<div class="flow-pie-legend-item">
+        <div class="flow-pie-legend-dot" style="background:#f0f9ff;border:1.5px dashed #94a3b8;"></div>
+        <div class="flow-pie-legend-name" style="color:var(--muted);">⬜ Remaining</div>
+        <div class="flow-pie-legend-hrs">${(remainingMins/60).toFixed(1)}h</div>
+      </div>`;
+    }
+    if (isToday) {
+      legendHtml += `<div class="flow-pie-legend-item" style="margin-top:2px;">
+        <div class="flow-pie-legend-dot" style="background:#dc2626;border-radius:50%;"></div>
+        <div class="flow-pie-legend-name" style="color:#dc2626;font-weight:700;">▶ Now</div>
+        <div class="flow-pie-legend-hrs" style="color:#dc2626;">${fmtTime(minToTime(nowMinAbs))}</div>
+      </div>`;
+    }
+    legendEl.innerHTML = legendHtml;
+  }
+
+  // ── End-of-day stats panel ──
+  const statsPanel = document.getElementById('flow-day-stats');
+  const statsContent = document.getElementById('flow-day-stats-content');
+  if (statsPanel && statsContent) {
+    if (dayDone || !isToday) {
+      const idleMins = Math.max(0, daySpanMins - totalActivityMins);
+      const actPctFinal = daySpanMins > 0 ? Math.round((totalActivityMins / daySpanMins) * 100) : 0;
+      const idlePctFinal = 100 - actPctFinal;
+
+      statsContent.innerHTML = `
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <div style="flex:1;background:var(--g-bg);border:1px solid rgba(22,163,74,.2);border-radius:8px;padding:10px 12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--g);letter-spacing:-1px;">${actPctFinal}%</div>
+            <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;">Active</div>
+            <div style="font-size:11px;font-weight:600;color:var(--g);margin-top:3px;">${(totalActivityMins/60).toFixed(1)}h</div>
+          </div>
+          <div style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--muted);letter-spacing:-1px;">${idlePctFinal}%</div>
+            <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;">Idle Time</div>
+            <div style="font-size:11px;font-weight:600;color:var(--muted);margin-top:3px;">${(idleMins/60).toFixed(1)}h</div>
+          </div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;height:10px;display:flex;">
+          <div style="width:${actPctFinal}%;background:var(--g);transition:width .5s;"></div>
+          <div style="flex:1;background:var(--surface);"></div>
+        </div>
+        <div style="margin-top:6px;font-size:10px;font-family:var(--mono);color:var(--muted);">
+          Waking window: ${fmtTime(flowSettings.wakeUp)} → ${fmtTime(flowSettings.sleepStart)} (${(daySpanMins/60).toFixed(1)}h)
+        </div>`;
+      statsPanel.style.display = 'block';
+    } else {
+      statsPanel.style.display = 'none';
+    }
+  }
+
+  // ── Signal bar ──
+  const signalEl = document.getElementById('flow-time-signal');
+  const iconEl = document.getElementById('flow-time-signal-icon');
+  const textEl = document.getElementById('flow-time-signal-text');
+  const subEl = document.getElementById('flow-time-signal-sub');
+  if (signalEl && iconEl && textEl && subEl) {
+    if (dayDone) {
+      const actPctF = daySpanMins > 0 ? Math.round((totalActivityMins / daySpanMins) * 100) : 0;
+      if (actPctF >= 70) {
+        signalEl.className = 'flow-time-signal abundant';
+        iconEl.textContent = '🏆';
+        textEl.textContent = `Great day — ${actPctF}% active`;
+        subEl.textContent = '· Winning days are built like this';
+      } else if (actPctF >= 40) {
+        signalEl.className = 'flow-time-signal moderate';
+        iconEl.textContent = '📊';
+        textEl.textContent = `Decent day — ${actPctF}% active`;
+        subEl.textContent = '· Push harder tomorrow';
+      } else {
+        signalEl.className = 'flow-time-signal tight';
+        iconEl.textContent = '📉';
+        textEl.textContent = `Low output — ${actPctF}% active`;
+        subEl.textContent = '· Tomorrow, commit early';
+      }
+    } else if (isToday) {
+      const freeHrs = (remainingMins / 60).toFixed(1);
+      const unratedCount = blockData.filter(({act}) => !act.rating || act.rating === null).length;
+      if (remainingMins <= 0) {
+        signalEl.className = 'flow-time-signal tight';
+        iconEl.textContent = '🔴';
+        textEl.textContent = 'Past bedtime — day is done';
+        subEl.textContent = '· Review and rate your activities';
+      } else if (remainingMins < totalActivityMins && unratedCount > 0) {
+        signalEl.className = 'flow-time-signal tight';
+        iconEl.textContent = '🚨';
+        textEl.textContent = `Only ${freeHrs}h left — ${unratedCount} unlogged`;
+        subEl.textContent = '· Not enough time — focus now';
+      } else if (remainingMins < 120) {
+        signalEl.className = 'flow-time-signal tight';
+        iconEl.textContent = '⏰';
+        textEl.textContent = `${freeHrs}h until bedtime`;
+        subEl.textContent = '· Final stretch — wrap up what matters';
+      } else if (remainingMins < 240) {
+        signalEl.className = 'flow-time-signal moderate';
+        iconEl.textContent = '⚡';
+        textEl.textContent = `${freeHrs}h left before sleep`;
+        subEl.textContent = '· Time is tightening — prioritize now';
+      } else {
+        signalEl.className = 'flow-time-signal abundant';
+        iconEl.textContent = '✅';
+        textEl.textContent = `${freeHrs}h remaining before bedtime`;
+        subEl.textContent = '· Good buffer — stay on track';
+      }
+    } else {
+      signalEl.className = 'flow-time-signal moderate';
+      iconEl.textContent = '📅';
+      textEl.textContent = 'Past day — review complete';
+      subEl.textContent = '· Use insights to plan better tomorrow';
+    }
+  }
+}
+
+// Load flow data on startup
+loadFlowData();
+
+// ── Live clock: re-render the pie every minute so the Now hand ticks ──
+setInterval(() => {
+  const flowView = document.getElementById('view-flow');
+  if (flowView && flowView.classList.contains('active')) {
+    renderFlow();
+  }
+}, 30000); // update every 30s for smooth-ish ticking
 
 document.getElementById('new-act-name').addEventListener('keydown', e => {
   if (e.key === 'Enter') addActivity();
