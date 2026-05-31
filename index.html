@@ -16,13 +16,13 @@
     --g-bg: #dcfce7;
     --g-dk: #14532d;
     --g-text: #fff;
-    --y: #d97706;
-    --y-bg: #fef3c7;
-    --y-dk: #78350f;
-    --y-text: #fff;
-    --r: #dc2626;
-    --r-bg: #fee2e2;
-    --r-dk: #7f1d1d;
+    --y: #e6c800;
+    --y-bg: #fffff0;
+    --y-dk: #7a6800;
+    --y-text: #1a1500;
+    --r: #ff0000;
+    --r-bg: #fff0f0;
+    --r-dk: #8b0000;
     --r-text: #fff;
     --bg: #fafaf9;
     --card: #ffffff;
@@ -51,10 +51,10 @@
       --muted: #a8a29e;
       --surface: #292524;
       --g-bg: #052e16; --g-dk: #86efac;
-      --y-bg: #1c0a00; --y-dk: #fcd34d;
-      --r-bg: #1f0505; --r-dk: #fca5a5;
+      --y-bg: #1a1900; --y-dk: #ffd700; --y: #e6c800;
+      --r-bg: #1f0000; --r-dk: #ff6666; --r: #ff0000;
       --info-bg: #0c1a3a; --info-text: #93c5fd;
-      --warn-bg: #1c0a00; --warn-text: #fbbf24;
+      --warn-bg: #1a1900; --warn-text: #ffd700;
     }
   }
 
@@ -125,11 +125,11 @@
   }
   .motto-icon { font-size: 20px; flex-shrink: 0; position: relative; z-index: 1; }
   .motto-text {
-    font-family: var(--sans); font-weight: 700; font-size: 13px;
-    letter-spacing: -0.1px; line-height: 1.4;
+    font-family: var(--sans); font-weight: 700; font-size: 15px;
+    letter-spacing: -0.2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     position: relative; z-index: 1;
   }
-  .motto-sub { font-size: 10px; font-family: var(--mono); opacity: 0.55; margin-top: 1px; display: block; }
+  .motto-sub { font-size: 11px; font-family: var(--mono); opacity: 0.55; margin-top: 1px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   /* ── Score bar ── */
   .score-bar {
@@ -146,8 +146,8 @@
     flex-shrink: 0; transition: all 0.3s; letter-spacing: -0.5px;
   }
   .score-ring.green { background: var(--g); color: #fff; box-shadow: 0 4px 14px rgba(22,163,74,0.4); }
-  .score-ring.yellow { background: var(--y); color: #fff; box-shadow: 0 4px 14px rgba(217,119,6,0.4); }
-  .score-ring.red { background: var(--r); color: #fff; box-shadow: 0 4px 14px rgba(220,38,38,0.4); }
+  .score-ring.yellow { background: var(--y); color: #1a1500; box-shadow: 0 4px 14px rgba(230,200,0,0.4); }
+  .score-ring.red { background: var(--r); color: #fff; box-shadow: 0 4px 14px rgba(255,0,0,0.4); }
   .score-ring.none { background: var(--surface); color: var(--muted); border: 2px dashed var(--border-md); }
 
   .score-info { flex: 1; min-width: 0; }
@@ -299,11 +299,11 @@
   .rate-btn.started { color: var(--y-dk); }
   .rate-btn.notstart { color: var(--r-dk); }
   .rate-btn.done.sel { background: var(--g); color: #fff; border-color: var(--g-dk); box-shadow: 0 2px 8px rgba(22,163,74,0.4); }
-  .rate-btn.started.sel { background: var(--y); color: #fff; border-color: var(--y-dk); box-shadow: 0 2px 8px rgba(217,119,6,0.4); }
-  .rate-btn.notstart.sel { background: var(--r); color: #fff; border-color: var(--r-dk); box-shadow: 0 2px 8px rgba(220,38,38,0.4); }
+  .rate-btn.started.sel { background: var(--y); color: #1a1500; border-color: var(--y-dk); box-shadow: 0 2px 8px rgba(230,200,0,0.4); }
+  .rate-btn.notstart.sel { background: var(--r); color: #fff; border-color: var(--r-dk); box-shadow: 0 2px 8px rgba(255,0,0,0.4); }
   .rate-btn:hover:not(.sel) { transform: scale(1.05); border-color: var(--text); }
   .rate-btn.done:hover:not(.sel) { color: #fff; background: var(--g); border-color: var(--g-dk); }
-  .rate-btn.started:hover:not(.sel) { color: #fff; background: var(--y); border-color: var(--y-dk); }
+  .rate-btn.started:hover:not(.sel) { color: #1a1500; background: var(--y); border-color: var(--y-dk); }
   .rate-btn.notstart:hover:not(.sel) { color: #fff; background: var(--r); border-color: var(--r-dk); }
   .rate-btn.sel:hover { transform: scale(1.05); }
 
@@ -437,8 +437,8 @@
   .day-cell .day-num { font-size: 13px; font-weight: 700; position: relative; z-index: 1; }
   .day-cell .day-pct { font-size: 9px; position: relative; z-index: 1; font-weight: 700; opacity: 0.85; font-family: var(--mono); }
   .day-cell.green { background: var(--g); border-color: var(--g-dk); color: #fff; box-shadow: 0 2px 6px rgba(22,163,74,0.3); }
-  .day-cell.yellow { background: var(--y); border-color: var(--y-dk); color: #fff; box-shadow: 0 2px 6px rgba(217,119,6,0.3); }
-  .day-cell.red { background: var(--r); border-color: var(--r-dk); color: #fff; box-shadow: 0 2px 6px rgba(220,38,38,0.3); }
+  .day-cell.yellow { background: var(--y); border-color: var(--y-dk); color: #1a1500; box-shadow: 0 2px 6px rgba(230,200,0,0.3); }
+  .day-cell.red { background: var(--r); border-color: var(--r-dk); color: #fff; box-shadow: 0 2px 6px rgba(255,0,0,0.3); }
   .day-cell.today { outline: 2px solid var(--text); outline-offset: 2px; }
   .day-cell:hover { transform: scale(1.05); z-index: 2; }
   .streak-bar { position: absolute; top: 0; left: -4px; right: -4px; bottom: 0; background: rgba(22,163,74,0.1); z-index: 0; pointer-events: none; }
@@ -452,8 +452,8 @@
     background: var(--surface); color: var(--muted); border: 1px solid transparent;
   }
   .month-cell.green { background: var(--g); color: #fff; box-shadow: 0 1px 4px rgba(22,163,74,0.35); }
-  .month-cell.yellow { background: var(--y); color: #fff; box-shadow: 0 1px 4px rgba(217,119,6,0.35); }
-  .month-cell.red { background: var(--r); color: #fff; box-shadow: 0 1px 4px rgba(220,38,38,0.35); }
+  .month-cell.yellow { background: var(--y); color: #1a1500; box-shadow: 0 1px 4px rgba(230,200,0,0.35); }
+  .month-cell.red { background: var(--r); color: #fff; box-shadow: 0 1px 4px rgba(255,0,0,0.35); }
   .month-cell.today { outline: 2px solid var(--text); outline-offset: 2px; }
   .month-cell.empty { opacity: 0; pointer-events: none; }
   .month-cell:not(.empty):hover { transform: scale(1.1); z-index: 2; }
@@ -582,7 +582,7 @@
   .flow-summary-chip .chip-label { font-size: 10px; font-weight: 700; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; }
   .flow-summary-chip-inner { display: flex; flex-direction: column; align-items: center; gap: 1px; }
   .flow-summary-chip.done-chip { background: var(--g); color: #fff; }
-  .flow-summary-chip.prog-chip { background: var(--y); color: #fff; }
+  .flow-summary-chip.prog-chip { background: var(--y); color: #1a1500; }
   .flow-summary-chip.skip-chip { background: var(--r); color: #fff; }
   .flow-summary-chip.free-chip { background: var(--surface); color: var(--muted); border: 1.5px solid var(--border-md); box-shadow: none; }
   /* Focus/completion bar styles handled inline */
@@ -605,15 +605,16 @@
   .flow-time-tick {
     position: absolute; right: 0; left: 0;
     display: flex; align-items: center; justify-content: flex-end;
-    padding-right: 6px;
+    padding-right: 8px;
+    height: 14px;
+    transform: translateY(-50%);
   }
   .flow-time-tick-label {
     font-size: 9px; font-weight: 700; font-family: var(--mono);
-    color: var(--muted); opacity: .75; white-space: nowrap;
+    color: var(--muted); opacity: .8; white-space: nowrap; line-height: 1;
   }
   .flow-time-tick-line {
-    position: absolute; right: -1px; width: 6px; height: 1px;
-    background: var(--border-md);
+    display: none;
   }
 
   .flow-lanes {
@@ -645,10 +646,15 @@
   /* Horizontal hour guides */
   .flow-hour-guide {
     position: absolute; left: 0; right: 0; height: 1px;
-    background: var(--border);
+    background: var(--border-md);
     pointer-events: none; z-index: 0;
   }
-  .flow-hour-guide.half { background: var(--border); opacity: .4; border-top: 1px dashed var(--border); height: 0; }
+  .flow-hour-guide.half {
+    height: 0;
+    border-top: 1px dashed var(--border);
+    background: none;
+    opacity: .6;
+  }
 
   /* Current time needle */
   .flow-now-line {
@@ -714,14 +720,14 @@
     box-shadow: 0 2px 10px rgba(22,163,74,.3);
   }
   .flow-block.actual-started {
-    background: linear-gradient(135deg, #d97706, #f59e0b);
-    color: #fff;
-    box-shadow: 0 2px 10px rgba(217,119,6,.3);
+    background: linear-gradient(135deg, #ccaa00, #e6c800);
+    color: #1a1500;
+    box-shadow: 0 2px 10px rgba(230,200,0,.3);
   }
   .flow-block.actual-notstart {
-    background: linear-gradient(135deg, #dc2626, #ef4444);
+    background: linear-gradient(135deg, #cc0000, #ff0000);
     color: #fff;
-    box-shadow: 0 2px 10px rgba(220,38,38,.25);
+    box-shadow: 0 2px 10px rgba(255,0,0,.25);
   }
   .flow-block.actual-unrated {
     background: var(--surface);
@@ -1109,18 +1115,18 @@
 
     <div class="flow-summary-row" id="flow-summary-row"></div>
 
+    <!-- Time signal bar (before pie) -->
+    <div class="flow-time-signal" id="flow-time-signal" style="margin-bottom:1rem;">
+      <div class="flow-time-signal-icon" id="flow-time-signal-icon">⏳</div>
+      <div class="flow-time-signal-body">
+        <div class="flow-time-signal-text" id="flow-time-signal-text">Calculating...</div>
+        <div class="flow-time-signal-sub" id="flow-time-signal-sub"></div>
+      </div>
+    </div>
+
     <!-- 24hr Pie Visual -->
     <div class="flow-pie-section" id="flow-pie-section">
-      <div class="flow-pie-title" id="flow-pie-title">🕐 Day Clock — <span id="flow-pie-date-label"></span></div>
-
-      <!-- Signal bar ABOVE the ring -->
-      <div class="flow-time-signal" id="flow-time-signal" style="margin-top:0;margin-bottom:1rem;">
-        <div class="flow-time-signal-icon" id="flow-time-signal-icon">⏳</div>
-        <div class="flow-time-signal-body">
-          <div class="flow-time-signal-text" id="flow-time-signal-text">Calculating...</div>
-          <div class="flow-time-signal-sub" id="flow-time-signal-sub"></div>
-        </div>
-      </div>
+      <div class="flow-pie-title">🕐 Day Clock</div>
 
       <div class="flow-pie-layout">
         <div class="flow-pie-wrap">
@@ -1367,6 +1373,7 @@ function updateMotto(pct, activityRating, activityName) {
     document.getElementById('motto-sub').textContent = activityName ? activityName + ' — ' + m.sub : m.sub;
     document.querySelector('.motto-icon').innerHTML = m.icon;
     bar.style.background = activityRating === 'done' ? 'var(--g)' : activityRating === 'started' ? 'var(--y)' : 'var(--r)';
+    bar.style.color = activityRating === 'started' ? '#1a1500' : '';
     return;
   }
 
@@ -1380,6 +1387,7 @@ function updateMotto(pct, activityRating, activityName) {
   document.querySelector('.motto-icon').innerHTML = m.icon;
   bar.style.background = pct === null ? 'var(--text)' :
     pct >= 80 ? 'var(--g)' : pct >= 50 ? 'var(--y)' : 'var(--r)';
+  bar.style.color = (pct !== null && pct >= 50 && pct < 80) ? '#1a1500' : '';
 }
 
 // ── Today tab ──
@@ -1521,19 +1529,6 @@ function renderTodayDaySummary(day, isToday, key) {
   let remainingMins = isToday ? Math.max(0, sleepMin - nowMin) : 0;
 
   let html = '<div style="font-size:10px;font-weight:700;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">\u{1F4CA} Day Summary</div>';
-
-  if (isToday && remainingMins > 0) {
-    const remH = Math.floor(remainingMins / 60), remM = remainingMins % 60;
-    const remStr = remH + 'h' + (remM > 0 ? remM + 'm' : '');
-    const remColor = remainingMins < 120 ? 'var(--r)' : remainingMins < 240 ? 'var(--y)' : 'var(--g)';
-    html += `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
-      <div style="font-size:26px;font-weight:900;font-family:var(--sans);color:${remColor};letter-spacing:-0.5px;line-height:1;flex-shrink:0;">${remStr}</div>
-      <div style="display:flex;flex-direction:column;gap:1px;">
-        <div style="font-size:12px;font-weight:700;line-height:1.2;">Until bedtime</div>
-        <div style="font-size:10px;font-family:var(--mono);color:var(--muted);white-space:nowrap;">${fs.wakeUp}–${fs.sleepStart} · ${(daySpanMins/60).toFixed(0)}h window</div>
-      </div>
-    </div>`;
-  }
 
   if (ratedTotal > 0) {
     html += `<div style="display:flex;gap:8px;margin-bottom:8px;">
@@ -1871,7 +1866,7 @@ function renderMonth() {
       const wc = scoreClass(wp);
       const isT = wk === todayKey();
       const bgColor = wc === 'green' ? 'var(--g)' : wc === 'yellow' ? 'var(--y)' : wc === 'red' ? 'var(--r)' : 'var(--surface)';
-      const txtColor = wc !== 'none' ? '#fff' : 'var(--muted)';
+      const txtColor = wc === 'yellow' ? '#1a1500' : wc !== 'none' ? '#fff' : 'var(--muted)';
       daysHtml += `<div onclick="goToDay('${wk}')" style="flex:1;text-align:center;cursor:pointer;background:${bgColor};border-radius:8px;padding:7px 2px;${isT?'outline:2px solid var(--text);outline-offset:2px;':''}border:1px solid ${wc!=='none'?'transparent':'var(--border)'};">
         <div style="font-size:9px;font-weight:700;font-family:var(--mono);color:${txtColor};opacity:0.85;text-transform:uppercase;">${dayNames[i]}</div>
         <div style="font-size:12px;font-weight:900;font-family:var(--sans);color:${txtColor};margin-top:2px;">${wd.getDate()}</div>
@@ -2062,13 +2057,6 @@ function renderFlow() {
   const todayBtn = document.getElementById('flow-go-today-btn');
   if (todayBtn) todayBtn.classList.toggle('hidden', isToday);
 
-  // Update pie date label
-  const pieDateLabel = document.getElementById('flow-pie-date-label');
-  if (pieDateLabel) {
-    pieDateLabel.textContent = isToday
-      ? vDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
-      : vDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
-  }
 
   const day = getDay(key);
   const activities = day.activities;
@@ -2138,9 +2126,8 @@ function renderFlow() {
     if (relMin < 0 || relMin > totalMin) continue;
     const top = relMin * PX_PER_MIN;
     const label = (h % 24 === 0) ? '12am' : (h % 24 < 12) ? (h % 24) + 'am' : (h % 24 === 12 ? '12pm' : (h % 24 - 12) + 'pm');
-    axisHtml += `<div class="flow-time-tick" style="top:${top}px;height:16px;">
+    axisHtml += `<div class="flow-time-tick" style="top:${top}px;">
       <span class="flow-time-tick-label">${label}</span>
-      <div class="flow-time-tick-line" style="top:8px;"></div>
     </div>`;
   }
   axisEl.innerHTML = axisHtml;
@@ -2151,7 +2138,7 @@ function renderFlow() {
 
   let lanesHtml = '';
 
-  // Hour guide lines
+  // Hour guide lines — no offset, coordinate system starts at wakeMin
   for (let h = startHour; h <= endHour; h++) {
     const absMin = h * 60;
     const relMin = absMin - wakeMin;
@@ -2168,12 +2155,8 @@ function renderFlow() {
   // Lane divider
   lanesHtml += `<div class="flow-lane-divider"></div>`;
 
-  // Sleep block – end of day (top and bottom caps)
-  // Top sleep cap (previous night's sleep → wake time) - small header
-  lanesHtml += `
-    <div class="flow-block sleep" style="left:3px;right:3px;top:4px;height:24px;z-index:3;border-radius:6px;">
-      <div class="flow-block-name" style="font-size:9px;opacity:.85;">💤 Woke at ${fmtTime(flowSettings.wakeUp)}</div>
-    </div>`;
+  // Sleep header — shown as a label in the label bar, not as a block in the timeline
+  // (keeping it as overlay at top doesn't affect coordinate math since we removed +30 offsets)
 
   // Bottom sleep block
   const sleepTopPx = (sleepMin - wakeMin) * PX_PER_MIN;
@@ -2192,7 +2175,7 @@ function renderFlow() {
     const plannedEndMin = plannedStartMin + b.plannedDur;
 
     const relPlanned = plannedStartMin - wakeMin;
-    const plannedTop = Math.max(30, relPlanned * PX_PER_MIN + 30);
+    const plannedTop = Math.max(0, relPlanned * PX_PER_MIN);
     const plannedH = Math.max(22, b.plannedDur * PX_PER_MIN - 3);
 
     // Detect overlaps with earlier planned blocks
@@ -2208,9 +2191,9 @@ function renderFlow() {
     const plannedBg = act.rating === 'done' || act.rating === 'green'
       ? 'linear-gradient(135deg,#15803d,#16a34a)'
       : act.rating === 'started' || act.rating === 'yellow'
-      ? 'linear-gradient(135deg,#b45309,#d97706)'
+      ? 'linear-gradient(135deg,#ccaa00,#e6c800)'
       : act.rating === 'notstart' || act.rating === 'red'
-      ? 'linear-gradient(135deg,#b91c1c,#dc2626)'
+      ? 'linear-gradient(135deg,#cc0000,#ff0000)'
       : 'linear-gradient(135deg,#6366f1,#818cf8)';
 
     lanesHtml += `
@@ -2232,7 +2215,7 @@ function renderFlow() {
       const actualStartMin = timeToMin(b.actualStart);
       const actualEndMin = actualStartMin + b.actualDur;
       const relActual = actualStartMin - wakeMin;
-      const actualTop = Math.max(30, relActual * PX_PER_MIN + 30);
+      const actualTop = Math.max(0, relActual * PX_PER_MIN);
       const actualH = Math.max(22, b.actualDur * PX_PER_MIN - 3);
 
       // Detect overlaps with earlier actual blocks
