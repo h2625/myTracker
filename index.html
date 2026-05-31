@@ -444,19 +444,91 @@
   .streak-bar { position: absolute; top: 0; left: -4px; right: -4px; bottom: 0; background: rgba(22,163,74,0.1); z-index: 0; pointer-events: none; }
 
   /* ── Month grid ── */
-  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
   .month-cell {
-    aspect-ratio: 1; border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 1; border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.15s;
-    background: var(--surface); color: var(--muted); border: 1px solid transparent;
+    background: var(--surface); color: var(--muted); border: 1px solid var(--border);
+    gap: 2px; position: relative; overflow: hidden;
   }
-  .month-cell.green { background: var(--g); color: #fff; box-shadow: 0 1px 4px rgba(22,163,74,0.35); }
-  .month-cell.yellow { background: var(--y); color: #1a1500; box-shadow: 0 1px 4px rgba(230,200,0,0.35); }
-  .month-cell.red { background: var(--r); color: #fff; box-shadow: 0 1px 4px rgba(255,0,0,0.35); }
-  .month-cell.today { outline: 2px solid var(--text); outline-offset: 2px; }
+  .month-cell .m-day-num { font-size: 12px; font-weight: 800; }
+  .month-cell .m-day-pct { font-size: 8px; font-family: var(--mono); font-weight: 700; opacity: 0.85; }
+  .month-cell.green { background: var(--g); color: #fff; border-color: var(--g-dk); box-shadow: 0 2px 6px rgba(22,163,74,0.3); }
+  .month-cell.yellow { background: var(--y); color: #1a1500; border-color: var(--y-dk); box-shadow: 0 2px 6px rgba(230,200,0,0.3); }
+  .month-cell.red { background: var(--r); color: #fff; border-color: var(--r-dk); box-shadow: 0 2px 6px rgba(255,0,0,0.3); }
+  .month-cell.today { outline: 2.5px solid var(--text); outline-offset: 2px; }
   .month-cell.empty { opacity: 0; pointer-events: none; }
-  .month-cell:not(.empty):hover { transform: scale(1.1); z-index: 2; }
+  .month-cell:not(.empty):hover { transform: scale(1.08); z-index: 2; }
+
+  /* Month week summary redesign */
+  .month-week-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .month-week-title {
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
+    color: var(--muted); text-transform: uppercase; letter-spacing: .08em;
+  }
+  .month-week-range {
+    font-size: 10px; font-family: var(--mono); color: var(--muted); opacity: .7;
+  }
+  .month-week-stat-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;
+  }
+  .month-week-stat {
+    border-radius: 12px; padding: 14px 10px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .month-week-stat .ws-num {
+    font-size: 28px; font-weight: 900; font-family: var(--sans); letter-spacing: -1.5px; line-height: 1;
+  }
+  .month-week-stat .ws-label {
+    font-size: 9px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; opacity: .8;
+  }
+  .month-week-stat .ws-sub {
+    font-size: 10px; font-weight: 600; opacity: .7; margin-top: 1px;
+  }
+  .month-week-stat.ws-green { background: var(--g); color: #fff; box-shadow: 0 4px 14px rgba(22,163,74,0.25); }
+  .month-week-stat.ws-yellow { background: var(--y); color: #1a1500; box-shadow: 0 4px 14px rgba(230,200,0,0.25); }
+  .month-week-stat.ws-neutral { background: var(--card); color: var(--text); border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+  /* Day pills row */
+  .month-week-days-row {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px;
+  }
+  .month-week-day-pill {
+    border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer;
+    transition: transform .15s; border: 1px solid transparent;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .month-week-day-pill:hover { transform: scale(1.06); }
+  .month-week-day-pill .wd-name { font-size: 9px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; opacity: .8; }
+  .month-week-day-pill .wd-date { font-size: 13px; font-weight: 900; font-family: var(--sans); line-height: 1; margin-top: 1px; }
+  .month-week-day-pill .wd-pct { font-size: 8px; font-family: var(--mono); font-weight: 700; margin-top: 2px; opacity: .85; }
+
+  /* Month stats bar */
+  .month-stats-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1rem;
+  }
+  .month-stat-card {
+    border-radius: var(--radius-md); padding: 14px 10px; text-align: center;
+    background: var(--card); border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .month-stat-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  }
+  .month-stat-card.ms-green::after { background: var(--g); }
+  .month-stat-card.ms-yellow::after { background: var(--y); }
+  .month-stat-card.ms-red::after { background: var(--r); }
+  .month-stat-card.ms-neutral::after { background: var(--muted); opacity: .3; }
+  .month-stat-card .ms-val { font-size: 26px; font-weight: 900; font-family: var(--sans); letter-spacing: -1px; line-height: 1; }
+  .month-stat-card.ms-green .ms-val { color: var(--g); }
+  .month-stat-card.ms-yellow .ms-val { color: var(--y-dk); }
+  .month-stat-card.ms-red .ms-val { color: var(--r); }
+  .month-stat-card.ms-neutral .ms-val { color: var(--text); }
+  .month-stat-card .ms-lbl { font-size: 9px; font-weight: 700; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-top: 4px; }
 
   /* ── Year — 12 month rows × 31 day columns ── */
   .year-heatmap { margin-top: 6px; overflow-x: auto; }
@@ -686,20 +758,20 @@
   .flow-block {
     position: absolute; left: 3px; right: 3px;
     border-radius: 8px; overflow: hidden;
-    cursor: pointer; transition: transform .1s, box-shadow .1s;
-    z-index: 2; display: flex; flex-direction: column;
-    justify-content: flex-start; padding: 5px 7px;
-    min-height: 20px;
+    cursor: pointer; transition: box-shadow .1s;
+    z-index: 2; display: flex; flex-direction: row;
+    align-items: center; padding: 0 7px;
+    min-height: 20px; gap: 4px;
   }
-  .flow-block:hover { transform: scaleX(1.03); box-shadow: 0 4px 16px rgba(0,0,0,.15); z-index: 10; }
+  .flow-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,.2); z-index: 10; }
   .flow-block-name {
     font-size: 10px; font-weight: 700; font-family: var(--sans);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    line-height: 1.3;
+    line-height: 1; flex: 1; min-width: 0;
   }
   .flow-block-time {
-    font-size: 8px; font-family: var(--mono); opacity: .8; margin-top: 1px;
-    white-space: nowrap; overflow: hidden;
+    font-size: 8px; font-family: var(--mono); opacity: .85;
+    white-space: nowrap; flex-shrink: 0; line-height: 1;
   }
 
   /* sleep block */
@@ -708,9 +780,9 @@
     color: rgba(255,255,255,.9);
     cursor: default;
   }
-  /* planned block */
+  /* planned block — always neutral grey */
   .flow-block.planned {
-    background: linear-gradient(135deg, #6366f1, #818cf8);
+    background: linear-gradient(135deg, #64748b, #94a3b8);
     color: #fff;
   }
   /* actual blocks */
@@ -730,9 +802,16 @@
     box-shadow: 0 2px 10px rgba(255,0,0,.25);
   }
   .flow-block.actual-unrated {
-    background: var(--surface);
-    color: var(--muted);
-    border: 1.5px dashed var(--border-md);
+    background: #e2e8f0;
+    color: #475569;
+    border: 2px dashed #94a3b8;
+  }
+  @media (prefers-color-scheme: dark) {
+    .flow-block.actual-unrated {
+      background: #334155;
+      color: #cbd5e1;
+      border: 2px dashed #64748b;
+    }
   }
 
   /* Gap / procrastination highlight */
@@ -848,15 +927,16 @@
   /* Bottom drag resize handle */
   .flow-block-resize {
     position: absolute; bottom: 0; left: 0; right: 0;
-    height: 8px; cursor: ns-resize; z-index: 20;
+    height: 6px; cursor: ns-resize; z-index: 20;
     display: flex; align-items: center; justify-content: center;
     opacity: 0; transition: opacity .15s;
+    background: rgba(0,0,0,0.1); border-radius: 0 0 8px 8px;
   }
   .flow-block:hover .flow-block-resize { opacity: 1; }
   .flow-block-resize::after {
     content: ''; display: block;
-    width: 24px; height: 3px; border-radius: 2px;
-    background: rgba(255,255,255,0.6);
+    width: 20px; height: 2px; border-radius: 2px;
+    background: rgba(255,255,255,0.7);
   }
 
   /* Overlap warning */
@@ -1040,12 +1120,15 @@
       <div class="cal-period" id="month-period"></div>
       <button class="nav-btn" onclick="navMonth(1)"><i class="ti ti-chevron-right"></i></button>
     </div>
-    <div class="stats-row" id="month-stats"></div>
-    <!-- Current week summary boxes (shown only for the current month) -->
-    <div id="month-week-summary" style="display:none;margin-bottom:1rem;">
-      <div style="font-size:10px;font-weight:700;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">This Week</div>
-      <div id="month-week-summary-boxes" style="display:flex;gap:8px;margin-bottom:8px;"></div>
-      <div id="month-week-summary-days" style="display:flex;gap:6px;"></div>
+    <div class="month-stats-bar" id="month-stats"></div>
+    <!-- Current week summary (shown only for the current month) -->
+    <div id="month-week-summary" style="display:none;margin-bottom:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;">
+      <div class="month-week-header">
+        <div class="month-week-title">📅 This Week</div>
+        <div class="month-week-range" id="month-week-range"></div>
+      </div>
+      <div class="month-week-stat-row" id="month-week-summary-boxes"></div>
+      <div class="month-week-days-row" id="month-week-summary-days"></div>
     </div>
     <div class="day-header-row">
       <div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div>
@@ -1160,11 +1243,12 @@
     </div>
 
     <div class="flow-legend">
-      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:linear-gradient(135deg,#6366f1,#818cf8)"></div>Planned</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:linear-gradient(135deg,#64748b,#94a3b8)"></div>Planned</div>
       <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--g)"></div>Done ✓</div>
       <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--y)"></div>In Progress ▶</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--r)"></div>Not Started ✕</div>
       <div class="flow-legend-item"><div class="flow-legend-dot" style="background:#1e3a5f;opacity:.7;"></div>💤 Sleep</div>
-      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:#e2e8f0;border:1.5px dashed #94a3b8;"></div>Free time</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:#e2e8f0;border:2px dashed #94a3b8;"></div>Unrated</div>
     </div>
   </div>
 </div>
@@ -1822,12 +1906,30 @@ function renderMonth() {
   const startDay = d.getDay();
   const keys = [];
   for (let day=1; day<=daysInMonth; day++) keys.push(dateKey(new Date(d.getFullYear(), d.getMonth(), day)));
-  renderStatCards('month-stats', buildPeriodStats(keys));
+
+  // Month stats bar (custom layout)
+  const mStats = buildPeriodStats(keys);
+  const totalTracked = mStats.greens + mStats.yellows + mStats.reds;
+  const greenPct = totalTracked ? Math.round(mStats.greens / totalTracked * 100) : 0;
+  document.getElementById('month-stats').innerHTML = `
+    <div class="month-stat-card ms-green">
+      <div class="ms-val">${mStats.greens}</div>
+      <div class="ms-lbl">🟢 Great Days</div>
+    </div>
+    <div class="month-stat-card ms-yellow">
+      <div class="ms-val">${mStats.yellows}</div>
+      <div class="ms-lbl">🟡 OK Days</div>
+    </div>
+    <div class="month-stat-card ms-neutral">
+      <div class="ms-val">${mStats.bestStreak}</div>
+      <div class="ms-lbl">🔥 Best Streak</div>
+    </div>`;
 
   // Current week summary boxes (only show if viewing current month)
   const weekSummaryEl = document.getElementById('month-week-summary');
   const weekBoxesEl = document.getElementById('month-week-summary-boxes');
   const weekDaysEl = document.getElementById('month-week-summary-days');
+  const weekRangeEl = document.getElementById('month-week-range');
   if (weekSummaryEl && weekBoxesEl && weekDaysEl && currentMonthOffset === 0) {
     const weekBase = new Date(TODAY);
     weekBase.setDate(weekBase.getDate() - weekBase.getDay());
@@ -1837,24 +1939,28 @@ function renderMonth() {
     const weekStats = buildPeriodStats(weekKeys);
     const { greens, yellows, reds, total: wTotal, bestStreak: wBestStreak } = weekStats;
     const gPct = wTotal ? Math.round(greens / wTotal * 100) : 0;
-    const yPct = wTotal ? Math.round(yellows / wTotal * 100) : 0;
 
-    // Summary boxes
+    if (weekRangeEl) {
+      const fmt = dt => dt.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+      weekRangeEl.textContent = fmt(weekDays[0]) + ' – ' + fmt(weekDays[6]);
+    }
+
+    // Summary stat boxes
     weekBoxesEl.innerHTML = `
-      <div style="flex:1;background:var(--g-bg);border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:12px 10px;text-align:center;">
-        <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--g);letter-spacing:-1px;">${wTotal ? gPct + '%' : '—'}</div>
-        <div style="font-size:9px;font-family:var(--mono);color:var(--g-dk);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;font-weight:700;">Great Days</div>
-        <div style="font-size:10px;color:var(--g);font-weight:600;margin-top:2px;opacity:.8;">${greens} of ${wTotal}</div>
+      <div class="month-week-stat ws-green">
+        <div class="ws-num">${wTotal ? gPct + '%' : '—'}</div>
+        <div class="ws-label">Great Days</div>
+        <div class="ws-sub">${greens} of ${wTotal} days</div>
       </div>
-      <div style="flex:1;background:var(--y-bg);border:1px solid rgba(217,119,6,.2);border-radius:10px;padding:12px 10px;text-align:center;">
-        <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--y);letter-spacing:-1px;">${wTotal ? yPct + '%' : '—'}</div>
-        <div style="font-size:9px;font-family:var(--mono);color:var(--y-dk);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;font-weight:700;">OK Days</div>
-        <div style="font-size:10px;color:var(--y);font-weight:600;margin-top:2px;opacity:.8;">${yellows} of ${wTotal}</div>
+      <div class="month-week-stat ws-yellow">
+        <div class="ws-num">${wTotal ? yellows : '—'}</div>
+        <div class="ws-label">OK Days</div>
+        <div class="ws-sub">${yellows} of ${wTotal} days</div>
       </div>
-      <div style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;">
-        <div style="font-size:22px;font-weight:900;font-family:var(--sans);color:var(--text);letter-spacing:-1px;">${wBestStreak}</div>
-        <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;font-weight:700;">Best Streak</div>
-        <div style="font-size:10px;color:var(--muted);font-weight:600;margin-top:2px;opacity:.8;">this week</div>
+      <div class="month-week-stat ws-neutral">
+        <div class="ws-num">${wBestStreak}</div>
+        <div class="ws-label">Streak</div>
+        <div class="ws-sub">days in a row</div>
       </div>`;
 
     // Day pills
@@ -1867,10 +1973,11 @@ function renderMonth() {
       const isT = wk === todayKey();
       const bgColor = wc === 'green' ? 'var(--g)' : wc === 'yellow' ? 'var(--y)' : wc === 'red' ? 'var(--r)' : 'var(--surface)';
       const txtColor = wc === 'yellow' ? '#1a1500' : wc !== 'none' ? '#fff' : 'var(--muted)';
-      daysHtml += `<div onclick="goToDay('${wk}')" style="flex:1;text-align:center;cursor:pointer;background:${bgColor};border-radius:8px;padding:7px 2px;${isT?'outline:2px solid var(--text);outline-offset:2px;':''}border:1px solid ${wc!=='none'?'transparent':'var(--border)'};">
-        <div style="font-size:9px;font-weight:700;font-family:var(--mono);color:${txtColor};opacity:0.85;text-transform:uppercase;">${dayNames[i]}</div>
-        <div style="font-size:12px;font-weight:900;font-family:var(--sans);color:${txtColor};margin-top:2px;">${wd.getDate()}</div>
-        ${wp !== null ? `<div style="font-size:8px;font-family:var(--mono);color:${txtColor};opacity:0.85;margin-top:1px;">${wp}%</div>` : ''}
+      const borderStyle = isT ? 'outline:2.5px solid var(--text);outline-offset:2px;' : (wc === 'none' ? 'border-color:var(--border-md);' : '');
+      daysHtml += `<div class="month-week-day-pill" onclick="goToDay('${wk}')" style="background:${bgColor};color:${txtColor};${borderStyle}">
+        <div class="wd-name">${dayNames[i]}</div>
+        <div class="wd-date">${wd.getDate()}</div>
+        ${wp !== null ? `<div class="wd-pct">${wp}%</div>` : '<div class="wd-pct" style="opacity:.3;">·</div>'}
       </div>`;
     });
     weekDaysEl.innerHTML = daysHtml;
@@ -1886,7 +1993,10 @@ function renderMonth() {
     const pct = getDayPct(k);
     const cls = scoreClass(pct);
     const isToday = k === todayKey();
-    html += `<div class="month-cell ${cls} ${isToday?'today':''}" title="${d.toLocaleDateString('en-US',{month:'short'})} ${day}${pct!==null?' — '+pct+'%':''}" onclick="goToDay('${k}')">${day}</div>`;
+    html += `<div class="month-cell ${cls} ${isToday?'today':''}" title="${d.toLocaleDateString('en-US',{month:'short'})} ${day}${pct!==null?' — '+pct+'%':''}" onclick="goToDay('${k}')">
+      <div class="m-day-num">${day}</div>
+      ${pct !== null ? `<div class="m-day-pct">${pct}%</div>` : ''}
+    </div>`;
   }
   document.getElementById('month-grid').innerHTML = html;
 }
@@ -2187,64 +2297,72 @@ function renderFlow() {
     }
 
     // Planned block (left half) — tap to copy, drag to move, handle at bottom to resize
-    // Color: use activity's Day tab rating color if rated, else indigo default
-    const plannedBg = act.rating === 'done' || act.rating === 'green'
-      ? 'linear-gradient(135deg,#15803d,#16a34a)'
-      : act.rating === 'started' || act.rating === 'yellow'
-      ? 'linear-gradient(135deg,#ccaa00,#e6c800)'
-      : act.rating === 'notstart' || act.rating === 'red'
-      ? 'linear-gradient(135deg,#cc0000,#ff0000)'
-      : 'linear-gradient(135deg,#6366f1,#818cf8)';
+    // Color: always grey (neutral) — not linked to status color
+    const plannedBg = 'linear-gradient(135deg,#64748b,#94a3b8)';
 
     lanesHtml += `
       <div class="flow-block planned${plannedOverlap?' overlap-warn':''}" 
            data-act-id="${act.id}" data-key="${key}" data-lane="planned"
-           draggable="true"
            style="top:${plannedTop}px;height:${plannedH}px;left:${leftOffset};width:calc(50% - 6px);cursor:pointer;background:${plannedBg};"
            title="${escHtml(act.name)} – tap to copy to Actual, drag to move">
         ${plannedOverlap?`<div class="flow-overlap-badge">⚠ overlap</div>`:''}
         <div class="flow-block-name">${escHtml(act.name)}</div>
         <div class="flow-block-time">${fmtTime(b.plannedStart)} · ${b.plannedDur}m</div>
-        <div style="position:absolute;bottom:3px;right:5px;font-size:8px;opacity:.55;font-family:var(--mono);">tap→copy</div>
         <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="planned" title="Drag to resize duration"></div>
       </div>`;
 
-    // Actual block — only shown if activity has been dropped (has actualDropped flag) AND not red
-    const isRed = act.rating === 'notstart' || act.rating === 'red';
-    if (b.actualDropped && !isRed) {
-      const actualStartMin = timeToMin(b.actualStart);
-      const actualEndMin = actualStartMin + b.actualDur;
+    // Actual blocks — supports multiple copies (actualCopies array)
+    // Migrate legacy single-block format
+    if (b.actualDropped && !b.actualCopies) {
+      b.actualCopies = [{ start: b.actualStart, dur: b.actualDur }];
+      b.actualDropped = false;
+    }
+    const copies = b.actualCopies || [];
+
+    copies.forEach((copy, copyIdx) => {
+      const actualStartMin = timeToMin(copy.start);
+      const actualEndMin = actualStartMin + copy.dur;
       const relActual = actualStartMin - wakeMin;
       const actualTop = Math.max(0, relActual * PX_PER_MIN);
-      const actualH = Math.max(22, b.actualDur * PX_PER_MIN - 3);
+      const actualH = Math.max(22, copy.dur * PX_PER_MIN - 3);
 
-      // Detect overlaps with earlier actual blocks
+      // Detect overlaps with earlier actual copies (same or other activities)
       let actualOverlap = false;
       for (let j = 0; j < i; j++) {
         const { b: bj } = blockData[j];
-        if (!bj.actualDropped) continue;
-        const ajS = timeToMin(bj.actualStart), ajE = ajS + bj.actualDur;
+        const otherCopies = bj.actualCopies || [];
+        otherCopies.forEach(oc => {
+          const ajS = timeToMin(oc.start), ajE = ajS + oc.dur;
+          if (actualStartMin < ajE && actualEndMin > ajS) actualOverlap = true;
+        });
+      }
+      // Also check earlier copies of same activity
+      for (let ci = 0; ci < copyIdx; ci++) {
+        const oc = copies[ci];
+        const ajS = timeToMin(oc.start), ajE = ajS + oc.dur;
         if (actualStartMin < ajE && actualEndMin > ajS) actualOverlap = true;
       }
 
       const ratingCls = act.rating === 'done' || act.rating === 'green' ? 'actual-done'
         : act.rating === 'started' || act.rating === 'yellow' ? 'actual-started'
+        : act.rating === 'notstart' || act.rating === 'red' ? 'actual-notstart'
         : 'actual-unrated';
       const ratingEmoji = act.rating === 'done' || act.rating === 'green' ? '✓'
         : act.rating === 'started' || act.rating === 'yellow' ? '▶'
+        : act.rating === 'notstart' || act.rating === 'red' ? '✕'
         : '◌';
 
       lanesHtml += `
         <div class="flow-block ${ratingCls}${actualOverlap?' overlap-warn':''}"
-             data-act-id="${act.id}" data-key="${key}" data-lane="actual"
+             data-act-id="${act.id}" data-key="${key}" data-lane="actual" data-copy-idx="${copyIdx}"
              style="top:${actualTop}px;height:${actualH}px;left:calc(50% + 3px);width:calc(50% - 6px);cursor:grab;"
-             title="${escHtml(act.name)} – actual ${fmtTime(b.actualStart)}, ${b.actualDur}min">
+             title="${escHtml(act.name)} – drag to move, resize handle at bottom">
           ${actualOverlap?`<div class="flow-overlap-badge">⚠ overlap</div>`:''}
-          <div class="flow-block-name">${ratingEmoji} ${escHtml(act.name)}</div>
-          <div class="flow-block-time">${fmtTime(b.actualStart)} · ${b.actualDur}m</div>
-          <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="actual" title="Drag to resize duration"></div>
-        </div>`;
-    }
+          <div class="flow-block-name">${ratingEmoji} ${escHtml(act.name)}${copies.length > 1 ? ` <span style="font-size:8px;opacity:.7;">#${copyIdx+1}</span>` : ''}</div>
+          <div class="flow-block-time">${fmtTime(copy.start)} · ${copy.dur}m</div>
+          <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="actual" data-copy-idx="${copyIdx}" title="Drag to resize duration"></div>
+        </div>`; 
+    });
   });
 
   // Drop zone overlay for actual column (covers right half)
@@ -2271,7 +2389,7 @@ function renderFlow() {
   renderFlowPie(blockData, key);
 }
 
-function openBlockPopup(e, actId, key) {
+function openBlockPopup(e, actId, key, copyIdx) {
   e.stopPropagation();
   const bKey = key + '_' + actId;
   const b = flowBlocks[bKey];
@@ -2280,6 +2398,16 @@ function openBlockPopup(e, actId, key) {
   const act = day.activities.find(a => a.id === actId);
   if (!act) return;
   const lane = e.target.closest('.flow-block')?.dataset?.lane || 'planned';
+
+  // Migrate legacy
+  if (b.actualDropped && !b.actualCopies) {
+    b.actualCopies = [{ start: b.actualStart, dur: b.actualDur }];
+    b.actualDropped = false;
+    copyIdx = 0;
+  }
+  const copies = b.actualCopies || [];
+  const hasCopy = copyIdx >= 0 && copies[copyIdx];
+  const copy = hasCopy ? copies[copyIdx] : null;
 
   let popup = document.getElementById('flow-popup');
   if (!popup) {
@@ -2292,7 +2420,7 @@ function openBlockPopup(e, actId, key) {
   // Simple direct time input popup
   popup.innerHTML = `
     <button class="flow-popup-close" onclick="closeBlockPopup()">×</button>
-    <div class="flow-popup-name">${escHtml(act.name)}</div>
+    <div class="flow-popup-name">${escHtml(act.name)}${copies.length > 1 && hasCopy ? ` <span style="font-size:10px;color:var(--muted);">#${copyIdx+1}</span>` : ''}</div>
     <div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">
       ${act.priority || 'M'} priority · ${act.rating || 'unrated'}
     </div>
@@ -2310,20 +2438,20 @@ function openBlockPopup(e, actId, key) {
     </div>
 
     <div class="flow-popup-section">
-      <div class="flow-popup-section-title">⚡ Actual ${b.actualDropped?'':'<span style="font-size:9px;opacity:.6;">(drag from planned to set)</span>'}</div>
+      <div class="flow-popup-section-title">⚡ Actual${!hasCopy?' <span style="font-size:9px;opacity:.6;">(tap planned to copy)</span>':''}</div>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
         <span style="font-size:10px;color:var(--muted);font-family:var(--mono);width:36px;">Start</span>
-        <input type="time" class="flow-popup-time-input" id="fp-act-start" value="${b.actualStart}" style="flex:1;" ${!b.actualDropped?'disabled':''} />
+        <input type="time" class="flow-popup-time-input" id="fp-act-start" value="${hasCopy ? copy.start : ''}" style="flex:1;" ${!hasCopy?'disabled':''} />
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span style="font-size:10px;color:var(--muted);font-family:var(--mono);width:36px;">End</span>
-        <input type="time" class="flow-popup-time-input" id="fp-act-end" value="${minToTime(timeToMin(b.actualStart)+b.actualDur)}" style="flex:1;" ${!b.actualDropped?'disabled':''} />
+        <input type="time" class="flow-popup-time-input" id="fp-act-end" value="${hasCopy ? minToTime(timeToMin(copy.start)+copy.dur) : ''}" style="flex:1;" ${!hasCopy?'disabled':''} />
       </div>
     </div>
 
     <div style="display:flex;gap:6px;margin-top:8px;">
-      <button class="flow-popup-save" style="flex:1;" onclick="saveBlockPopup('${actId}','${key}')">Save</button>
-      ${b.actualDropped?`<button class="flow-popup-save" style="flex:0 0 auto;background:var(--r);font-size:10px;" onclick="removeActualBlock('${actId}','${key}')">Remove actual</button>`:''}
+      <button class="flow-popup-save" style="flex:1;" onclick="saveBlockPopup('${actId}','${key}',${copyIdx})">Save</button>
+      ${hasCopy?`<button class="flow-popup-save" style="flex:0 0 auto;background:var(--r);font-size:10px;" onclick="removeActualBlock('${actId}','${key}',${copyIdx})">Remove</button>`:''}
     </div>
   `;
 
@@ -2351,32 +2479,42 @@ function closeBlockPopup() {
   activePopup = null;
 }
 
-function removeActualBlock(actId, key) {
+function removeActualBlock(actId, key, copyIdx) {
   const bKey = key + '_' + actId;
   if (flowBlocks[bKey]) {
-    flowBlocks[bKey].actualDropped = false;
+    // Migrate legacy
+    if (flowBlocks[bKey].actualDropped && !flowBlocks[bKey].actualCopies) {
+      flowBlocks[bKey].actualCopies = [];
+      flowBlocks[bKey].actualDropped = false;
+    }
+    if (flowBlocks[bKey].actualCopies && copyIdx >= 0) {
+      flowBlocks[bKey].actualCopies.splice(copyIdx, 1);
+    }
   }
   saveFlowData();
   closeBlockPopup();
   renderFlow();
 }
 
-function saveBlockPopup(actId, key) {
+function saveBlockPopup(actId, key, copyIdx) {
   const bKey = key + '_' + actId;
   if (!flowBlocks[bKey]) return;
+  const b = flowBlocks[bKey];
   const ps = document.getElementById('fp-plan-start')?.value;
   const pe = document.getElementById('fp-plan-end')?.value;
   const as = document.getElementById('fp-act-start')?.value;
   const ae = document.getElementById('fp-act-end')?.value;
-  if (ps) flowBlocks[bKey].plannedStart = ps;
+  if (ps) b.plannedStart = ps;
   if (ps && pe) {
     const dur = timeToMin(pe) - timeToMin(ps);
-    if (dur > 0) flowBlocks[bKey].plannedDur = dur;
+    if (dur > 0) b.plannedDur = dur;
   }
-  if (as && flowBlocks[bKey].actualDropped) flowBlocks[bKey].actualStart = as;
-  if (as && ae && flowBlocks[bKey].actualDropped) {
+  const copies = b.actualCopies || [];
+  const hasCopy = copyIdx >= 0 && copies[copyIdx];
+  if (hasCopy && as) copies[copyIdx].start = as;
+  if (hasCopy && as && ae) {
     const dur = timeToMin(ae) - timeToMin(as);
-    if (dur > 0) flowBlocks[bKey].actualDur = dur;
+    if (dur > 0) copies[copyIdx].dur = dur;
   }
   saveFlowData();
   closeBlockPopup();
@@ -2402,37 +2540,55 @@ document.addEventListener('mousedown', e => {
   const actId = handle.dataset.actId;
   const key = handle.dataset.key;
   const lane = handle.dataset.lane;
+  const copyIdx = handle.dataset.copyIdx !== undefined ? parseInt(handle.dataset.copyIdx) : -1;
   const bKey = key + '_' + actId;
   const b = flowBlocks[bKey]; if (!b) return;
   const startY = e.clientY;
-  const startDur = lane === 'planned' ? b.plannedDur : b.actualDur;
+  const startDur = lane === 'planned' ? b.plannedDur 
+    : (b.actualCopies && copyIdx >= 0 ? b.actualCopies[copyIdx].dur : b.actualDur || 60);
   const { totalMin } = getFlowDayRange();
   const CANVAS_H = Math.max(480, totalMin * 1.2);
   const PX_PER_MIN = CANVAS_H / totalMin;
+  // Find the actual block element to update live
+  const blockEl = handle.closest('.flow-block');
 
-  resizeDrag = { actId, key, lane, bKey, startY, startDur, PX_PER_MIN };
+  resizeDrag = { actId, key, lane, copyIdx, bKey, startY, startDur, PX_PER_MIN, blockEl, lastDur: startDur };
   document.body.style.cursor = 'ns-resize';
   document.body.style.userSelect = 'none';
 });
 
 document.addEventListener('mousemove', e => {
   if (!resizeDrag) return;
-  const { bKey, lane, startY, startDur, PX_PER_MIN } = resizeDrag;
+  const { bKey, lane, copyIdx, startY, startDur, PX_PER_MIN, blockEl } = resizeDrag;
   const dy = e.clientY - startY;
   const deltaMins = Math.round(dy / PX_PER_MIN / 5) * 5;
   const newDur = Math.max(15, Math.min(480, startDur + deltaMins));
+  if (newDur === resizeDrag.lastDur) return;
+  resizeDrag.lastDur = newDur;
   const b = flowBlocks[bKey]; if (!b) return;
   if (lane === 'planned') b.plannedDur = newDur;
+  else if (b.actualCopies && copyIdx >= 0) b.actualCopies[copyIdx].dur = newDur;
   else b.actualDur = newDur;
-  saveFlowData();
-  renderFlow();
+  // Live update block height without re-rendering
+  if (blockEl) {
+    blockEl.style.height = Math.max(20, newDur * PX_PER_MIN - 3) + 'px';
+    // Update time label
+    const timeEl = blockEl.querySelector('.flow-block-time');
+    if (timeEl) {
+      const startMin = lane === 'planned' ? timeToMin(b.plannedStart)
+        : (b.actualCopies && copyIdx >= 0 ? timeToMin(b.actualCopies[copyIdx].start) : timeToMin(b.actualStart || b.plannedStart));
+      timeEl.textContent = fmtTime(minToTime(startMin)) + ' · ' + newDur + 'm';
+    }
+  }
 });
 
 document.addEventListener('mouseup', () => {
   if (!resizeDrag) return;
+  saveFlowData();
   resizeDrag = null;
   document.body.style.cursor = '';
   document.body.style.userSelect = '';
+  renderFlow();
 });
 
 // ── Drag-to-move blocks (vertical position) ──
@@ -2444,51 +2600,72 @@ document.addEventListener('mousedown', e => {
   const actId = block.dataset.actId;
   const key = block.dataset.key;
   const lane = block.dataset.lane;
+  const copyIdx = block.dataset.copyIdx !== undefined ? parseInt(block.dataset.copyIdx) : -1;
   if (!actId || !key || !lane) return;
   const bKey = key + '_' + actId;
   const b = flowBlocks[bKey]; if (!b) return;
   const startY = e.clientY;
-  const startMin = lane === 'planned' ? timeToMin(b.plannedStart) : timeToMin(b.actualStart);
-  const { totalMin } = getFlowDayRange();
+  const startMin = lane === 'planned' ? timeToMin(b.plannedStart) 
+    : (b.actualCopies && copyIdx >= 0 ? timeToMin(b.actualCopies[copyIdx].start) : timeToMin(b.actualStart || b.plannedStart));
+  const { totalMin, wakeMin } = getFlowDayRange();
   const CANVAS_H = Math.max(480, totalMin * 1.2);
   const PX_PER_MIN = CANVAS_H / totalMin;
-  const { wakeMin } = getFlowDayRange();
 
-  moveDrag = { actId, key, lane, bKey, startY, startMin, PX_PER_MIN, wakeMin, moved: false };
+  moveDrag = { actId, key, lane, copyIdx, bKey, startY, startMin, PX_PER_MIN, wakeMin, moved: false, blockEl: block, lastMin: startMin };
   document.body.style.userSelect = 'none';
+  block.style.opacity = '0.75';
+  block.style.cursor = 'grabbing';
 }, true);
 
 document.addEventListener('mousemove', e => {
   if (!moveDrag) return;
-  const { bKey, lane, startY, startMin, PX_PER_MIN, wakeMin } = moveDrag;
+  const { bKey, lane, copyIdx, startY, startMin, PX_PER_MIN, wakeMin, blockEl } = moveDrag;
   const dy = e.clientY - startY;
-  if (Math.abs(dy) > 4) moveDrag.moved = true;
+  if (Math.abs(dy) > 3) moveDrag.moved = true;
+  if (!moveDrag.moved) return;
   const deltaMins = Math.round(dy / PX_PER_MIN / 5) * 5;
   const newMin = Math.max(wakeMin, startMin + deltaMins);
+  if (newMin === moveDrag.lastMin) return;
+  moveDrag.lastMin = newMin;
   const b = flowBlocks[bKey]; if (!b) return;
   if (lane === 'planned') b.plannedStart = minToTime(newMin);
+  else if (b.actualCopies && copyIdx >= 0) b.actualCopies[copyIdx].start = minToTime(newMin);
   else b.actualStart = minToTime(newMin);
-  saveFlowData();
-  renderFlow();
+  // Live update block position without re-rendering
+  if (blockEl) {
+    const newTop = (newMin - wakeMin) * PX_PER_MIN;
+    blockEl.style.top = Math.max(0, newTop) + 'px';
+    const timeEl = blockEl.querySelector('.flow-block-time');
+    if (timeEl) {
+      const dur = lane === 'planned' ? b.plannedDur
+        : (b.actualCopies && copyIdx >= 0 ? b.actualCopies[copyIdx].dur : b.actualDur || 60);
+      timeEl.textContent = fmtTime(minToTime(newMin)) + ' · ' + dur + 'm';
+    }
+  }
 }, true);
 
 document.addEventListener('mouseup', e => {
   if (!moveDrag) return;
-  const { moved, actId, key, lane } = moveDrag;
+  const { moved, actId, key, lane, blockEl } = moveDrag;
+  if (blockEl) { blockEl.style.opacity = ''; blockEl.style.cursor = ''; }
+  const wasMoved = moved;
+  const savedActId = actId, savedKey = key;
   moveDrag = null;
   document.body.style.userSelect = '';
   document.body.style.cursor = '';
-  // Only open popup if it was a click, not a drag
-  if (!moved) {
+  if (wasMoved) {
+    saveFlowData();
+    renderFlow();
+  } else {
+    // Only open popup if it was a click, not a drag
     const block = e.target.closest('.flow-block');
     if (block) {
       const blockLane = block.dataset.lane;
+      const blockCopyIdx = block.dataset.copyIdx !== undefined ? parseInt(block.dataset.copyIdx) : -1;
       if (blockLane === 'planned') {
-        // Show copy-to-actual banner on tap
-        showCopyBanner(actId, key);
-      } else {
-        openBlockPopup(e, actId, key);
+        showCopyBanner(savedActId, savedKey);
       }
+      // Actual blocks: no popup — drag/resize only
     }
   }
 }, true);
@@ -2547,15 +2724,25 @@ function doCopyToActual() {
   if (!flowBlocks[bKey]) { cancelCopy(); return; }
   const b = flowBlocks[bKey];
 
-  // Place at top of actual column = wakeMin + buffer, same duration
+  // Migrate legacy single-block format
+  if (b.actualDropped && !b.actualCopies) {
+    b.actualCopies = [{ start: b.actualStart, dur: b.actualDur }];
+    b.actualDropped = false;
+  }
+  if (!b.actualCopies) b.actualCopies = [];
+
+  // Place new copy at top of actual column (wakeMin + buffer), same duration as planned
   const { wakeMin } = getFlowDayRange();
-  b.actualStart = minToTime(wakeMin + 30);
-  b.actualDur = b.actualDur || b.plannedDur;
-  b.actualDropped = true;
+  const newCopy = {
+    start: minToTime(wakeMin + 30),
+    dur: b.plannedDur
+  };
+  b.actualCopies.unshift(newCopy); // add at top
   saveFlowData();
   cancelCopy();
   renderFlow();
-  showToast('Copied to Actual — drag it to the right time');
+  const count = b.actualCopies.length;
+  showToast(count > 1 ? `Copy #${count} added — drag it to the right time` : 'Copied to Actual — drag it to the right time');
 }
 
 // Keep legacy HTML5 drag-and-drop as fallback on desktop
@@ -2609,9 +2796,13 @@ document.addEventListener('drop', e => {
   const bKey = dragKey + '_' + dragActId;
   if (!flowBlocks[bKey]) return;
   const b = flowBlocks[bKey];
-  b.actualStart = minToTime(Math.max(wakeMin, dropMin));
-  b.actualDur = b.actualDur || b.plannedDur;
-  b.actualDropped = true;
+  // Migrate legacy
+  if (b.actualDropped && !b.actualCopies) {
+    b.actualCopies = [{ start: b.actualStart, dur: b.actualDur }];
+    b.actualDropped = false;
+  }
+  if (!b.actualCopies) b.actualCopies = [];
+  b.actualCopies.unshift({ start: minToTime(Math.max(wakeMin, dropMin)), dur: b.plannedDur });
   saveFlowData();
   dragActId = null; dragKey = null;
   renderFlow();
