@@ -413,7 +413,7 @@
   .stat-val.green { color: var(--g); }
   .stat-val.yellow { color: var(--y); }
   .stat-val.red { color: var(--r); }
-  .stat-lbl { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
+  .stat-lbl { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
 
   /* ── Pct bar ── */
   .pct-bar-wrap { margin-top: 8px; height: 7px; border-radius: 4px; background: var(--border); overflow: hidden; }
@@ -448,12 +448,12 @@
   .month-cell {
     aspect-ratio: 1; border-radius: 8px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+    font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s;
     background: var(--surface); color: var(--muted); border: 1px solid var(--border);
     gap: 2px; position: relative; overflow: hidden;
   }
-  .month-cell .m-day-num { font-size: 12px; font-weight: 800; }
-  .month-cell .m-day-pct { font-size: 8px; font-family: var(--mono); font-weight: 700; opacity: 0.85; }
+  .month-cell .m-day-num { font-size: 14px; font-weight: 800; }
+  .month-cell .m-day-pct { font-size: 9px; font-family: var(--mono); font-weight: 700; opacity: 0.85; }
   .month-cell.green { background: var(--g); color: #fff; border-color: var(--g-dk); box-shadow: 0 2px 6px rgba(22,163,74,0.3); }
   .month-cell.yellow { background: var(--y); color: #1a1500; border-color: var(--y-dk); box-shadow: 0 2px 6px rgba(230,200,0,0.3); }
   .month-cell.red { background: var(--r); color: #fff; border-color: var(--r-dk); box-shadow: 0 2px 6px rgba(255,0,0,0.3); }
@@ -467,11 +467,11 @@
     margin-bottom: 10px;
   }
   .month-week-title {
-    font-size: 11px; font-weight: 700; font-family: var(--mono);
+    font-size: 13px; font-weight: 700; font-family: var(--mono);
     color: var(--muted); text-transform: uppercase; letter-spacing: .08em;
   }
   .month-week-range {
-    font-size: 10px; font-family: var(--mono); color: var(--muted); opacity: .7;
+    font-size: 12px; font-family: var(--mono); color: var(--muted); opacity: .7;
   }
   .month-week-stat-row {
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;
@@ -484,10 +484,10 @@
     font-size: 28px; font-weight: 900; font-family: var(--sans); letter-spacing: -1.5px; line-height: 1;
   }
   .month-week-stat .ws-label {
-    font-size: 9px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; opacity: .8;
+    font-size: 11px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; opacity: .8;
   }
   .month-week-stat .ws-sub {
-    font-size: 10px; font-weight: 600; opacity: .7; margin-top: 1px;
+    font-size: 11px; font-weight: 600; opacity: .7; margin-top: 1px;
   }
   .month-week-stat.ws-green { background: var(--g); color: #fff; box-shadow: 0 4px 14px rgba(22,163,74,0.25); }
   .month-week-stat.ws-yellow { background: var(--y); color: #1a1500; box-shadow: 0 4px 14px rgba(230,200,0,0.25); }
@@ -503,9 +503,9 @@
     display: flex; flex-direction: column; align-items: center; gap: 2px;
   }
   .month-week-day-pill:hover { transform: scale(1.06); }
-  .month-week-day-pill .wd-name { font-size: 9px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; opacity: .8; }
-  .month-week-day-pill .wd-date { font-size: 13px; font-weight: 900; font-family: var(--sans); line-height: 1; margin-top: 1px; }
-  .month-week-day-pill .wd-pct { font-size: 8px; font-family: var(--mono); font-weight: 700; margin-top: 2px; opacity: .85; }
+  .month-week-day-pill .wd-name { font-size: 10px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; opacity: .8; }
+  .month-week-day-pill .wd-date { font-size: 14px; font-weight: 900; font-family: var(--sans); line-height: 1; margin-top: 1px; }
+  .month-week-day-pill .wd-pct { font-size: 9px; font-family: var(--mono); font-weight: 700; margin-top: 2px; opacity: .85; }
 
   /* Month stats bar */
   .month-stats-bar {
@@ -523,29 +523,30 @@
   .month-stat-card.ms-yellow::after { background: var(--y); }
   .month-stat-card.ms-red::after { background: var(--r); }
   .month-stat-card.ms-neutral::after { background: var(--muted); opacity: .3; }
-  .month-stat-card .ms-val { font-size: 26px; font-weight: 900; font-family: var(--sans); letter-spacing: -1px; line-height: 1; }
+  .month-stat-card .ms-val { font-size: 28px; font-weight: 900; font-family: var(--sans); letter-spacing: -1px; line-height: 1; }
   .month-stat-card.ms-green .ms-val { color: var(--g); }
   .month-stat-card.ms-yellow .ms-val { color: var(--y-dk); }
   .month-stat-card.ms-red .ms-val { color: var(--r); }
   .month-stat-card.ms-neutral .ms-val { color: var(--text); }
-  .month-stat-card .ms-lbl { font-size: 9px; font-weight: 700; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-top: 4px; }
+  .month-stat-card .ms-lbl { font-size: 11px; font-weight: 700; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-top: 4px; }
 
   /* ── Year — 12 month rows × 31 day columns ── */
   .year-heatmap { margin-top: 6px; overflow-x: auto; }
   .year-heatmap-inner { min-width: 520px; }
-  .year-day-numbers {
-    display: grid;
-    grid-template-columns: 30px repeat(31, 1fr);
-    gap: 2px; margin-bottom: 4px;
-  }
-  .year-day-num-lbl { font-size: 7px; font-weight: 700; color: var(--muted); text-align: center; font-family: var(--mono); opacity: 0.6; }
+
+  .year-day-num-lbl { font-size: 9px; font-weight: 700; color: var(--muted); text-align: center; font-family: var(--mono); opacity: 0.6; }
   .year-month-row {
     display: grid;
-    grid-template-columns: 30px repeat(31, 1fr);
+    grid-template-columns: 36px repeat(31, 1fr);
     gap: 2px; margin-bottom: 2px; align-items: center;
   }
+  .year-day-numbers {
+    display: grid;
+    grid-template-columns: 36px repeat(31, 1fr);
+    gap: 2px; margin-bottom: 4px;
+  }
   .year-month-lbl {
-    font-size: 9px; font-weight: 700; color: var(--muted);
+    font-size: 11px; font-weight: 700; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.06em;
     font-family: var(--mono); text-align: right; padding-right: 5px; white-space: nowrap;
   }
@@ -682,7 +683,7 @@
     transform: translateY(-50%);
   }
   .flow-time-tick-label {
-    font-size: 9px; font-weight: 700; font-family: var(--mono);
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
     color: var(--muted); opacity: .8; white-space: nowrap; line-height: 1;
   }
   .flow-time-tick-line {
@@ -706,7 +707,7 @@
   }
   .flow-lane-label {
     flex: 1; text-align: center; padding: 7px 0;
-    font-size: 9px; font-weight: 700; font-family: var(--mono);
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
     color: var(--muted); text-transform: uppercase; letter-spacing: .1em;
   }
   .flow-lane-label.left-label { border-right: 1px solid var(--border); }
@@ -730,19 +731,19 @@
 
   /* Current time needle */
   .flow-now-line {
-    position: absolute; left: 0; right: 0; height: 2px;
+    position: absolute; left: 0; right: 0; height: 4px;
     background: linear-gradient(90deg, #f43f5e, #fb7185);
-    z-index: 20; border-radius: 1px;
-    box-shadow: 0 0 6px rgba(244,63,94,.5);
+    z-index: 20; border-radius: 2px;
+    box-shadow: 0 0 8px rgba(244,63,94,.7);
   }
   .flow-now-dot {
-    position: absolute; left: -5px; top: -4px;
-    width: 10px; height: 10px; border-radius: 50%;
-    background: #f43f5e; box-shadow: 0 0 8px rgba(244,63,94,.6);
+    position: absolute; left: -6px; top: -5px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #f43f5e; box-shadow: 0 0 10px rgba(244,63,94,.8);
   }
   .flow-now-label {
-    position: absolute; right: 4px; top: -9px;
-    font-size: 8px; font-weight: 900; font-family: var(--mono);
+    position: absolute; right: 4px; top: -10px;
+    font-size: 9px; font-weight: 900; font-family: var(--mono);
     color: #f43f5e; white-space: nowrap;
   }
 
@@ -765,12 +766,12 @@
   }
   .flow-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,.2); z-index: 10; }
   .flow-block-name {
-    font-size: 10px; font-weight: 700; font-family: var(--sans);
+    font-size: 12px; font-weight: 700; font-family: var(--sans);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     line-height: 1; flex: 1; min-width: 0;
   }
   .flow-block-time {
-    font-size: 8px; font-family: var(--mono); opacity: .85;
+    font-size: 10px; font-family: var(--mono); opacity: .85;
     white-space: nowrap; flex-shrink: 0; line-height: 1;
   }
 
@@ -904,7 +905,7 @@
   /* Flow legend */
   .flow-legend {
     display: flex; gap: 10px; flex-wrap: wrap;
-    font-size: 9px; font-weight: 700; font-family: var(--mono);
+    font-size: 11px; font-weight: 700; font-family: var(--mono);
     color: var(--muted); text-transform: uppercase; letter-spacing: .05em;
     margin-top: .25rem;
   }
@@ -983,8 +984,8 @@
     border: 1px solid var(--border);
   }
   .flow-pie-legend-dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
-  .flow-pie-legend-name { font-size: 12px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .flow-pie-legend-hrs { font-size: 11px; font-family: var(--mono); color: var(--muted); font-weight: 700; white-space: nowrap; }
+  .flow-pie-legend-name { font-size: 13px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .flow-pie-legend-hrs { font-size: 12px; font-family: var(--mono); color: var(--muted); font-weight: 700; white-space: nowrap; }
 
   /* Copy button on planned blocks */
   .flow-block-copy-btn {
@@ -1230,14 +1231,7 @@
 
     <div class="flow-summary-row" id="flow-summary-row"></div>
 
-    <!-- Time signal bar (before pie) -->
-    <div class="flow-time-signal" id="flow-time-signal" style="margin-bottom:1rem;">
-      <div class="flow-time-signal-icon" id="flow-time-signal-icon">⏳</div>
-      <div class="flow-time-signal-body">
-        <div class="flow-time-signal-text" id="flow-time-signal-text">Calculating...</div>
-        <div class="flow-time-signal-sub" id="flow-time-signal-sub"></div>
-      </div>
-    </div>
+    <!-- Time signal bar removed per user request -->
 
     <!-- 24hr Pie Visual -->
     <div class="flow-pie-section" id="flow-pie-section">
@@ -2240,7 +2234,7 @@ function renderFlow() {
   let summaryHtml = '';
   if (doneCount) summaryHtml += `<div class="flow-summary-chip done-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${doneCount}</span><span class="chip-label">Done</span></div></div>`;
   if (progCount) summaryHtml += `<div class="flow-summary-chip prog-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${progCount}</span><span class="chip-label">In Progress</span></div></div>`;
-  if (skipCount) summaryHtml += `<div class="flow-summary-chip skip-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${skipCount}</span><span class="chip-label">Skipped</span></div></div>`;
+  if (skipCount) summaryHtml += `<div class="flow-summary-chip skip-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${skipCount}</span><span class="chip-label">Missed</span></div></div>`;
   if (unratedCount) summaryHtml += `<div class="flow-summary-chip free-chip"><div class="flow-summary-chip-inner"><span class="chip-count">${unratedCount}</span><span class="chip-label">Unrated</span></div></div>`;
 
   // Focus bar: % of rated activities that were done or in-progress (not skipped)
@@ -2929,6 +2923,8 @@ function renderFlowPie(blockData, key) {
   // ── 4. Activity arcs (actual times on the real clock) ──
   const actColors = [];
   let totalActivityMins = 0;
+  // Track per-activity total for legend tally
+  const actTotals = new Map(); // actId -> { act, color, totalDur }
 
   blockData.forEach(({ act, b }) => {
     const isRed = act.rating === 'notstart' || act.rating === 'red';
@@ -2940,20 +2936,39 @@ function renderFlowPie(blockData, key) {
       : act.rating === 'started' || act.rating === 'yellow' ? '#d97706'
       : '#6366f1';
 
-    const actualStartAbs = timeToMin(b.actualStart);
-    const dur = b.actualDur || 60;
-    const actualEndAbs = actualStartAbs + dur;
+    // Support multiple actual copies
+    const copies = b.actualCopies && b.actualCopies.length > 0 ? b.actualCopies
+      : (b.actualDropped ? [{ start: b.actualStart, dur: b.actualDur }] : []);
 
-    const startAngle = absMinToClockAngle(actualStartAbs);
-    let endAngle = absMinToClockAngle(actualEndAbs);
-    if (endAngle < startAngle) endAngle += 360; // crosses midnight
+    let actTotalDur = 0;
+    copies.forEach((copy, ci) => {
+      const actualStartAbs = timeToMin(copy.start);
+      const dur = copy.dur || 60;
+      const actualEndAbs = actualStartAbs + dur;
 
-    const path = arcPath(startAngle, endAngle, OUTER, INNER);
-    if (path) {
-      svgPaths += `<path d="${path}" fill="${color}" opacity="0.9"/>`;
-      totalActivityMins += dur;
-      actColors.push({ act, color, dur, startAngle, endAngle });
+      const startAngle = absMinToClockAngle(actualStartAbs);
+      let endAngle = absMinToClockAngle(actualEndAbs);
+      if (endAngle < startAngle) endAngle += 360;
+
+      const path = arcPath(startAngle, endAngle, OUTER, INNER);
+      if (path) {
+        // Slightly vary opacity for multiple copies of same activity
+        const opacity = ci === 0 ? 0.9 : 0.75;
+        svgPaths += `<path d="${path}" fill="${color}" opacity="${opacity}"/>`;
+        totalActivityMins += dur;
+        actTotalDur += dur;
+        // Only push to actColors once per activity (for legend)
+      }
+    });
+
+    if (actTotalDur > 0) {
+      actTotals.set(act.id, { act, color, totalDur: (actTotals.get(act.id)?.totalDur || 0) + actTotalDur });
     }
+  });
+
+  // Build actColors from actTotals for legend
+  actTotals.forEach(({ act, color, totalDur }) => {
+    actColors.push({ act, color, dur: totalDur });
   });
 
   // ── 5. Hour tick marks (all 24 hours around the clock) ──
@@ -3034,10 +3049,13 @@ function renderFlowPie(blockData, key) {
     let legendHtml = '';
     actColors.forEach(({ act, color, dur }) => {
       const hrs = (dur / 60).toFixed(1);
+      const hPart = Math.floor(dur / 60);
+      const mPart = dur % 60;
+      const durLabel = hPart > 0 ? (hPart + 'h' + (mPart > 0 ? mPart + 'm' : '')) : mPart + 'm';
       legendHtml += `<div class="flow-pie-legend-item">
         <div class="flow-pie-legend-dot" style="background:${color};"></div>
         <div class="flow-pie-legend-name">${escHtml(act.name)}</div>
-        <div class="flow-pie-legend-hrs">${hrs}h</div>
+        <div class="flow-pie-legend-hrs">${durLabel}</div>
       </div>`;
     });
 
