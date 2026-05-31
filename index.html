@@ -509,7 +509,7 @@
 
   /* Month stats bar */
   .month-stats-bar {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;
   }
   .month-stat-card {
     border-radius: var(--radius-md); padding: 14px 10px; text-align: center;
@@ -986,6 +986,32 @@
   .flow-pie-legend-name { font-size: 12px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .flow-pie-legend-hrs { font-size: 11px; font-family: var(--mono); color: var(--muted); font-weight: 700; white-space: nowrap; }
 
+  /* Copy button on planned blocks */
+  .flow-block-copy-btn {
+    position: absolute; top: 4px; right: 22px;
+    width: 18px; height: 18px; border-radius: 4px;
+    background: rgba(255,255,255,0.22); border: none;
+    color: #fff; font-size: 13px; font-weight: 900; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .15s, background .1s;
+    z-index: 15; padding: 0;
+  }
+  .flow-block:hover .flow-block-copy-btn { opacity: 1; }
+  .flow-block-copy-btn:hover { background: #6366f1 !important; opacity: 1 !important; }
+
+  /* Delete button on actual blocks */
+  .flow-block-del-btn {
+    position: absolute; top: 4px; right: 4px;
+    width: 18px; height: 18px; border-radius: 4px;
+    background: rgba(0,0,0,0.18); border: none;
+    color: rgba(255,255,255,0.9); font-size: 9px; font-weight: 900; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .15s, background .1s;
+    z-index: 15; padding: 0;
+  }
+  .flow-block:hover .flow-block-del-btn { opacity: 1; }
+  .flow-block-del-btn:hover { background: var(--r) !important; opacity: 1 !important; }
+
   /* Signal bar below pie */
   .flow-time-signal {
     margin-top: 1rem; padding: 12px 16px;
@@ -1120,8 +1146,8 @@
       <div class="cal-period" id="month-period"></div>
       <button class="nav-btn" onclick="navMonth(1)"><i class="ti ti-chevron-right"></i></button>
     </div>
-    <div class="month-stats-bar" id="month-stats"></div>
-    <!-- Current week summary (shown only for the current month) -->
+
+    <!-- Current week summary (shown only for the current month) — NOW AT TOP -->
     <div id="month-week-summary" style="display:none;margin-bottom:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;">
       <div class="month-week-header">
         <div class="month-week-title">📅 This Week</div>
@@ -1130,15 +1156,21 @@
       <div class="month-week-stat-row" id="month-week-summary-boxes"></div>
       <div class="month-week-days-row" id="month-week-summary-days"></div>
     </div>
-    <div class="day-header-row">
-      <div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div>
-      <div class="day-header">We</div><div class="day-header">Th</div><div class="day-header">Fr</div><div class="day-header">Sa</div>
-    </div>
-    <div class="month-grid" id="month-grid"></div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot green"></div> Great (&ge;80%)</div>
-      <div class="legend-item"><div class="legend-dot yellow"></div> OK (50–79%)</div>
-      <div class="legend-item"><div class="legend-dot red"></div> Missed (&lt;50%)</div>
+
+    <!-- This Month: stats + calendar grouped together -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:1rem;">
+      <div style="font-size:11px;font-weight:700;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">📆 This Month</div>
+      <div class="month-stats-bar" id="month-stats"></div>
+      <div class="day-header-row">
+        <div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div>
+        <div class="day-header">We</div><div class="day-header">Th</div><div class="day-header">Fr</div><div class="day-header">Sa</div>
+      </div>
+      <div class="month-grid" id="month-grid"></div>
+      <div class="legend" style="margin-top:10px;">
+        <div class="legend-item"><div class="legend-dot green"></div> Great (&ge;80%)</div>
+        <div class="legend-item"><div class="legend-dot yellow"></div> OK (50–79%)</div>
+        <div class="legend-item"><div class="legend-dot red"></div> Missed (&lt;50%)</div>
+      </div>
     </div>
   </div>
 
@@ -1234,7 +1266,7 @@
 
     <div class="flow-lane-labels-bar">
       <div class="flow-axis-spacer"></div>
-      <div class="flow-lane-label left-label">📋 Planned <span style="font-size:8px;opacity:.5;font-weight:400;">(tap to copy)</span></div>
+      <div class="flow-lane-label left-label">📋 Planned</div>
       <div class="flow-lane-label">⚡ Actual</div>
     </div>
     <div class="flow-canvas-wrap">
@@ -2303,11 +2335,12 @@ function renderFlow() {
     lanesHtml += `
       <div class="flow-block planned${plannedOverlap?' overlap-warn':''}" 
            data-act-id="${act.id}" data-key="${key}" data-lane="planned"
-           style="top:${plannedTop}px;height:${plannedH}px;left:${leftOffset};width:calc(50% - 6px);cursor:pointer;background:${plannedBg};"
-           title="${escHtml(act.name)} – tap to copy to Actual, drag to move">
+           style="top:${plannedTop}px;height:${plannedH}px;left:${leftOffset};width:calc(50% - 6px);cursor:grab;background:${plannedBg};"
+           title="${escHtml(act.name)} – drag to move">
         ${plannedOverlap?`<div class="flow-overlap-badge">⚠ overlap</div>`:''}
         <div class="flow-block-name">${escHtml(act.name)}</div>
         <div class="flow-block-time">${fmtTime(b.plannedStart)} · ${b.plannedDur}m</div>
+        <button class="flow-block-copy-btn" data-act-id="${act.id}" data-key="${key}" title="Copy to Actual" onclick="event.stopPropagation();copyToActualDirect('${act.id}','${key}')">＋</button>
         <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="planned" title="Drag to resize duration"></div>
       </div>`;
 
@@ -2360,6 +2393,7 @@ function renderFlow() {
           ${actualOverlap?`<div class="flow-overlap-badge">⚠ overlap</div>`:''}
           <div class="flow-block-name">${ratingEmoji} ${escHtml(act.name)}${copies.length > 1 ? ` <span style="font-size:8px;opacity:.7;">#${copyIdx+1}</span>` : ''}</div>
           <div class="flow-block-time">${fmtTime(copy.start)} · ${copy.dur}m</div>
+          <button class="flow-block-del-btn" data-act-id="${act.id}" data-key="${key}" data-copy-idx="${copyIdx}" title="Remove" onclick="event.stopPropagation();removeActualBlock('${act.id}','${key}',${copyIdx})">✕</button>
           <div class="flow-block-resize" data-act-id="${act.id}" data-key="${key}" data-lane="actual" data-copy-idx="${copyIdx}" title="Drag to resize duration"></div>
         </div>`; 
     });
@@ -2656,18 +2690,8 @@ document.addEventListener('mouseup', e => {
   if (wasMoved) {
     saveFlowData();
     renderFlow();
-  } else {
-    // Only open popup if it was a click, not a drag
-    const block = e.target.closest('.flow-block');
-    if (block) {
-      const blockLane = block.dataset.lane;
-      const blockCopyIdx = block.dataset.copyIdx !== undefined ? parseInt(block.dataset.copyIdx) : -1;
-      if (blockLane === 'planned') {
-        showCopyBanner(savedActId, savedKey);
-      }
-      // Actual blocks: no popup — drag/resize only
-    }
   }
+  // No click-to-copy on blocks — use the copy button instead
 }, true);
 
 // ── Tap-to-copy: planned block → copy to actual column ──
@@ -2740,6 +2764,23 @@ function doCopyToActual() {
   b.actualCopies.unshift(newCopy); // add at top
   saveFlowData();
   cancelCopy();
+  renderFlow();
+  const count = b.actualCopies.length;
+  showToast(count > 1 ? `Copy #${count} added — drag it to the right time` : 'Copied to Actual — drag it to the right time');
+}
+
+function copyToActualDirect(actId, key) {
+  const bKey = key + '_' + actId;
+  if (!flowBlocks[bKey]) return;
+  const b = flowBlocks[bKey];
+  if (b.actualDropped && !b.actualCopies) {
+    b.actualCopies = [{ start: b.actualStart, dur: b.actualDur }];
+    b.actualDropped = false;
+  }
+  if (!b.actualCopies) b.actualCopies = [];
+  const { wakeMin } = getFlowDayRange();
+  b.actualCopies.unshift({ start: minToTime(wakeMin + 30), dur: b.plannedDur });
+  saveFlowData();
   renderFlow();
   const count = b.actualCopies.length;
   showToast(count > 1 ? `Copy #${count} added — drag it to the right time` : 'Copied to Actual — drag it to the right time');
